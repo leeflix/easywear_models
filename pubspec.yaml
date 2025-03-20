@@ -1,0 +1,7 @@
+name: easywear_models
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  collection:
+  crypto:

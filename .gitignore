@@ -1,0 +1,4 @@
+.dart_tool/
+.idea/
+easywear_models.iml
+pubspec.lock
