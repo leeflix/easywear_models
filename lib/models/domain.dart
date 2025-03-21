@@ -45,7 +45,7 @@ class Domain extends Model<Domain> {
     required this.supplierConfig,
     required this.adminUserIds,
     required this.beekeeperAccessToken,
-  }) : super(id: "0");
+  }) : super(id: domain);
 
   Domain.fromJson(Map<String, dynamic> json)
     : domain = json["domain"],
