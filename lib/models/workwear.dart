@@ -12,7 +12,7 @@ class Workwear extends Model<Workwear> {
   DateTime created;
   Map<int, double> cost;
   Map<int, double> oldCost;
-  String? supplierDomain;
+  String? supplierDomainId;
   String? articleNumber;
   String? collectionId;
   Set<String> categoryIds;
@@ -30,7 +30,7 @@ class Workwear extends Model<Workwear> {
     required this.oldCost,
     required this.shopPrice,
     required this.oldShopPrice,
-    required this.supplierDomain,
+    required this.supplierDomainId,
     required this.collectionId,
     required this.categoryIds,
     required this.skuToArticle,
@@ -54,7 +54,7 @@ class Workwear extends Model<Workwear> {
       }),
       shopPrice = json["shopPrice"]?.toDouble(),
       oldShopPrice = json["oldShopPrice"]?.toDouble(),
-      supplierDomain = json["supplierDomain"],
+      supplierDomainId = json["supplierDomainId"],
       collectionId = json["collectionId"],
       categoryIds = Set<String>.from(json["categoryIds"]),
       skuToArticle = json["skuToArticle"].map<String, Article>((key, value) {
@@ -75,7 +75,7 @@ class Workwear extends Model<Workwear> {
     "oldCost": oldCost.map((k, v) => MapEntry(k.toString(), v)),
     "shopPrice": shopPrice,
     "oldShopPrice": oldShopPrice,
-    "supplierDomain": supplierDomain,
+    "supplierDomainId": supplierDomainId,
     "collectionId": collectionId,
     "categoryIds": categoryIds.toList(),
     "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
