@@ -111,11 +111,11 @@ class Inventory {
     required Map<String, String?> config,
   }) => items[workwearId]?[calculateConfigHash(config)]?.amount ?? 0;
 
-  static bool has({
+  bool has({
     required String workwearId,
     required Map<String, String?> config,
     required int amount,
-  }) => items[workwearId]?[calculateConfigHash(config)]?.amount ?? 0 >= amount;
+  }) => readAmountOfItem(workwearId: workwearId, config: config) >= amount;
 }
 
 String calculateConfigHash(Map<String, String?> config) =>
