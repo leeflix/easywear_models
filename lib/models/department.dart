@@ -38,4 +38,7 @@ class Department extends Model<Department> {
 
   @override
   Department fromJson(Map<String, dynamic> json) => Department.fromJson(json);
+
+  @override
+  String className() => "Department";
 }

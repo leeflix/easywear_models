@@ -140,6 +140,9 @@ class User extends Model<User> {
 
   @override
   User fromJson(Map<String, dynamic> json) => User.fromJson(json);
+
+  @override
+  String className() => "User";
 }
 
 class Address {

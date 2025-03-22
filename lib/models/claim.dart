@@ -71,4 +71,7 @@ class Claim extends OrderOrClaim {
 
   @override
   Request fromJson(Map<String, dynamic> json) => Claim.fromJson(json);
+
+  @override
+  String className() => "Claim";
 }

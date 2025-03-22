@@ -14,4 +14,7 @@ class Warehouse extends Model<Warehouse> {
 
   @override
   Warehouse fromJson(Map<String, dynamic> json) => Warehouse.fromJson(json);
+
+  @override
+  String className() => "Warehouse";
 }
