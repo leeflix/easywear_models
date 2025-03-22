@@ -1,3 +1,4 @@
+import 'address.dart';
 import 'inventory.dart';
 import 'language.dart';
 import 'model.dart';
@@ -145,66 +146,8 @@ class User extends Model<User> {
   String className() => "User";
 }
 
-class Address {
-  final Gender gender;
-  final ShippingCountry country;
-  final String firstName;
-  final String lastName;
-  final String streetAndHouseNumber;
-  final String addressLine2;
-  final String zipCode;
-  final String city;
 
-  Address({
-    required this.gender,
-    required this.country,
-    required this.firstName,
-    required this.lastName,
-    required this.streetAndHouseNumber,
-    required this.addressLine2,
-    required this.zipCode,
-    required this.city,
-  });
 
-  Map<String, dynamic> toJson() => {
-    "gender": gender.string,
-    "country": country.string,
-    "firstName": firstName,
-    "lastName": lastName,
-    "streetAndHouseNumber": streetAndHouseNumber,
-    "addressLine2": addressLine2,
-    "zipCode": zipCode,
-    "city": city,
-  };
 
-  factory Address.fromJson(Map<String, dynamic> json) {
-    return Address(
-      gender: GenderExtension.fromString(json["gender"]),
-      country: ShippingCountryExtension.fromString(json["country"]),
-      firstName: json["firstName"],
-      lastName: json["lastName"],
-      streetAndHouseNumber: json["streetAndHouseNumber"],
-      addressLine2: json["addressLine2"],
-      zipCode: json["zipCode"],
-      city: json["city"],
-    );
-  }
-}
 
-enum Gender { mrs, mr, diverse, preferNotToSay }
 
-extension GenderExtension on Gender {
-  String get string => toString().split(".").last;
-
-  static Gender fromString(String string) =>
-      Gender.values.firstWhere((gender) => gender.string == string);
-}
-
-enum ShippingCountry { germany, austria, switzerland }
-
-extension ShippingCountryExtension on ShippingCountry {
-  String get string => toString().split(".").last;
-
-  static ShippingCountry fromString(String string) =>
-      ShippingCountry.values.firstWhere((country) => country.string == string);
-}
