@@ -27,3 +27,6 @@ export 'models/warehouse.dart';
 export 'models/white_label.dart';
 export 'models/workwear.dart';
 export 'models/model.dart';
+export 'models/address.dart';
+export 'models/country.dart';
+export 'models/gender.dart';

@@ -52,4 +52,7 @@ class Code extends Model<Code> {
 
   @override
   Code fromJson(Map<String, dynamic> json) => Code.fromJson(json);
+
+  @override
+  String className() => "Code";
 }

@@ -47,4 +47,7 @@ class Correction extends Request {
 
   @override
   Request fromJson(Map<String, dynamic> json) => Correction.fromJson(json);
+
+  @override
+  String className() => "Correction";
 }

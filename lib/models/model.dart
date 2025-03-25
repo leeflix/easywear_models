@@ -7,6 +7,8 @@ abstract class Model<T extends Model<T>> {
 
   Model({required this.id});
 
+  String className();
+
   Map<String, dynamic> toJson();
 
   T fromMongoDoc(Map<String, dynamic> doc) =>

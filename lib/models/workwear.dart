@@ -85,7 +85,10 @@ class Workwear extends Model<Workwear> {
   @override
   Workwear fromJson(Map<String, dynamic> json) => Workwear.fromJson(json);
 
-  bool sale() {
+  @override
+  String className() => "Workwear";
+
+      bool sale() {
     if (oldCost.isNotEmpty) return true;
     for (var article in skuToArticle.values) {
       if (article.oldCost.isNotEmpty) return true;
