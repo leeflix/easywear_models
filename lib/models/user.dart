@@ -7,11 +7,11 @@ class User extends Model<User> {
   bool isAdmin;
   DateTime created;
   String? companyMail;
-  String firstName;
+  String? firstName;
   String? lastName;
-  String? userName;
-  String password;
-  String passwordHash;
+  String userName;
+  String? password;
+  String? passwordHash;
   bool isVerified;
   bool isArchived;
   double budgetBeforeCalculation;
