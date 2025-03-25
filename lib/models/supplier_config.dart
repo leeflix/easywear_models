@@ -1,10 +1,18 @@
 class SupplierConfig {
   String? returnPolicyUrl;
+  Set<String> customerDomainIds;
 
-  SupplierConfig({this.returnPolicyUrl});
+  SupplierConfig({
+    required this.returnPolicyUrl,
+    required this.customerDomainIds,
+  });
 
-  Map<String, dynamic> toJson() => {"returnPolicyUrl": returnPolicyUrl};
+  Map<String, dynamic> toJson() => {
+    "returnPolicyUrl": returnPolicyUrl,
+    "customerDomainIds": customerDomainIds.toList(),
+  };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
-    : returnPolicyUrl = json["returnPolicyUrl"];
+    : customerDomainIds = Set<String>.from(json["customerDomainIds"]),
+      returnPolicyUrl = json["returnPolicyUrl"];
 }
