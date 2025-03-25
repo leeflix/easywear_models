@@ -8,8 +8,8 @@ class User extends Model<User> {
   DateTime created;
   String? companyMail;
   String firstName;
-  String lastName;
-  String userName;
+  String? lastName;
+  String? userName;
   String password;
   String passwordHash;
   bool isVerified;
