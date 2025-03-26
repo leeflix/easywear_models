@@ -3,12 +3,14 @@ import 'request.dart';
 import 'request_status.dart';
 
 class Claim extends OrderOrClaim {
-  Set<String> imageIds;
   bool userInventory;
+  Set<String> imageIds;
 
   Claim({
     required super.id,
     required super.created,
+    required super.updated,
+    required super.isArchived,
     required super.userId,
     required super.status,
     required super.adminMessage,
@@ -22,52 +24,42 @@ class Claim extends OrderOrClaim {
     required super.booked,
     required super.toBuy,
     required super.fromWarehouse,
-    required this.imageIds,
     required this.userInventory,
+    required this.imageIds,
   });
 
   @override
   Claim.fromJson(Map<String, dynamic> json)
-    : imageIds = Set<String>.from(json["imageIds"]),
-      userInventory = json["userInventory"],
-      super(
-        id: json["id"],
-        created: DateTime.parse(json["created"]),
-        userId: json["userId"],
-        status: RequestStatusE.fromString(json["status"]),
-        adminMessage: json["adminMessage"],
-        userMessage: json["userMessage"],
-        workwearId: json["workwearId"],
-        config: Map<String, String?>.from(json["config"]),
-        sku: json["sku"],
-        amount: json["amount"],
-        cost: json["cost"]?.toDouble(),
-        departmentId: json["departmentId"],
-        booked: json["booked"] == null ? null : DateTime.parse(json["booked"]),
-        toBuy: json["toBuy"],
-        fromWarehouse: json["fromWarehouse"],
-      );
+      : userInventory = json["userInventory"],
+        imageIds = Set<String>.from(json["imageIds"]),
+        super(
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+          userId: json["userId"],
+          status: RequestStatusExt.fromString(json["status"]),
+          adminMessage: json["adminMessage"],
+          userMessage: json["userMessage"],
+          workwearId: json["workwearId"],
+          config: Map<String, String?>.from(json["config"]),
+          sku: json["sku"],
+          amount: json["amount"],
+          cost: json["cost"]?.toDouble(),
+          departmentId: json["departmentId"],
+          booked:
+              json["booked"] == null ? null : DateTime.parse(json["booked"]),
+          toBuy: json["toBuy"],
+          fromWarehouse: json["fromWarehouse"],
+        );
 
   @override
   Map<String, dynamic> toJson() => {
     "type": "claim",
-    "id": id,
-    "created": created.toIso8601String(),
-    "userId": userId,
-    "status": status.string,
-    "adminMessage": adminMessage,
-    "userMessage": userMessage,
-    "workwearId": workwearId,
-    "amount": amount,
-    "config": config,
-    "cost": cost,
-    "departmentId": departmentId,
-    "booked": booked?.toIso8601String(),
-    "toBuy": toBuy,
-    "fromWarehouse": fromWarehouse,
-    "imageIds": imageIds.toList(),
-    "userInventory": userInventory,
-  };
+        "userInventory": userInventory,
+        "imageIds": imageIds.toList(),
+        ...super.toJson(),
+      };
 
   @override
   Request fromJson(Map<String, dynamic> json) => Claim.fromJson(json);

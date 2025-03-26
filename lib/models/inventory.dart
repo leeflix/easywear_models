@@ -12,26 +12,19 @@ class Inventory {
   Inventory({required this.items});
 
   Map<String, dynamic> toJson() => {
-    "items": items.map(
-      (category, itemMap) => MapEntry(
-        category,
-        itemMap.map((name, entry) => MapEntry(name, entry.toJson())),
-      ),
-    ),
-  };
-
-  Inventory.fromJson(Map<String, dynamic> json)
-    : items = Map.from(json["items"]).map(
-        (workwearId, rest) => MapEntry(
-          workwearId,
-          Map.from(rest).map(
-            (configHash, inventoryEntryJson) => MapEntry(
-              configHash,
-              ConfigAndAmount.fromJson(inventoryEntryJson),
-            ),
+        "items": items.map(
+          (category, itemMap) => MapEntry(
+            category,
+            itemMap.map((name, entry) => MapEntry(name, entry.toJson())),
           ),
         ),
-      );
+      };
+
+  Inventory.fromJson(Map<String, dynamic> json)
+      : items = Map.from(json["items"]).map((workwearId, rest) => MapEntry(
+            workwearId,
+            Map.from(rest).map((configHash, inventoryEntryJson) => MapEntry(
+                configHash, ConfigAndAmount.fromJson(inventoryEntryJson)))));
 
   List<InventoryEntry> toInventoryEntries() {
     List<InventoryEntry> inventoryEntries = [];
@@ -109,20 +102,21 @@ class Inventory {
   int readAmountOfItem({
     required String workwearId,
     required Map<String, String?> config,
-  }) => items[workwearId]?[calculateConfigHash(config)]?.amount ?? 0;
+  }) =>
+      items[workwearId]?[calculateConfigHash(config)]?.amount ?? 0;
 
   bool has({
     required String workwearId,
     required Map<String, String?> config,
     required int amount,
-  }) => readAmountOfItem(workwearId: workwearId, config: config) >= amount;
+  }) =>
+      readAmountOfItem(workwearId: workwearId, config: config) >= amount;
 }
 
-String calculateConfigHash(Map<String, String?> config) =>
-    md5
-        .convert(
-          utf8.encode(
-            "{${config.entries.sorted((a, b) => a.key.compareTo(b.key)).map((e) => "\"${e.key}\":\"${e.value}\"").join(",")}}",
-          ),
-        )
-        .toString();
+String calculateConfigHash(Map<String, String?> config) => md5
+    .convert(
+      utf8.encode(
+        "{${config.entries.sorted((a, b) => a.key.compareTo(b.key)).map((e) => "\"${e.key}\":\"${e.value}\"").join(",")}}",
+      ),
+    )
+    .toString();

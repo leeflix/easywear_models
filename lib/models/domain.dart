@@ -9,96 +9,100 @@ import 'white_label.dart';
 class Domain extends Model<Domain> {
   String domain;
   String tenant;
-  int licensesQuantity;
-  DateTime? registered;
-  DateTime? premiumTrialStartDate;
-  FeatureLevel featureLevel;
-  DateTime? verified;
+  Set<String> aliases;
+  EasyType type;
+  SupplierConfig? supplierConfig;
   WhiteLabel whiteLabelData;
+  DateTime? registered;
+  DateTime? verified;
+  int licensesQuantity;
+  FeatureLevel featureLevel;
+  DateTime? premiumTrialStartDate;
+  Features features;
   String currency;
   bool useCurrencyForBudget;
-  Intratool? intratool;
-  Features features;
   String delimiter;
-  EasyType type;
-  Set<String> aliases;
-  SupplierConfig? supplierConfig;
+  Intratool? intratool;
   String? beekeeperAccessToken;
 
   Domain({
+    required super.created,
+    required super.updated,
+    required super.isArchived,
     required this.domain,
     required this.tenant,
-    required this.licensesQuantity,
+    required this.aliases,
+    required this.type,
+    required this.supplierConfig,
+    required this.whiteLabelData,
     required this.registered,
+    required this.verified,
+    required this.licensesQuantity,
     required this.featureLevel,
     required this.premiumTrialStartDate,
-    required this.whiteLabelData,
+    required this.features,
     required this.currency,
     required this.useCurrencyForBudget,
-    required this.verified,
-    required this.intratool,
-    required this.features,
     required this.delimiter,
-    required this.type,
-    required this.aliases,
-    required this.supplierConfig,
+    required this.intratool,
     required this.beekeeperAccessToken,
   }) : super(id: domain);
 
   Domain.fromJson(Map<String, dynamic> json)
-    : domain = json["domain"],
-      tenant = json["tenant"],
-      licensesQuantity = json["licensesQuantity"],
-      registered =
-          json["registered"] == null
-              ? null
-              : DateTime.parse(json["registered"]),
-      premiumTrialStartDate =
-          json["premiumTrialStartDate"] == null
-              ? null
-              : DateTime.parse(json["premiumTrialStartDate"]),
-      featureLevel = FeatureLevelExtension.fromString(json["featureLevel"]),
-      whiteLabelData = WhiteLabel.fromJson(json["whiteLabelData"]),
-      currency = json["currency"],
-      useCurrencyForBudget = json["useCurrencyForBudget"],
-      verified =
-          json["verified"] == null ? null : DateTime.parse(json["verified"]),
-      intratool =
-          json["intratool"] == null
-              ? null
-              : Intratool.fromJson(json["intratool"]),
-      features = Features.fromJson(json["features"]),
-      delimiter = json["delimiter"],
-      type = EasyTypeE.fromString(json["type"]),
-      aliases = Set<String>.from(json["aliases"]),
-      supplierConfig =
-          json["supplierConfig"] == null
-              ? null
-              : SupplierConfig.fromJson(json["supplierConfig"]),
-      beekeeperAccessToken = json["beekeeperAccessToken"],
-      super(id: json["id"]);
+      : domain = json["domain"],
+        tenant = json["tenant"],
+        aliases = Set<String>.from(json["aliases"]),
+        type = EasyTypeExt.fromString(json["type"]),
+        supplierConfig = json["supplierConfig"] == null
+            ? null
+            : SupplierConfig.fromJson(json["supplierConfig"]),
+        whiteLabelData = WhiteLabel.fromJson(json["whiteLabelData"]),
+        registered = json["registered"] == null
+            ? null
+            : DateTime.parse(json["registered"]),
+        verified =
+            json["verified"] == null ? null : DateTime.parse(json["verified"]),
+        licensesQuantity = json["licensesQuantity"],
+        featureLevel = FeatureLevelExt.fromString(json["featureLevel"]),
+        premiumTrialStartDate = json["premiumTrialStartDate"] == null
+            ? null
+            : DateTime.parse(json["premiumTrialStartDate"]),
+        features = Features.fromJson(json["features"]),
+        currency = json["currency"],
+        useCurrencyForBudget = json["useCurrencyForBudget"],
+        delimiter = json["delimiter"],
+        intratool = json["intratool"] == null
+            ? null
+            : Intratool.fromJson(json["intratool"]),
+        beekeeperAccessToken = json["beekeeperAccessToken"],
+        super(
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+        );
 
   @override
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "domain": domain,
-    "tenant": tenant,
-    "licensesQuantity": licensesQuantity,
-    "registered": registered?.toIso8601String(),
-    "premiumTrialStartDate": premiumTrialStartDate?.toIso8601String(),
-    "featureLevel": featureLevel.string(),
-    "whiteLabelData": whiteLabelData.toJson(),
-    "currency": currency,
-    "useCurrencyForBudget": useCurrencyForBudget,
-    "verified": verified?.toIso8601String(),
-    "intratool": intratool?.toJson(),
-    "features": features.toJson(),
-    "type": type.string,
-    "delimiter": delimiter,
-    "aliases": aliases.toList(),
-    "supplierConfig": supplierConfig?.toJson(),
-    "beekeeperAccessToken": beekeeperAccessToken,
-  };
+        "domain": domain,
+        "tenant": tenant,
+        "aliases": aliases.toList(),
+        "type": type.string,
+        "supplierConfig": supplierConfig?.toJson(),
+        "whiteLabelData": whiteLabelData.toJson(),
+        "registered": registered?.toIso8601String(),
+        "verified": verified?.toIso8601String(),
+        "licensesQuantity": licensesQuantity,
+        "featureLevel": featureLevel.string,
+        "premiumTrialStartDate": premiumTrialStartDate?.toIso8601String(),
+        "features": features.toJson(),
+        "currency": currency,
+        "useCurrencyForBudget": useCurrencyForBudget,
+        "delimiter": delimiter,
+        "intratool": intratool?.toJson(),
+        "beekeeperAccessToken": beekeeperAccessToken,
+        ...super.toJson(),
+      };
 
   @override
   Domain fromJson(Map<String, dynamic> json) => Domain.fromJson(json);

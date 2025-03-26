@@ -12,15 +12,18 @@ class InventoryEntry {
   });
 
   InventoryEntry.fromJson(Map<String, dynamic> json)
-    : workwearId = json["workwearId"],
-      config = Map.from(json["config"]),
-      amount = json["amount"];
+      : workwearId = json["workwearId"],
+        config = Map.from(json["config"]),
+        amount = json["amount"];
 
   Map<String, dynamic> toJson() => {
-    "workwearId": workwearId,
-    "config": config,
-    "amount": amount,
-  };
+        "workwearId": workwearId,
+        "config": config,
+        "amount": amount,
+      };
+
+  @override
+  String toString() => jsonEncode(this);
 
   InventoryEntry deepCopy() =>
       InventoryEntry.fromJson(jsonDecode(jsonEncode(this)));

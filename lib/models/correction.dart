@@ -8,6 +8,8 @@ class Correction extends Request {
   Correction({
     required super.id,
     required super.created,
+    required super.updated,
+    required super.isArchived,
     required super.userId,
     required super.status,
     required super.adminMessage,
@@ -16,34 +18,27 @@ class Correction extends Request {
   });
 
   Correction.fromJson(Map<String, dynamic> json)
-    : inventoryEntries = List<InventoryEntry>.from(
-        json["inventoryEntries"].map(
-          (inventoryEntry) => InventoryEntry.fromJson(inventoryEntry),
-        ),
-      ),
-      super(
-        id: json["id"],
-        created: DateTime.parse(json["created"]),
-        userId: json["userId"],
-        status: RequestStatusE.fromString(json["status"]),
-        adminMessage: json["adminMessage"],
-        userMessage: json["userMessage"],
-      );
+      : inventoryEntries = List<InventoryEntry>.from(json["inventoryEntries"]
+            .map((inventoryEntry) => InventoryEntry.fromJson(inventoryEntry))),
+        super(
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+          userId: json["userId"],
+          status: RequestStatusExt.fromString(json["status"]),
+          adminMessage: json["adminMessage"],
+          userMessage: json["userMessage"],
+        );
 
   @override
   Map<String, dynamic> toJson() => {
-    "type": "correction",
-    "id": id,
-    "created": created.toIso8601String(),
-    "userId": userId,
-    "status": status.string,
-    "adminMessage": adminMessage,
-    "userMessage": userMessage,
-    "inventoryEntries":
-        inventoryEntries
+        "type": "correction",
+        "inventoryEntries": inventoryEntries
             .map((inventoryEntry) => inventoryEntry.toJson())
             .toList(),
-  };
+        ...super.toJson(),
+      };
 
   @override
   Request fromJson(Map<String, dynamic> json) => Correction.fromJson(json);

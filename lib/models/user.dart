@@ -1,147 +1,144 @@
-import 'package:easywear_models/models/permissions.dart';
-
 import 'address.dart';
 import 'inventory.dart';
 import 'language.dart';
 import 'model.dart';
+import 'permissions.dart';
 
 class User extends Model<User> {
   bool isAdmin;
-  DateTime created;
-  String? companyMail;
+  Permissions permissions;
+  bool isVerified;
   String? firstName;
   String? lastName;
+  String? personnelNumber;
+  String? imageId;
   String userName;
+  String? companyMail;
+  String? contactMail;
+  String? phoneNumber;
+  List<Address> addresses;
   String? password;
   String? passwordHash;
-  bool isVerified;
-  bool isArchived;
+  Language language;
+  Inventory companyInventory;
+  Inventory userInventory;
+  Map<String, Map<String, String?>> workwearIdToDefaultConfig;
   double budgetBeforeCalculation;
   double budgetPerMonth;
   DateTime lastBudgetCalculation;
   double requiredDeposit;
   double paidDeposit;
-  Map<String, Map<String, String?>> workwearIdToDefaultConfig;
-  Inventory companyInventory;
-  Inventory userInventory;
   bool askForInventoryAfterLogin;
   bool showFirstLoginMessage;
-  Language language;
-  String? imageId;
-  String? contactMail;
-  String? phoneNumber;
-  String? personnelNumber;
   int? intratoolUserId;
   String? beekeeperUserId;
-  List<Address> addresses;
-  Permissions permissions;
 
   User({
     required super.id,
+    required super.created,
+    required super.updated,
+    required super.isArchived,
     required this.isAdmin,
-    required this.created,
-    required this.companyMail,
+    required this.permissions,
+    required this.isVerified,
     required this.firstName,
     required this.lastName,
+    required this.personnelNumber,
+    required this.imageId,
     required this.userName,
+    required this.companyMail,
+    required this.contactMail,
+    required this.phoneNumber,
+    required this.addresses,
     required this.password,
     required this.passwordHash,
-    required this.isVerified,
-    required this.isArchived,
+    required this.language,
+    required this.companyInventory,
+    required this.userInventory,
+    required this.workwearIdToDefaultConfig,
     required this.budgetBeforeCalculation,
     required this.budgetPerMonth,
     required this.lastBudgetCalculation,
     required this.requiredDeposit,
     required this.paidDeposit,
-    required this.workwearIdToDefaultConfig,
-    required this.companyInventory,
-    required this.userInventory,
     required this.askForInventoryAfterLogin,
     required this.showFirstLoginMessage,
-    required this.language,
-    required this.imageId,
-    required this.contactMail,
-    required this.phoneNumber,
-    required this.personnelNumber,
     required this.intratoolUserId,
     required this.beekeeperUserId,
-    required this.addresses,
-    required this.permissions,
   });
 
   @override
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "isAdmin": isAdmin,
-    "created": created.toIso8601String(),
-    "companyMail": companyMail,
-    "firstName": firstName,
-    "lastName": lastName,
-    "userName": userName,
-    "password": password,
-    "passwordHash": passwordHash,
-    "isVerified": isVerified,
-    "isArchived": isArchived,
-    "budgetBeforeCalculation": budgetBeforeCalculation,
-    "budgetPerMonth": budgetPerMonth,
-    "lastBudgetCalculation": lastBudgetCalculation.toIso8601String(),
-    "requiredDeposit": requiredDeposit,
-    "paidDeposit": paidDeposit,
-    "workwearIdToDefaultConfig": workwearIdToDefaultConfig,
-    "companyInventory": companyInventory.toJson(),
-    "userInventory": userInventory.toJson(),
-    "askForInventoryAfterLogin": askForInventoryAfterLogin,
-    "showFirstLoginMessage": showFirstLoginMessage,
-    "language": language.string,
-    "imageId": imageId,
-    "contactMail": contactMail,
-    "phoneNumber": phoneNumber,
-    "personnelNumber": personnelNumber,
-    "intratoolUserId": intratoolUserId,
-    "beekeeperUserId": beekeeperUserId,
-    "addresses": addresses.map((address) => address.toJson()).toList(),
-    "permissions": permissions.toJson(),
-  };
+        "isAdmin": isAdmin,
+        "permissions": permissions.toJson(),
+        "isVerified": isVerified,
+        "firstName": firstName,
+        "lastName": lastName,
+        "personnelNumber": personnelNumber,
+        "imageId": imageId,
+        "userName": userName,
+        "companyMail": companyMail,
+        "contactMail": contactMail,
+        "phoneNumber": phoneNumber,
+        "addresses": addresses.map((address) => address.toJson()).toList(),
+        "password": password,
+        "passwordHash": passwordHash,
+        "language": language.string,
+        "companyInventory": companyInventory.toJson(),
+        "userInventory": userInventory.toJson(),
+        "workwearIdToDefaultConfig": workwearIdToDefaultConfig,
+        "budgetBeforeCalculation": budgetBeforeCalculation,
+        "budgetPerMonth": budgetPerMonth,
+        "lastBudgetCalculation": lastBudgetCalculation.toIso8601String(),
+        "requiredDeposit": requiredDeposit,
+        "paidDeposit": paidDeposit,
+        "askForInventoryAfterLogin": askForInventoryAfterLogin,
+        "showFirstLoginMessage": showFirstLoginMessage,
+        "intratoolUserId": intratoolUserId,
+        "beekeeperUserId": beekeeperUserId,
+        ...super.toJson(),
+      };
 
   User.fromJson(Map<String, dynamic> json)
-    : isAdmin = json["isAdmin"],
-      created = DateTime.parse(json["created"]),
-      companyMail = json["companyMail"],
-      firstName = json["firstName"],
-      lastName = json["lastName"],
-      userName = json["userName"],
-      password = json["password"],
-      passwordHash = json["passwordHash"],
-      isVerified = json["isVerified"],
-      isArchived = json["isArchived"],
-      companyInventory = Inventory.fromJson(json["companyInventory"]),
-      userInventory = Inventory.fromJson(json["userInventory"]),
-      askForInventoryAfterLogin = json["askForInventoryAfterLogin"],
-      showFirstLoginMessage = json["showFirstLoginMessage"],
-      language = LanguageE.fromString(json["language"]),
-      imageId = json["imageId"],
-      contactMail = json["contactMail"],
-      phoneNumber = json["phoneNumber"],
-      personnelNumber = json["personnelNumber"],
-      budgetBeforeCalculation = json["budgetBeforeCalculation"].toDouble(),
-      budgetPerMonth = json["budgetPerMonth"].toDouble(),
-      lastBudgetCalculation = DateTime.parse(json["lastBudgetCalculation"]),
-      requiredDeposit = json["requiredDeposit"].toDouble(),
-      paidDeposit = json["paidDeposit"].toDouble(),
-      workwearIdToDefaultConfig = Map.from(
-        json["workwearIdToDefaultConfig"],
-      ).map(
-        (workwearId, defaultConfig) =>
-            MapEntry(workwearId, Map.from(defaultConfig)),
-      ),
-      intratoolUserId = json["intratoolUserId"],
-      beekeeperUserId = json["beekeeperUserId"],
-      addresses =
-          List.from(
-            json["addresses"],
-          ).map((address) => Address.fromJson(address)).toList(),
-      permissions = Permissions.fromJson(json["permissions"]),
-      super(id: json["id"]);
+      : isAdmin = json["isAdmin"],
+        permissions = Permissions.fromJson(json["permissions"]),
+        isVerified = json["isVerified"],
+        firstName = json["firstName"],
+        lastName = json["lastName"],
+        personnelNumber = json["personnelNumber"],
+        imageId = json["imageId"],
+        userName = json["userName"],
+        companyMail = json["companyMail"],
+        contactMail = json["contactMail"],
+        phoneNumber = json["phoneNumber"],
+        addresses = List.from(json["addresses"])
+            .map((address) => Address.fromJson(address))
+            .toList(),
+        password = json["password"],
+        passwordHash = json["passwordHash"],
+        language = LanguageExt.fromString(json["language"]),
+        companyInventory = Inventory.fromJson(json["companyInventory"]),
+        userInventory = Inventory.fromJson(json["userInventory"]),
+        workwearIdToDefaultConfig =
+            Map.from(json["workwearIdToDefaultConfig"]).map(
+          (workwearId, defaultConfig) =>
+              MapEntry(workwearId, Map.from(defaultConfig)),
+        ),
+        budgetBeforeCalculation = json["budgetBeforeCalculation"].toDouble(),
+        budgetPerMonth = json["budgetPerMonth"].toDouble(),
+        lastBudgetCalculation = DateTime.parse(json["lastBudgetCalculation"]),
+        requiredDeposit = json["requiredDeposit"].toDouble(),
+        paidDeposit = json["paidDeposit"].toDouble(),
+        askForInventoryAfterLogin = json["askForInventoryAfterLogin"],
+        showFirstLoginMessage = json["showFirstLoginMessage"],
+        intratoolUserId = json["intratoolUserId"],
+        beekeeperUserId = json["beekeeperUserId"],
+        super(
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+        );
 
   String fullName() => "$firstName $lastName";
 
@@ -151,9 +148,3 @@ class User extends Model<User> {
   @override
   String className() => "User";
 }
-
-
-
-
-
-

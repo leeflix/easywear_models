@@ -9,11 +9,11 @@ enum RequestStatus {
   canceled,
 }
 
-extension RequestStatusE on RequestStatus {
-  String get string => toString().replaceAll("RequestStatus.", "");
+extension RequestStatusExt on RequestStatus {
+  String get string => toString().split(".").last;
 
-  static RequestStatus fromString(String string) =>
-      RequestStatus.values.firstWhere((e) => e.string == string);
+  static RequestStatus fromString(String s) =>
+      RequestStatus.values.firstWhere((e) => e.string == s);
 
   String uiText(Language currentLanguage) {
     switch (this) {

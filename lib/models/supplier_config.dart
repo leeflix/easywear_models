@@ -1,18 +1,23 @@
+import 'dart:convert';
+
 class SupplierConfig {
-  String? returnPolicyUrl;
   Set<String> customerDomainIds;
+  String? returnPolicyUrl;
 
   SupplierConfig({
-    required this.returnPolicyUrl,
     required this.customerDomainIds,
+    required this.returnPolicyUrl,
   });
 
   Map<String, dynamic> toJson() => {
-    "returnPolicyUrl": returnPolicyUrl,
-    "customerDomainIds": customerDomainIds.toList(),
-  };
+        "customerDomainIds": customerDomainIds.toList(),
+        "returnPolicyUrl": returnPolicyUrl,
+      };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
-    : customerDomainIds = Set<String>.from(json["customerDomainIds"]),
-      returnPolicyUrl = json["returnPolicyUrl"];
+      : customerDomainIds = Set<String>.from(json["customerDomainIds"]),
+        returnPolicyUrl = json["returnPolicyUrl"];
+
+  @override
+  String toString() => jsonEncode(this);
 }

@@ -8,6 +8,8 @@ class Order extends OrderOrClaim {
   Order({
     required super.id,
     required super.created,
+    required super.updated,
+    required super.isArchived,
     required super.userId,
     required super.status,
     required super.adminMessage,
@@ -29,8 +31,10 @@ class Order extends OrderOrClaim {
       super(
         id: json["id"],
         created: DateTime.parse(json["created"]),
+        updated: DateTime.parse(json["updated"]),
+        isArchived: json["isArchived"],
         userId: json["userId"],
-        status: RequestStatusE.fromString(json["status"]),
+        status: RequestStatusExt.fromString(json["status"]),
         adminMessage: json["adminMessage"],
         userMessage: json["userMessage"],
         workwearId: json["workwearId"],
@@ -47,21 +51,8 @@ class Order extends OrderOrClaim {
   @override
   Map<String, dynamic> toJson() => {
     "type": "order",
-    "id": id,
-    "userId": userId,
-    "created": created.toIso8601String(),
-    "status": status.string,
-    "adminMessage": adminMessage,
-    "userMessage": userMessage,
-    "workwearId": workwearId,
-    "config": config,
-    "amount": amount,
-    "cost": cost,
-    "departmentId": departmentId,
-    "booked": booked?.toIso8601String(),
-    "toBuy": toBuy,
-    "fromWarehouse": fromWarehouse,
     "userPays": userPays,
+    ...super.toJson(),
   };
 
   @override

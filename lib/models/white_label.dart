@@ -9,6 +9,38 @@ class WhiteLabel {
   String? secondaryColor;
   String? tertiaryColor;
 
+  WhiteLabel({
+    required this.logoLightBackground,
+    required this.logoDarkBackground,
+    required this.faviconUrl,
+    required this.primaryColor,
+    required this.secondaryColor,
+    required this.tertiaryColor,
+    required this.solutionName,
+  });
+
+  WhiteLabel.fromJson(Map<String, dynamic> json)
+      : solutionName = json["solutionName"],
+        logoLightBackground = json["logoLightBackground"],
+        logoDarkBackground = json["logoDarkBackground"],
+        faviconUrl = json["faviconUrl"],
+        primaryColor = json["primaryColor"],
+        secondaryColor = json["secondaryColor"],
+        tertiaryColor = json["tertiaryColor"];
+
+  Map<String, dynamic> toJson() => {
+        "solutionName": solutionName,
+        "logoLightBackground": logoLightBackground,
+        "logoDarkBackground": logoDarkBackground,
+        "faviconUrl": faviconUrl,
+        "primaryColor": primaryColor,
+        "secondaryColor": secondaryColor,
+        "tertiaryColor": tertiaryColor,
+      };
+
+  @override
+  String toString() => jsonEncode(this);
+
   String getSolutionName() => solutionName ?? _defaultSolutionName;
 
   String getLogoLightBackground() =>
@@ -35,44 +67,12 @@ class WhiteLabel {
   static const String _defaultSecondaryColor = "FF5883F2";
   static const String _defaultTertiaryColor = "FFEFF5F8";
 
-  WhiteLabel({
-    required this.logoLightBackground,
-    required this.logoDarkBackground,
-    required this.faviconUrl,
-    required this.primaryColor,
-    required this.secondaryColor,
-    required this.tertiaryColor,
-    required this.solutionName,
-  });
-
   WhiteLabel.null_()
-    : solutionName = null,
-      logoDarkBackground = null,
-      faviconUrl = null,
-      primaryColor = null,
-      secondaryColor = null,
-      tertiaryColor = null,
-      logoLightBackground = null;
-
-  WhiteLabel.fromJson(Map<String, dynamic> json)
-    : solutionName = json["solutionName"],
-      logoLightBackground = json["logoLightBackground"],
-      logoDarkBackground = json["logoDarkBackground"],
-      faviconUrl = json["faviconUrl"],
-      primaryColor = json["primaryColor"],
-      secondaryColor = json["secondaryColor"],
-      tertiaryColor = json["tertiaryColor"];
-
-  Map<String, dynamic> toJson() => {
-    "solutionName": solutionName,
-    "logoLightBackground": logoLightBackground,
-    "logoDarkBackground": logoDarkBackground,
-    "faviconUrl": faviconUrl,
-    "primaryColor": primaryColor,
-    "secondaryColor": secondaryColor,
-    "tertiaryColor": tertiaryColor,
-  };
-
-  @override
-  String toString() => jsonEncode(this);
+      : solutionName = null,
+        logoDarkBackground = null,
+        faviconUrl = null,
+        primaryColor = null,
+        secondaryColor = null,
+        tertiaryColor = null,
+        logoLightBackground = null;
 }

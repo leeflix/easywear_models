@@ -1,8 +1,8 @@
 enum EasyType { wear, it }
 
-extension EasyTypeE on EasyType {
+extension EasyTypeExt on EasyType {
   String get string => toString().split(".").last;
 
-  static EasyType fromString(String value) =>
-      EasyType.values.firstWhere((e) => e.string == value);
+  static EasyType fromString(String s) =>
+      EasyType.values.firstWhere((e) => e.string == s);
 }

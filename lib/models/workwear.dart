@@ -1,86 +1,48 @@
 import 'article.dart';
 import 'model.dart';
-import 'property.dart';
 
 class Workwear extends Model<Workwear> {
-  Set<String> imageIds;
   String name;
-  List<Property> properties;
-  bool isArchived;
-  double? shopPrice;
-  double? oldShopPrice;
-  DateTime created;
-  Map<int, double> cost;
-  Map<int, double> oldCost;
-  String? supplierDomainId;
-  String? articleNumber;
-  String? collectionId;
+  Set<String> imageIds;
   Set<String> categoryIds;
   Map<String, Article> skuToArticle;
-  Map<String, String> custom;
+  String? supplierDomainId;
 
   Workwear({
     required super.id,
+    required super.created,
+    required super.updated,
+    required super.isArchived,
     required this.name,
-    required this.properties,
-    required this.isArchived,
-    required this.created,
     required this.imageIds,
-    required this.cost,
-    required this.oldCost,
-    required this.shopPrice,
-    required this.oldShopPrice,
-    required this.supplierDomainId,
-    required this.collectionId,
     required this.categoryIds,
     required this.skuToArticle,
-    required this.custom,
+    required this.supplierDomainId,
   });
 
   Workwear.fromJson(Map<String, dynamic> json)
-    : name = json["name"],
-      properties =
-          json["properties"]
-              .map<Property>((propertyJson) => Property.fromJson(propertyJson))
-              .toList(),
-      isArchived = json["isArchived"],
-      created = DateTime.parse(json["created"]),
-      imageIds = Set<String>.from(json["imageIds"]),
-      cost = (json["cost"] as Map).map<int, double>((key, value) {
-        return MapEntry<int, double>(int.parse(key), value.toDouble());
-      }),
-      oldCost = (json["oldCost"] as Map).map<int, double>((key, value) {
-        return MapEntry<int, double>(int.parse(key), value.toDouble());
-      }),
-      shopPrice = json["shopPrice"]?.toDouble(),
-      oldShopPrice = json["oldShopPrice"]?.toDouble(),
-      supplierDomainId = json["supplierDomainId"],
-      collectionId = json["collectionId"],
-      categoryIds = Set<String>.from(json["categoryIds"]),
-      skuToArticle = json["skuToArticle"].map<String, Article>((key, value) {
-        return MapEntry<String, Article>(key, Article.fromJson(value));
-      }),
-      custom = Map<String, String>.from(json["custom"]),
-      super(id: json["id"]);
+      : name = json["name"],
+        imageIds = Set<String>.from(json["imageIds"]),
+        categoryIds = Set<String>.from(json["categoryIds"]),
+        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
+            MapEntry<String, Article>(key, Article.fromJson(value))),
+        supplierDomainId = json["supplierDomainId"],
+        super(
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+        );
 
   @override
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "properties": properties.map((property) => property.toJson()).toList(),
-    "isArchived": isArchived,
-    "created": created.toIso8601String(),
-    "imageIds": imageIds.toList(),
-    "cost": cost.map((k, v) => MapEntry(k.toString(), v)),
-    "oldCost": oldCost.map((k, v) => MapEntry(k.toString(), v)),
-    "shopPrice": shopPrice,
-    "oldShopPrice": oldShopPrice,
-    "supplierDomainId": supplierDomainId,
-    "collectionId": collectionId,
-    "categoryIds": categoryIds.toList(),
-    "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
-    "custom": custom,
-  };
+        "name": name,
+        "imageIds": imageIds.toList(),
+        "categoryIds": categoryIds.toList(),
+        "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
+        "supplierDomainId": supplierDomainId,
+        ...super.toJson(),
+      };
 
   @override
   Workwear fromJson(Map<String, dynamic> json) => Workwear.fromJson(json);
@@ -88,8 +50,7 @@ class Workwear extends Model<Workwear> {
   @override
   String className() => "Workwear";
 
-      bool sale() {
-    if (oldCost.isNotEmpty) return true;
+  bool sale() {
     for (var article in skuToArticle.values) {
       if (article.oldCost.isNotEmpty) return true;
     }
@@ -105,11 +66,6 @@ class Workwear extends Model<Workwear> {
         }
       }
     }
-    for (var cost in this.cost.values) {
-      if (minCost == null || cost < minCost) {
-        minCost = cost;
-      }
-    }
     return minCost;
   }
 
@@ -120,11 +76,6 @@ class Workwear extends Model<Workwear> {
         if (maxCost == null || cost > maxCost) {
           maxCost = cost;
         }
-      }
-    }
-    for (var cost in this.cost.values) {
-      if (maxCost == null || cost > maxCost) {
-        maxCost = cost;
       }
     }
     return maxCost;
