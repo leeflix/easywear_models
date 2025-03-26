@@ -5,7 +5,6 @@ class Department extends Model<Department> {
   Set<String> userIds;
   DateTime created;
   Map<String, double?> shop;
-  Set<String> adminUserIds;
 
   Department({
     required super.id,
@@ -13,7 +12,6 @@ class Department extends Model<Department> {
     required this.userIds,
     required this.created,
     required this.shop,
-    required this.adminUserIds,
   });
 
   Department.fromJson(Map<String, dynamic> json)
@@ -23,7 +21,6 @@ class Department extends Model<Department> {
       shop = Map.from(
         json["shop"],
       ).map((key, value) => MapEntry(key, value?.toDouble())),
-      adminUserIds = Set.from(json["adminUserIds"]),
       super(id: json["id"]);
 
   @override
@@ -32,7 +29,6 @@ class Department extends Model<Department> {
     "name": name,
     "userIds": userIds.toList(),
     "created": created.toIso8601String(),
-    "adminUserIds": adminUserIds.toList(),
     "shop": shop,
   };
 

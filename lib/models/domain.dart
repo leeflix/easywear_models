@@ -9,7 +9,6 @@ import 'white_label.dart';
 class Domain extends Model<Domain> {
   String domain;
   String tenant;
-  Set<String> adminUserIds;
   int licensesQuantity;
   DateTime? registered;
   DateTime? premiumTrialStartDate;
@@ -43,7 +42,6 @@ class Domain extends Model<Domain> {
     required this.type,
     required this.aliases,
     required this.supplierConfig,
-    required this.adminUserIds,
     required this.beekeeperAccessToken,
   }) : super(id: domain);
 
@@ -77,7 +75,6 @@ class Domain extends Model<Domain> {
           json["supplierConfig"] == null
               ? null
               : SupplierConfig.fromJson(json["supplierConfig"]),
-      adminUserIds = Set<String>.from(json["adminUserIds"]),
       beekeeperAccessToken = json["beekeeperAccessToken"],
       super(id: json["id"]);
 
@@ -100,7 +97,6 @@ class Domain extends Model<Domain> {
     "delimiter": delimiter,
     "aliases": aliases.toList(),
     "supplierConfig": supplierConfig?.toJson(),
-    "adminUserIds": adminUserIds.toList(),
     "beekeeperAccessToken": beekeeperAccessToken,
   };
 

@@ -1,3 +1,5 @@
+import 'package:easywear_models/models/permissions.dart';
+
 import 'address.dart';
 import 'inventory.dart';
 import 'language.dart';
@@ -32,6 +34,7 @@ class User extends Model<User> {
   int? intratoolUserId;
   String? beekeeperUserId;
   List<Address> addresses;
+  Permissions permissions;
 
   User({
     required super.id,
@@ -63,6 +66,7 @@ class User extends Model<User> {
     required this.intratoolUserId,
     required this.beekeeperUserId,
     required this.addresses,
+    required this.permissions,
   });
 
   @override
@@ -96,6 +100,7 @@ class User extends Model<User> {
     "intratoolUserId": intratoolUserId,
     "beekeeperUserId": beekeeperUserId,
     "addresses": addresses.map((address) => address.toJson()).toList(),
+    "permissions": permissions.toJson(),
   };
 
   User.fromJson(Map<String, dynamic> json)
@@ -135,6 +140,7 @@ class User extends Model<User> {
           List.from(
             json["addresses"],
           ).map((address) => Address.fromJson(address)).toList(),
+      permissions = Permissions.fromJson(json["permissions"]),
       super(id: json["id"]);
 
   String fullName() => "$firstName $lastName";
