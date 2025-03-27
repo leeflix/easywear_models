@@ -3,7 +3,7 @@ import 'language.dart';
 enum RequestStatus {
   inShoppingCart,
   created,
-  inprogress,
+  inProgress,
   completed,
   rejected,
   canceled,
@@ -47,7 +47,7 @@ extension RequestStatusExt on RequestStatus {
           Language.af => "Nuwe",
           Language.hi => "नया",
         };
-      case RequestStatus.inprogress:
+      case RequestStatus.inProgress:
         return switch (currentLanguage) {
           Language.de => "In Bearbeitung",
           Language.en => "In progress",

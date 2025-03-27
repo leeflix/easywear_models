@@ -1,4 +1,9 @@
-enum FeatureLevel { free, basic, premium, enterprise }
+enum FeatureLevel {
+  free,
+  basic,
+  premium,
+  enterprise,
+}
 
 extension FeatureLevelExt on FeatureLevel {
   String get string => toString().split(".").last;

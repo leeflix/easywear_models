@@ -1,4 +1,7 @@
-enum EasyType { wear, it }
+enum EasyType {
+  wear,
+  it,
+}
 
 extension EasyTypeExt on EasyType {
   String get string => toString().split(".").last;

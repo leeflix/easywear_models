@@ -1,7 +1,5 @@
 import 'dart:convert';
-
-import 'package:easywear_models/models/country.dart';
-
+import 'country.dart';
 import 'gender.dart';
 
 class Address {

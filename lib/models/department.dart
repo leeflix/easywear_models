@@ -5,16 +5,6 @@ class Department extends Model<Department> {
   Set<String> userIds;
   Map<String, double?> shop;
 
-  Department({
-    required super.id,
-    required super.created,
-    required super.updated,
-    required super.isArchived,
-    required this.name,
-    required this.userIds,
-    required this.shop,
-  });
-
   Department.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         userIds = Set.from(json["userIds"]),

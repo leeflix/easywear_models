@@ -1,4 +1,9 @@
-enum Gender { mrs, mr, diverse, preferNotToSay }
+enum Gender {
+  mrs,
+  mr,
+  diverse,
+  preferNotToSay,
+}
 
 extension GenderExt on Gender {
   String get string => toString().split(".").last;

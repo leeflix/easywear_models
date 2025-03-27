@@ -30,8 +30,8 @@ abstract class Request extends Model<Request> {
       };
 
   RequestType get type => switch (this) {
-        Order _ => RequestType.order,
         Claim _ => RequestType.claim,
+        Order _ => RequestType.order,
         Correction _ => RequestType.correction,
         _ => throw Error(),
       };

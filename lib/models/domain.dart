@@ -24,6 +24,7 @@ class Domain extends Model<Domain> {
   String delimiter;
   Intratool? intratool;
   String? beekeeperAccessToken;
+  Map<String, double?> shop;
 
   Domain({
     required super.created,
@@ -46,6 +47,7 @@ class Domain extends Model<Domain> {
     required this.delimiter,
     required this.intratool,
     required this.beekeeperAccessToken,
+    required this.shop,
   }) : super(id: domain);
 
   Domain.fromJson(Map<String, dynamic> json)
@@ -75,6 +77,8 @@ class Domain extends Model<Domain> {
             ? null
             : Intratool.fromJson(json["intratool"]),
         beekeeperAccessToken = json["beekeeperAccessToken"],
+        shop = Map<String, double?>.from(json["shop"])
+            .map((key, value) => MapEntry(key, value?.toDouble())),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),
@@ -101,6 +105,7 @@ class Domain extends Model<Domain> {
         "delimiter": delimiter,
         "intratool": intratool?.toJson(),
         "beekeeperAccessToken": beekeeperAccessToken,
+        "shop": shop,
         ...super.toJson(),
       };
 

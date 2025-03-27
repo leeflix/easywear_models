@@ -1,25 +1,10 @@
-import 'inventory_entry.dart';
-import 'request.dart';
-import 'request_status.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 class Correction extends Request {
-  List<InventoryEntry> inventoryEntries;
-
-  Correction({
-    required super.id,
-    required super.created,
-    required super.updated,
-    required super.isArchived,
-    required super.userId,
-    required super.status,
-    required super.adminMessage,
-    required super.userMessage,
-    required this.inventoryEntries,
-  });
+  Inventory inventory;
 
   Correction.fromJson(Map<String, dynamic> json)
-      : inventoryEntries = List<InventoryEntry>.from(json["inventoryEntries"]
-            .map((inventoryEntry) => InventoryEntry.fromJson(inventoryEntry))),
+      : inventory = Inventory.fromJson(json["inventory"]),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),
@@ -34,9 +19,7 @@ class Correction extends Request {
   @override
   Map<String, dynamic> toJson() => {
         "type": "correction",
-        "inventoryEntries": inventoryEntries
-            .map((inventoryEntry) => inventoryEntry.toJson())
-            .toList(),
+        "inventory": inventory.toJson(),
         ...super.toJson(),
       };
 

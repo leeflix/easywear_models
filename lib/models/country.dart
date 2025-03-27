@@ -1,4 +1,8 @@
-enum Country { germany, austria, switzerland }
+enum Country {
+  germany,
+  austria,
+  switzerland,
+}
 
 extension CountryExt on Country {
   String get string => toString().split(".").last;
