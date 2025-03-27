@@ -3,7 +3,7 @@ import 'model.dart';
 class Location extends Model<Location> {
   String name;
   Set<String> departmentIds;
-  Map<String, double?> shop;
+  Map<String, Map<String, double?>> shop;
 
   Location({
     String? id,
@@ -23,8 +23,7 @@ class Location extends Model<Location> {
   Location.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         departmentIds = Set<String>.from(json["departmentIds"]),
-        shop = Map<String, double?>.from(json["shop"])
-            .map((key, value) => MapEntry(key, value?.toDouble())),
+        shop = Map<String, Map<String, double?>>.from(json["shop"]),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),

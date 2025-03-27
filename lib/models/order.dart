@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
 import 'package:easywear_models/models/package.dart';
 
@@ -47,4 +48,9 @@ class Order extends Request {
 
   @override
   String className() => "Order";
+
+  Set<String> workwearIds() => packages
+      .map((package) => package.workwearIdToSkuToPackageEntry.keys)
+      .flattened
+      .toSet();
 }

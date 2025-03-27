@@ -3,7 +3,7 @@ import 'model.dart';
 class Department extends Model<Department> {
   String name;
   Set<String> userIds;
-  Map<String, double?> shop;
+  Map<String, Map<String, double?>> shop;
 
   Department({
     String? id,

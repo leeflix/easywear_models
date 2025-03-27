@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class SupplierConfig {
   Set<String> customerDomainIds;
-  Map<String, Set<String>> shops;
+  Map<String, Map<String, Map<String, double?>>> shops;
   String? returnPolicyUrl;
 
   SupplierConfig({
@@ -13,15 +13,25 @@ class SupplierConfig {
 
   Map<String, dynamic> toJson() => {
         "customerDomainIds": customerDomainIds.toList(),
-        "shops": shops.map((key, value) => MapEntry(key, value.toList())),
+        "shops": shops.map(
+          (key, value) => MapEntry(
+            key,
+            value.map(
+              (key, value) => MapEntry(
+                key,
+                value.map(
+                  (key, value) => MapEntry(key, value),
+                ),
+              ),
+            ),
+          ),
+        ),
         "returnPolicyUrl": returnPolicyUrl,
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
       : customerDomainIds = Set<String>.from(json["customerDomainIds"]),
-        shops = Map<String, Set<String>>.from(json["shops"]).map(
-          (key, value) => MapEntry(key, Set<String>.from(value)),
-        ),
+        shops = Map<String, Map<String, Map<String, double?>>>.from(json["shops"]),
         returnPolicyUrl = json["returnPolicyUrl"];
 
   @override
