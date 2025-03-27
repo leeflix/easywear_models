@@ -34,10 +34,10 @@ class User extends Model<User> {
   String? beekeeperUserId;
 
   User({
-    required super.id,
-    required super.created,
-    required super.updated,
-    required super.isArchived,
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
     required this.isAdmin,
     required this.permissions,
     required this.isVerified,
@@ -65,7 +65,12 @@ class User extends Model<User> {
     required this.showFirstLoginMessage,
     required this.intratoolUserId,
     required this.beekeeperUserId,
-  });
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   @override
   Map<String, dynamic> toJson() => {

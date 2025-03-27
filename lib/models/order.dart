@@ -4,6 +4,23 @@ import 'package:easywear_models/models/package.dart';
 class Order extends Request {
   List<Package> packages;
 
+  Order({
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
+    required super.userId,
+    required super.status,
+    required super.adminMessage,
+    required super.userMessage,
+    required this.packages,
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
+
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"]
             .map<Package>((package) => Package.fromJson(package)),

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:uuid/uuid.dart';
+
 import '../util.dart';
 
 abstract class Model<T extends Model<T>> {
@@ -9,11 +11,14 @@ abstract class Model<T extends Model<T>> {
   bool isArchived;
 
   Model({
-    required this.id,
-    required this.created,
-    required this.updated,
-    required this.isArchived,
-  });
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
+  })  : id = id ?? Uuid().v4(),
+        created = created ?? DateTime.now(),
+        updated = updated ?? DateTime.now(),
+        isArchived = isArchived ?? false;
 
   String className();
 

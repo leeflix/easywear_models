@@ -6,3 +6,4 @@ environment:
 dependencies:
   collection:
   crypto:
+  uuid:

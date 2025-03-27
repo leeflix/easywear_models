@@ -6,14 +6,19 @@ class Location extends Model<Location> {
   Map<String, double?> shop;
 
   Location({
-    required super.id,
-    required super.created,
-    required super.updated,
-    required super.isArchived,
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
     required this.name,
     required this.departmentIds,
     required this.shop,
-  });
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   Location.fromJson(Map<String, dynamic> json)
       : name = json["name"],

@@ -11,10 +11,10 @@ class Code extends Model<Code> {
   bool askForInventoryAfterFirstLogin;
 
   Code({
-    required super.id,
-    required super.created,
-    required super.updated,
-    required super.isArchived,
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
     required this.code,
     required this.departmentId,
     required this.isAdmin,
@@ -23,7 +23,12 @@ class Code extends Model<Code> {
     required this.initialBudget,
     required this.budgetPerMonth,
     required this.askForInventoryAfterFirstLogin,
-  });
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   Code.fromJson(Map<String, dynamic> json)
       : code = json["code"],

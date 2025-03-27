@@ -5,6 +5,25 @@ class Claim extends Order {
   bool userInventory;
   Set<String> imageIds;
 
+  Claim({
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
+    required super.userId,
+    required super.status,
+    required super.adminMessage,
+    required super.userMessage,
+    required super.packages,
+    required this.userInventory,
+    required this.imageIds,
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
+
   @override
   Claim.fromJson(Map<String, dynamic> json)
       : userInventory = json["userInventory"],

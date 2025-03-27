@@ -27,9 +27,10 @@ class Domain extends Model<Domain> {
   Map<String, double?> shop;
 
   Domain({
-    required super.created,
-    required super.updated,
-    required super.isArchived,
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
     required this.domain,
     required this.tenant,
     required this.aliases,
@@ -48,7 +49,12 @@ class Domain extends Model<Domain> {
     required this.intratool,
     required this.beekeeperAccessToken,
     required this.shop,
-  }) : super(id: domain);
+  }) : super(
+          id: id ?? domain,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   Domain.fromJson(Map<String, dynamic> json)
       : domain = json["domain"],

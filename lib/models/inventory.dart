@@ -1,7 +1,11 @@
 class Inventory {
   Map<String, Map<String, int>> items;
 
-  Inventory({required this.items});
+  Inventory({
+    required this.items,
+  });
+
+  Inventory.empty() : items = {};
 
   Map<String, dynamic> toJson() => {
         "items": items,

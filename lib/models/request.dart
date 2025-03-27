@@ -12,15 +12,20 @@ abstract class Request extends Model<Request> {
   String? userMessage;
 
   Request({
-    required super.id,
-    required super.created,
-    required super.updated,
-    required super.isArchived,
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
     required this.userId,
     required this.status,
     required this.adminMessage,
     required this.userMessage,
-  });
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   static Request fromJson2(Map<String, dynamic> json) =>
       switch (RequestTypeE.fromString(json["type"])) {

@@ -5,11 +5,17 @@ class Warehouse extends Model<Warehouse> {
   Inventory inventory;
 
   Warehouse({
-    required super.created,
-    required super.updated,
-    required super.isArchived,
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
     required this.inventory,
-  }) : super(id: "0");
+  }) : super(
+          id: id ?? "0",
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   Warehouse.fromJson(Map<String, dynamic> json)
       : inventory = Inventory.fromJson(json["inventory"]),

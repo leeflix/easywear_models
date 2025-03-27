@@ -9,16 +9,21 @@ class Workwear extends Model<Workwear> {
   String? supplierDomainId;
 
   Workwear({
-    required super.id,
-    required super.created,
-    required super.updated,
-    required super.isArchived,
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
     required this.name,
     required this.imageIds,
     required this.categoryIds,
     required this.skuToArticle,
     required this.supplierDomainId,
-  });
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
