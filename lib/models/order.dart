@@ -58,15 +58,17 @@ class Order extends Request {
       .flattened
       .toSet();
 
-  Future<void> iterate(
-    FutureOr<void> Function(
+  Future<List<T>> iterate<T>(
+    FutureOr<T> Function(
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
   ) async {
+    List<T> results = [];
     for (var package in packages) {
-      await package.iterate(fn);
+      results.addAll(await package.iterate(fn));
     }
+    return results;
   }
 }
