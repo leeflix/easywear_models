@@ -15,6 +15,7 @@ class PackageEntry {
     required this.userPays,
     required this.toBuy,
     required this.fromWarehouse,
+    required this.shopPrice,
     required this.cost,
     required this.departmentId,
     required this.booked,
@@ -25,6 +26,7 @@ class PackageEntry {
         "userPays": userPays,
         "toBuy": toBuy,
         "fromWarehouse": fromWarehouse,
+        "shopPrice": shopPrice,
         "cost": cost,
         "departmentId": departmentId,
         "booked": booked?.toIso8601String(),
@@ -35,6 +37,7 @@ class PackageEntry {
         userPays = json["userPays"],
         toBuy = json["toBuy"],
         fromWarehouse = json["fromWarehouse"],
+        shopPrice = json["shopPrice"]?.toDouble(),
         cost = json["cost"]?.toDouble(),
         departmentId = json["departmentId"],
         booked = json["booked"] == null ? null : DateTime.parse(json["booked"]);
