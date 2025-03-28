@@ -4,6 +4,7 @@ class PackageEntry {
   int amount;
   int? toBuy;
   int? fromWarehouse;
+  double? shopPrice;
   double? cost;
   String? departmentId;
   DateTime? booked;
