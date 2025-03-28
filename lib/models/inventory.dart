@@ -1,15 +1,11 @@
 class Inventory {
   Map<String, Map<String, int>> items;
 
-  Inventory({
-    required this.items,
-  });
+  Inventory({required this.items});
 
   Inventory.empty() : items = {};
 
-  Map<String, dynamic> toJson() => {
-        "items": items,
-      };
+  Map<String, dynamic> toJson() => {"items": items};
 
   Inventory.fromJson(Map<String, dynamic> json)
       : items = Map.from(json["items"]).map(
@@ -60,4 +56,19 @@ class Inventory {
     required int amount,
   }) =>
       readAmountOfItem(workwearId: workwearId, sku: sku) >= amount;
+
+  bool contains({required Inventory inventory}) {
+    for (var workwearId in inventory.workwearIds()) {
+      for (var sku in inventory.items[workwearId]!.keys) {
+        if (!has(
+          workwearId: workwearId,
+          sku: sku,
+          amount: inventory.readAmountOfItem(workwearId: workwearId, sku: sku),
+        )) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }

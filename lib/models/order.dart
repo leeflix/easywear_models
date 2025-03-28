@@ -71,4 +71,16 @@ class Order extends Request {
     }
     return results;
   }
+
+  Inventory readInventory() {
+    Inventory inventory = Inventory.empty();
+    iterate(
+      (workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
+        workwearId: workwearId,
+        sku: sku,
+        amount: packageEntry.amount,
+      ),
+    );
+    return inventory;
+  }
 }

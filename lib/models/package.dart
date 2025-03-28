@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'address.dart';
+import 'package:easywear_models/easywear_models.dart';
+
 import 'package_entry.dart';
 
 class Package {
@@ -42,7 +43,7 @@ class Package {
   @override
   String toString() => jsonEncode(this);
 
-  Future<List<T>> iterate<T>(
+  FutureOr<List<T>> iterate<T>(
     FutureOr<T> Function(
       String workwearId,
       String sku,
@@ -62,5 +63,17 @@ class Package {
       }
     }
     return results;
+  }
+
+  Inventory readInventory() {
+    Inventory inventory = Inventory.empty();
+    iterate(
+      (workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
+        workwearId: workwearId,
+        sku: sku,
+        amount: packageEntry.amount,
+      ),
+    );
+    return inventory;
   }
 }
