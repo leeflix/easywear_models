@@ -58,18 +58,18 @@ class Order extends Request {
       .flattened
       .toSet();
 
-  Future<List<T>> iterate<T>(
+  Stream<T> iterate<T>(
     FutureOr<T> Function(
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
-  ) async {
-    List<T> results = [];
+  ) async* {
     for (var package in packages) {
-      results.addAll(await package.iterate(fn));
+      await for (var res in package.iterate(fn)) {
+        yield res;
+      }
     }
-    return results;
   }
 
   Inventory readInventory() {

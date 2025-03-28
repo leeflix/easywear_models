@@ -43,26 +43,23 @@ class Package {
   @override
   String toString() => jsonEncode(this);
 
-  FutureOr<List<T>> iterate<T>(
+  Stream<T> iterate<T>(
     FutureOr<T> Function(
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
-  ) async {
-    List<T> results = [];
+  ) async* {
     for (var workwearId in workwearIdToSkuToPackageEntry.keys) {
       for (var sku in workwearIdToSkuToPackageEntry[workwearId]!.keys) {
-        results.add(
-          await fn(
-            workwearId,
-            sku,
-            workwearIdToSkuToPackageEntry[workwearId]![sku]!,
-          ),
+        var res = await fn(
+          workwearId,
+          sku,
+          workwearIdToSkuToPackageEntry[workwearId]![sku]!,
         );
+        if (res != null) yield res;
       }
     }
-    return results;
   }
 
   Inventory readInventory() {
