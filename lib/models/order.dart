@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
 import 'package:easywear_models/models/package.dart';
+
+import 'package_entry.dart';
 
 class Order extends Request {
   List<Package> packages;
@@ -53,4 +57,16 @@ class Order extends Request {
       .map((package) => package.workwearIdToSkuToPackageEntry.keys)
       .flattened
       .toSet();
+
+  Future<void> iterate(
+    FutureOr<void> Function(
+      String workwearId,
+      String sku,
+      PackageEntry packageEntry,
+    ) fn,
+  ) async {
+    for (var package in packages) {
+      await package.iterate(fn);
+    }
+  }
 }

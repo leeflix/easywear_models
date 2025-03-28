@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'address.dart';
@@ -40,4 +41,19 @@ class Package {
 
   @override
   String toString() => jsonEncode(this);
+
+  Future<void> iterate(
+    FutureOr<void> Function(
+      String workwearId,
+      String sku,
+      PackageEntry packageEntry,
+    ) fn,
+  ) async {
+    for (var workwearId in workwearIdToSkuToPackageEntry.keys) {
+      for (var sku in workwearIdToSkuToPackageEntry[workwearId]!.keys) {
+        var packageEntry = workwearIdToSkuToPackageEntry[workwearId]![sku]!;
+        await fn(workwearId, sku, packageEntry);
+      }
+    }
+  }
 }
