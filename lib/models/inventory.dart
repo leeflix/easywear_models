@@ -1,3 +1,5 @@
+import 'dart:async';
+
 class Inventory {
   Map<String, Map<String, int>> items;
 
@@ -70,5 +72,24 @@ class Inventory {
       }
     }
     return true;
+  }
+
+  Stream<T> iterate<T>(
+    FutureOr<T> Function(
+      String workwearId,
+      String sku,
+      int amount,
+    ) fn,
+  ) async* {
+    for (var workwearId in workwearIds()) {
+      for (var sku in items[workwearId]!.keys) {
+        var res = await fn(
+          workwearId,
+          sku,
+          items[workwearId]![sku]!,
+        );
+        if (res != null) yield res;
+      }
+    }
   }
 }
