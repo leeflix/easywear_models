@@ -101,4 +101,22 @@ class Workwear extends Model<Workwear> {
     }
     return images;
   }
+
+  Set<String> options({required String property}) {
+    Set<String> options = Set<String>();
+    for (var article in skuToArticle.values) {
+      if(article.configuration[property] != null) {
+        options.add(article.configuration[property]!);
+      }
+    }
+    return options;
+  }
+
+  Set<String> properties() {
+    Set<String> properties = Set<String>();
+    for (var article in skuToArticle.values) {
+      properties.addAll(article.configuration.keys);
+    }
+    return properties;
+  }
 }
