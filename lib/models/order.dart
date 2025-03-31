@@ -83,4 +83,12 @@ class Order extends Request {
     );
     return inventory;
   }
+
+  double cost() {
+    double cost = 0;
+    iterate(
+      (workwearId, sku, packageEntry) => cost += packageEntry.amount * (packageEntry.cost ?? 0),
+    );
+    return cost;
+  }
 }
