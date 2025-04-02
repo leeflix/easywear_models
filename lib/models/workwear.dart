@@ -119,4 +119,17 @@ class Workwear extends Model<Workwear> {
     }
     return properties;
   }
+
+  Map<String, Set<String>> propertiesToOptions() {
+    Map<String, Set<String>> propertiesToOptions = Map<String, Set<String>>();
+    for (var article in skuToArticle.values) {
+      for (var property in article.configuration.keys) {
+        if(propertiesToOptions[property] != null) {
+          propertiesToOptions[property] = Set<String>();
+        }
+        propertiesToOptions[property]!.add(article.configuration[property]!);
+      }
+    }
+    return propertiesToOptions;
+  }
 }

@@ -2,13 +2,16 @@ import 'dart:convert';
 
 class PackageEntry {
   int amount;
+
   int? toBuy;
   int? fromWarehouse;
-  double? shopPrice;
+
   double? cost;
   String? departmentId;
   DateTime? booked;
+
   bool userPays;
+  double? shopPrice;
 
   PackageEntry({
     required this.amount,

@@ -73,4 +73,26 @@ class Package {
     );
     return inventory;
   }
+
+  List<T> mapSync<T>(
+    T Function(
+      String workwearId,
+      String sku,
+      PackageEntry packageEntry,
+    ) fn,
+  ) {
+    List<T> res = [];
+    for (var workwearId in workwearIdToSkuToPackageEntry.keys) {
+      for (var sku in workwearIdToSkuToPackageEntry[workwearId]!.keys) {
+        res.add(
+          fn(
+            workwearId,
+            sku,
+            workwearIdToSkuToPackageEntry[workwearId]![sku]!,
+          ),
+        );
+      }
+    }
+    return res;
+  }
 }
