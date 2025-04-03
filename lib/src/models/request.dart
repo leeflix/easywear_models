@@ -34,7 +34,7 @@ sealed class Request extends Model<Request> {
   @override
   Map<String, dynamic> toJson() => {
         "userId": userId,
-        "status": status.toString(),
+        "status": status.string,
         "adminMessage": adminMessage,
         "userMessage": userMessage,
         ...super.toJson(),
