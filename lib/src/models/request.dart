@@ -69,7 +69,7 @@ class Order extends Request {
 
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"]
-            .map<Package>((package) => Package.fromJson(package)),
+            .map<Package>((package) => Package.fromJson(package)).toList(),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),
@@ -84,7 +84,7 @@ class Order extends Request {
   @override
   Map<String, dynamic> toJson() => {
         "type": "order",
-        "packages": packages.map((package) => package.toJson()),
+        "packages": packages.map((package) => package.toJson()).toList(),
         ...super.toJson(),
       };
 
