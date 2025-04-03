@@ -6,7 +6,8 @@ import 'package:easywear_models/models/package.dart';
 
 import 'package_entry.dart';
 
-class Order extends Request {
+base class Order extends Request {
+  String? supplierDomainId;
   List<Package> packages;
 
   Order({

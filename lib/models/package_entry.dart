@@ -1,8 +1,12 @@
 import 'dart:convert';
 
 class PackageEntry {
+  bool userPays;
+
+  // workwearId + sku
   int amount;
 
+  bool? rejected;
   int? toBuy;
   int? fromWarehouse;
 
@@ -10,8 +14,9 @@ class PackageEntry {
   String? departmentId;
   DateTime? booked;
 
-  bool userPays;
   double? shopPrice;
+
+
 
   PackageEntry({
     required this.amount,
