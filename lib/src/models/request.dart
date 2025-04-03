@@ -31,6 +31,15 @@ sealed class Request extends Model<Request> {
           isArchived: isArchived,
         );
 
+  @override
+  Map<String, dynamic> toJson() => {
+        "userId": userId,
+        "status": status.toString(),
+        "adminMessage": adminMessage,
+        "userMessage": userMessage,
+        ...super.toJson(),
+      };
+
   static Request fromJson2(Map<String, dynamic> json) =>
       switch (RequestTypeE.fromString(json["type"])) {
         RequestType.order => Order.fromJson(json),
@@ -42,7 +51,6 @@ sealed class Request extends Model<Request> {
         Claim _ => RequestType.claim,
         Order _ => RequestType.order,
         Correction _ => RequestType.correction,
-        _ => throw Error(),
       };
 }
 
