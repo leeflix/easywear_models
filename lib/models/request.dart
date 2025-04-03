@@ -1,11 +1,15 @@
-import 'claim.dart';
-import 'correction.dart';
+import 'dart:async';
+
+import 'package:collection/collection.dart';
+
+import 'inventory.dart';
 import 'model.dart';
-import 'order.dart';
+import 'package.dart';
+import 'package_entry.dart';
 import 'request_status.dart';
 import 'request_type.dart';
 
-abstract base class Request extends Model<Request> {
+sealed class Request extends Model<Request> {
   String userId;
   RequestStatus status;
   String? adminMessage;
@@ -40,4 +44,184 @@ abstract base class Request extends Model<Request> {
         Correction _ => RequestType.correction,
         _ => throw Error(),
       };
+}
+
+class Order extends Request {
+  String? supplierDomainId;
+  List<Package> packages;
+
+  Order({
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
+    required super.userId,
+    required super.status,
+    required super.adminMessage,
+    required super.userMessage,
+    required this.packages,
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
+
+  Order.fromJson(Map<String, dynamic> json)
+      : packages = json["packages"]
+            .map<Package>((package) => Package.fromJson(package)),
+        super(
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+          userId: json["userId"],
+          status: RequestStatusExt.fromString(json["status"]),
+          adminMessage: json["adminMessage"],
+          userMessage: json["userMessage"],
+        );
+
+  @override
+  Map<String, dynamic> toJson() => {
+        "type": "order",
+        "packages": packages.map((package) => package.toJson()),
+        ...super.toJson(),
+      };
+
+  @override
+  Request fromJson(Map<String, dynamic> json) => Order.fromJson(json);
+
+  @override
+  String className() => "Order";
+
+  Set<String> workwearIds() => packages
+      .map((package) => package.workwearIdToSkuToPackageEntry.keys)
+      .flattened
+      .toSet();
+
+  Stream<T> iterate<T>(
+    FutureOr<T> Function(
+      String workwearId,
+      String sku,
+      PackageEntry packageEntry,
+    ) fn,
+  ) async* {
+    for (var package in packages) {
+      await for (var res in package.iterate(fn)) {
+        yield res;
+      }
+    }
+  }
+
+  Inventory readInventory() {
+    Inventory inventory = Inventory.empty();
+    iterate(
+      (workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
+        workwearId: workwearId,
+        sku: sku,
+        amount: packageEntry.amount,
+      ),
+    );
+    return inventory;
+  }
+
+  double cost() {
+    double cost = 0;
+    iterate(
+      (workwearId, sku, packageEntry) =>
+          cost += packageEntry.amount * (packageEntry.cost ?? 0),
+    );
+    return cost;
+  }
+}
+
+class Correction extends Request {
+  Inventory inventory;
+
+  Correction({
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
+    required super.userId,
+    required super.status,
+    required super.adminMessage,
+    required super.userMessage,
+    required this.inventory,
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
+
+  Correction.fromJson(Map<String, dynamic> json)
+      : inventory = Inventory.fromJson(json["inventory"]),
+        super(
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+          userId: json["userId"],
+          status: RequestStatusExt.fromString(json["status"]),
+          adminMessage: json["adminMessage"],
+          userMessage: json["userMessage"],
+        );
+
+  @override
+  Map<String, dynamic> toJson() => {
+        "type": "correction",
+        "inventory": inventory.toJson(),
+        ...super.toJson(),
+      };
+
+  @override
+  Request fromJson(Map<String, dynamic> json) => Correction.fromJson(json);
+
+  @override
+  String className() => "Correction";
+}
+
+class Claim extends Order {
+  bool userInventory;
+  Set<String> imageIds;
+
+  Claim({
+    String? id,
+    DateTime? created,
+    DateTime? updated,
+    bool? isArchived,
+    required super.userId,
+    required super.status,
+    required super.adminMessage,
+    required super.userMessage,
+    required super.packages,
+    required this.userInventory,
+    required this.imageIds,
+  }) : super(
+          id: id,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
+
+  @override
+  Claim.fromJson(Map<String, dynamic> json)
+      : userInventory = json["userInventory"],
+        imageIds = Set<String>.from(json["imageIds"]),
+        super.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => {
+        "type": "claim",
+        "userInventory": userInventory,
+        "imageIds": imageIds.toList(),
+        ...super.toJson(),
+      };
+
+  @override
+  Request fromJson(Map<String, dynamic> json) => Claim.fromJson(json);
+
+  @override
+  String className() => "Claim";
 }
