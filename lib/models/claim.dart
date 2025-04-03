@@ -1,7 +1,7 @@
 import 'order.dart';
 import 'request.dart';
 
-class Claim extends Order {
+base class Claim extends Order {
   bool userInventory;
   Set<String> imageIds;
 

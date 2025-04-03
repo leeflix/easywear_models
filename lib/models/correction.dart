@@ -1,6 +1,6 @@
 import 'package:easywear_models/easywear_models.dart';
 
-class Correction extends Request {
+base class Correction extends Request {
   Inventory inventory;
 
   Correction({

@@ -5,7 +5,7 @@ import 'order.dart';
 import 'request_status.dart';
 import 'request_type.dart';
 
-abstract class Request extends Model<Request> {
+abstract base class Request extends Model<Request> {
   String userId;
   RequestStatus status;
   String? adminMessage;
