@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:easywear_models/util.dart';
 import 'package:uuid/uuid.dart';
-
-import '../util.dart';
 
 abstract class Model<T extends Model<T>> {
   String id;

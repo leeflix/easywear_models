@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:easywear_models/easywear_models.dart';
 
+import 'address.dart';
+import 'inventory.dart';
 import 'package_entry.dart';
 
 class Package {
