@@ -108,46 +108,53 @@ class Order extends Request {
       .flattened
       .toSet();
 
-  List<T> iterateSync<T>(
-    T Function(
+  List<T> iterateSync<T>(T Function(
+      int packageIndex,
       String workwearId,
       String sku,
       PackageEntry packageEntry,
-    ) fn,
-  ) {
+      ) fn,) {
     List<T> res = [];
+    int pacakgeIndex = 0;
     for (var package in packages) {
       res.addAll(
         package.iterateSync(
-          (workwearId, sku, packageEntry) => fn(
-            workwearId,
-            sku,
-            packageEntry,
-          ),
+              (workwearId, sku, packageEntry) =>
+              fn(
+                pacakgeIndex,
+                workwearId,
+                sku,
+                packageEntry,
+              ),
         ),
       );
+      pacakgeIndex += 1;
     }
     return res;
   }
 
   FutureOr<List<T>> iterateAsync<T>(
     FutureOr<T> Function(
+        int packageIndex,
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
   ) async {
     List<T> res = [];
+    int pacakgeIndex = 0;
     for (var package in packages) {
       res.addAll(
         await package.iterateAsync(
           (workwearId, sku, packageEntry) => fn(
+            pacakgeIndex,
             workwearId,
             sku,
             packageEntry,
           ),
         ),
       );
+      pacakgeIndex += 1;
     }
     return res;
   }
@@ -155,7 +162,7 @@ class Order extends Request {
   Inventory readInventory() {
     Inventory inventory = Inventory.empty();
     iterateSync(
-      (workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
+      (packageIndex, workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
         workwearId: workwearId,
         sku: sku,
         amount: packageEntry.amount,
@@ -167,7 +174,7 @@ class Order extends Request {
   double cost() {
     double cost = 0;
     iterateSync(
-      (workwearId, sku, packageEntry) =>
+      (packageIndex, workwearId, sku, packageEntry) =>
           cost += packageEntry.amount * (packageEntry.cost ?? 0),
     );
     return cost;
