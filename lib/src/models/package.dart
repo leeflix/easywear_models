@@ -45,28 +45,53 @@ class Package {
   @override
   String toString() => jsonEncode(this);
 
-  Stream<T> iterate<T>(
+  List<T> iterateSync<T>(
+    T Function(
+      String workwearId,
+      String sku,
+      PackageEntry packageEntry,
+    ) fn,
+  ) {
+    List<T> res = [];
+    for (var workwearId in workwearIdToSkuToPackageEntry.keys) {
+      for (var sku in workwearIdToSkuToPackageEntry[workwearId]!.keys) {
+        res.add(
+          fn(
+            workwearId,
+            sku,
+            workwearIdToSkuToPackageEntry[workwearId]![sku]!,
+          ),
+        );
+      }
+    }
+    return res;
+  }
+
+  FutureOr<List<T>> iterateAsync<T>(
     FutureOr<T> Function(
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
-  ) async* {
+  ) async {
+    List<T> res = [];
     for (var workwearId in workwearIdToSkuToPackageEntry.keys) {
       for (var sku in workwearIdToSkuToPackageEntry[workwearId]!.keys) {
-        var res = await fn(
-          workwearId,
-          sku,
-          workwearIdToSkuToPackageEntry[workwearId]![sku]!,
+        res.add(
+          await fn(
+            workwearId,
+            sku,
+            workwearIdToSkuToPackageEntry[workwearId]![sku]!,
+          ),
         );
-        if (res != null) yield res;
       }
     }
+    return res;
   }
 
   Inventory readInventory() {
     Inventory inventory = Inventory.empty();
-    iterate(
+    iterateSync(
       (workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
         workwearId: workwearId,
         sku: sku,

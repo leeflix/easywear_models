@@ -77,7 +77,8 @@ class Order extends Request {
 
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"]
-            .map<Package>((package) => Package.fromJson(package)).toList(),
+            .map<Package>((package) => Package.fromJson(package))
+            .toList(),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),
@@ -107,23 +108,53 @@ class Order extends Request {
       .flattened
       .toSet();
 
-  Stream<T> iterate<T>(
+  List<T> iterateSync<T>(
+    T Function(
+      String workwearId,
+      String sku,
+      PackageEntry packageEntry,
+    ) fn,
+  ) {
+    List<T> res = [];
+    for (var package in packages) {
+      res.addAll(
+        package.iterateSync(
+          (workwearId, sku, packageEntry) => fn(
+            workwearId,
+            sku,
+            packageEntry,
+          ),
+        ),
+      );
+    }
+    return res;
+  }
+
+  FutureOr<List<T>> iterateAsync<T>(
     FutureOr<T> Function(
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
-  ) async* {
+  ) async {
+    List<T> res = [];
     for (var package in packages) {
-      await for (var res in package.iterate(fn)) {
-        yield res;
-      }
+      res.addAll(
+        await package.iterateAsync(
+          (workwearId, sku, packageEntry) => fn(
+            workwearId,
+            sku,
+            packageEntry,
+          ),
+        ),
+      );
     }
+    return res;
   }
 
   Inventory readInventory() {
     Inventory inventory = Inventory.empty();
-    iterate(
+    iterateSync(
       (workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
         workwearId: workwearId,
         sku: sku,
@@ -135,7 +166,7 @@ class Order extends Request {
 
   double cost() {
     double cost = 0;
-    iterate(
+    iterateSync(
       (workwearId, sku, packageEntry) =>
           cost += packageEntry.amount * (packageEntry.cost ?? 0),
     );

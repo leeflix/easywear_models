@@ -74,22 +74,59 @@ class Inventory {
     return true;
   }
 
-  Stream<T> iterate<T>(
+  int? maxAmount() {
+    int? maxAmount;
+    for (var workwearId in items.keys) {
+      for (var sku in items[workwearId]!.keys) {
+        if (maxAmount == null || items[workwearId]![sku]! > maxAmount) {
+          maxAmount = items[workwearId]![sku]!;
+        }
+      }
+    }
+    return maxAmount;
+  }
+
+  List<T> iterateSync<T>(
+    T Function(
+      String workwearId,
+      String sku,
+      int amount,
+    ) fn,
+  ) {
+    List<T> results = [];
+    for (var workwearId in workwearIds()) {
+      for (var sku in items[workwearId]!.keys) {
+        results.add(
+          fn(
+            workwearId,
+            sku,
+            items[workwearId]![sku]!,
+          ),
+        );
+      }
+    }
+    return results;
+  }
+
+  FutureOr<List<T>> iterateAsync<T>(
     FutureOr<T> Function(
       String workwearId,
       String sku,
       int amount,
     ) fn,
-  ) async* {
+  ) async {
+    List<T> results = [];
     for (var workwearId in workwearIds()) {
       for (var sku in items[workwearId]!.keys) {
-        var res = await fn(
-          workwearId,
-          sku,
-          items[workwearId]![sku]!,
+        results.add(
+          await fn(
+            workwearId,
+            sku,
+            items[workwearId]![sku]!,
+          ),
         );
-        if (res != null) yield res;
       }
     }
+    return results;
   }
 }

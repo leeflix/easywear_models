@@ -19,4 +19,9 @@ class Permissions {
         "locationIds": locationIds.toList(),
         "departmentIds": departmentIds.toList(),
       };
+
+  Permissions.none()
+      : domainIds = {},
+        locationIds = {},
+        departmentIds = {};
 }
