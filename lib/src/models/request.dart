@@ -53,7 +53,9 @@ sealed class Request extends Model<Request> {
         Correction _ => RequestType.correction,
       };
 
-  Set<String> workwearIds();
+  Set<String> readWorkwearIds();
+
+  Inventory readInventory();
 }
 
 class Order extends Request {
@@ -105,7 +107,7 @@ class Order extends Request {
   @override
   String className() => "Order";
 
-  Set<String> workwearIds() => packages
+  Set<String> readWorkwearIds() => packages
       .map((package) => package.workwearIdToSkuToPackageEntry.keys)
       .flattened
       .toSet();
@@ -230,7 +232,10 @@ class Correction extends Request {
   String className() => "Correction";
 
   @override
-  Set<String> workwearIds() => inventory.workwearIds();
+  Set<String> readWorkwearIds() => inventory.workwearIds();
+
+  @override
+  Inventory readInventory() => inventory;
 }
 
 class Claim extends Order {
