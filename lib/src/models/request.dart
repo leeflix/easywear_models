@@ -52,6 +52,8 @@ sealed class Request extends Model<Request> {
         Order _ => RequestType.order,
         Correction _ => RequestType.correction,
       };
+
+  Set<String> workwearIds();
 }
 
 class Order extends Request {
@@ -226,6 +228,9 @@ class Correction extends Request {
 
   @override
   String className() => "Correction";
+
+  @override
+  Set<String> workwearIds() => inventory.workwearIds();
 }
 
 class Claim extends Order {
