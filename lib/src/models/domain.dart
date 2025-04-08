@@ -64,18 +64,27 @@ class Domain extends Model<Domain> {
         tenant = json["tenant"],
         aliases = Set<String>.from(json["aliases"]),
         type = EasyTypeExt.fromString(json["type"]),
-        supplierConfig = json["supplierConfig"] == null ? null : SupplierConfig.fromJson(json["supplierConfig"]),
+        supplierConfig = json["supplierConfig"] == null
+            ? null
+            : SupplierConfig.fromJson(json["supplierConfig"]),
         whiteLabelData = WhiteLabel.fromJson(json["whiteLabelData"]),
-        registered = json["registered"] == null ? null : DateTime.parse(json["registered"]),
-        verified = json["verified"] == null ? null : DateTime.parse(json["verified"]),
+        registered = json["registered"] == null
+            ? null
+            : DateTime.parse(json["registered"]),
+        verified =
+            json["verified"] == null ? null : DateTime.parse(json["verified"]),
         licensesQuantity = json["licensesQuantity"],
         featureLevel = FeatureLevelExt.fromString(json["featureLevel"]),
-        premiumTrialStartDate = json["premiumTrialStartDate"] == null ? null : DateTime.parse(json["premiumTrialStartDate"]),
+        premiumTrialStartDate = json["premiumTrialStartDate"] == null
+            ? null
+            : DateTime.parse(json["premiumTrialStartDate"]),
         features = Features.fromJson(json["features"]),
         currency = json["currency"],
         useCurrencyForBudget = json["useCurrencyForBudget"],
         delimiter = json["delimiter"],
-        intratool = json["intratool"] == null ? null : Intratool.fromJson(json["intratool"]),
+        intratool = json["intratool"] == null
+            ? null
+            : Intratool.fromJson(json["intratool"]),
         beekeeperAccessToken = json["beekeeperAccessToken"],
         shop = Map<String, double?>.from(json["shop"]),
         super(
@@ -87,6 +96,7 @@ class Domain extends Model<Domain> {
 
   @override
   Map<String, dynamic> toJson() => {
+        "name": name,
         "domain": domain,
         "tenant": tenant,
         "aliases": aliases.toList(),
