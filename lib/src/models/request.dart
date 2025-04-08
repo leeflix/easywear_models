@@ -11,6 +11,7 @@ import 'request_type.dart';
 
 sealed class Request extends Model<Request> {
   String userId;
+  DateTime requested;
   RequestStatus status;
   String? adminMessage;
   String? userMessage;
@@ -21,6 +22,7 @@ sealed class Request extends Model<Request> {
     DateTime? updated,
     bool? isArchived,
     required this.userId,
+    required this.requested,
     required this.status,
     required this.adminMessage,
     required this.userMessage,
@@ -34,6 +36,8 @@ sealed class Request extends Model<Request> {
   @override
   Map<String, dynamic> toJson() => {
         "userId": userId,
+        "requested": requested.toIso8601String(),
+        "created": created.toIso8601String(),
         "status": status.string,
         "adminMessage": adminMessage,
         "userMessage": userMessage,
@@ -68,6 +72,7 @@ class Order extends Request {
     DateTime? updated,
     bool? isArchived,
     required super.userId,
+    required super.requested,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
@@ -89,6 +94,7 @@ class Order extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
+          requested: DateTime.parse(json["requested"]),
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
@@ -194,6 +200,7 @@ class Correction extends Request {
     DateTime? updated,
     bool? isArchived,
     required super.userId,
+    required super.requested,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
@@ -213,6 +220,7 @@ class Correction extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
+          requested: DateTime.parse(json["requested"]),
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
@@ -248,6 +256,7 @@ class Claim extends Order {
     DateTime? updated,
     bool? isArchived,
     required super.userId,
+    required super.requested,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
