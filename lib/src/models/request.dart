@@ -11,7 +11,7 @@ import 'request_type.dart';
 
 sealed class Request extends Model<Request> {
   String userId;
-  DateTime requested;
+  DateTime? requested;
   RequestStatus status;
   String? adminMessage;
   String? userMessage;
@@ -36,7 +36,7 @@ sealed class Request extends Model<Request> {
   @override
   Map<String, dynamic> toJson() => {
         "userId": userId,
-        "requested": requested.toIso8601String(),
+        "requested": requested?.toIso8601String(),
         "created": created.toIso8601String(),
         "status": status.string,
         "adminMessage": adminMessage,
@@ -44,8 +44,7 @@ sealed class Request extends Model<Request> {
         ...super.toJson(),
       };
 
-  static Request fromJson2(Map<String, dynamic> json) =>
-      switch (RequestTypeE.fromString(json["type"])) {
+  static Request fromJson2(Map<String, dynamic> json) => switch (RequestTypeE.fromString(json["type"])) {
         RequestType.order => Order.fromJson(json),
         RequestType.claim => Claim.fromJson(json),
         RequestType.correction => Correction.fromJson(json),
@@ -85,16 +84,14 @@ class Order extends Request {
         );
 
   Order.fromJson(Map<String, dynamic> json)
-      : packages = json["packages"]
-            .map<Package>((package) => Package.fromJson(package))
-            .toList(),
+      : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: DateTime.parse(json["requested"]),
+          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
@@ -113,29 +110,27 @@ class Order extends Request {
   @override
   String className() => "Order";
 
-  Set<String> readWorkwearIds() => packages
-      .map((package) => package.workwearIdToSkuToPackageEntry.keys)
-      .flattened
-      .toSet();
+  Set<String> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToPackageEntry.keys).flattened.toSet();
 
-  List<T> iterateSync<T>(T Function(
+  List<T> iterateSync<T>(
+    T Function(
       int packageIndex,
       String workwearId,
       String sku,
       PackageEntry packageEntry,
-      ) fn,) {
+    ) fn,
+  ) {
     List<T> res = [];
     int pacakgeIndex = 0;
     for (var package in packages) {
       res.addAll(
         package.iterateSync(
-              (workwearId, sku, packageEntry) =>
-              fn(
-                pacakgeIndex,
-                workwearId,
-                sku,
-                packageEntry,
-              ),
+          (workwearId, sku, packageEntry) => fn(
+            pacakgeIndex,
+            workwearId,
+            sku,
+            packageEntry,
+          ),
         ),
       );
       pacakgeIndex += 1;
@@ -145,7 +140,7 @@ class Order extends Request {
 
   FutureOr<List<T>> iterateAsync<T>(
     FutureOr<T> Function(
-        int packageIndex,
+      int packageIndex,
       String workwearId,
       String sku,
       PackageEntry packageEntry,
@@ -184,8 +179,7 @@ class Order extends Request {
   double cost() {
     double cost = 0;
     iterateSync(
-      (packageIndex, workwearId, sku, packageEntry) =>
-          cost += packageEntry.amount * (packageEntry.cost ?? 0),
+      (packageIndex, workwearId, sku, packageEntry) => cost += packageEntry.amount * (packageEntry.cost ?? 0),
     );
     return cost;
   }
@@ -220,7 +214,7 @@ class Correction extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: DateTime.parse(json["requested"]),
+          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
