@@ -7,6 +7,7 @@ import 'supplier_config.dart';
 import 'white_label.dart';
 
 class Domain extends Model<Domain> {
+  String name;
   String domain;
   String tenant;
   Set<String> aliases;
@@ -31,6 +32,7 @@ class Domain extends Model<Domain> {
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
+    required this.name,
     required this.domain,
     required this.tenant,
     required this.aliases,
@@ -57,7 +59,8 @@ class Domain extends Model<Domain> {
         );
 
   Domain.fromJson(Map<String, dynamic> json)
-      : domain = json["domain"],
+      :  name = json["name"],
+        domain = json["domain"],
         tenant = json["tenant"],
         aliases = Set<String>.from(json["aliases"]),
         type = EasyTypeExt.fromString(json["type"]),
