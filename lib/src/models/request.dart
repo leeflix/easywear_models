@@ -12,6 +12,7 @@ import 'request_type.dart';
 sealed class Request extends Model<Request> {
   String userId;
   DateTime? requested;
+  DateTime? canceled;
   RequestStatus status;
   String? adminMessage;
   String? userMessage;
@@ -23,6 +24,7 @@ sealed class Request extends Model<Request> {
     bool? isArchived,
     required this.userId,
     required this.requested,
+    required this.canceled,
     required this.status,
     required this.adminMessage,
     required this.userMessage,
@@ -72,6 +74,7 @@ class Order extends Request {
     bool? isArchived,
     required super.userId,
     required super.requested,
+    required super.canceled,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
@@ -92,6 +95,7 @@ class Order extends Request {
           isArchived: json["isArchived"],
           userId: json["userId"],
           requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
@@ -195,6 +199,7 @@ class Correction extends Request {
     bool? isArchived,
     required super.userId,
     required super.requested,
+    required super.canceled,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
@@ -215,6 +220,7 @@ class Correction extends Request {
           isArchived: json["isArchived"],
           userId: json["userId"],
           requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
@@ -251,6 +257,7 @@ class Claim extends Order {
     bool? isArchived,
     required super.userId,
     required super.requested,
+    required super.canceled,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
