@@ -29,8 +29,7 @@ class Workwear extends Model<Workwear> {
       : name = json["name"],
         imageIds = Set<String>.from(json["imageIds"]),
         categoryIds = Set<String>.from(json["categoryIds"]),
-        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
-            MapEntry<String, Article>(key, Article.fromJson(value))),
+        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
         supplierDomainId = json["supplierDomainId"],
         super(
           id: json["id"],
@@ -105,7 +104,7 @@ class Workwear extends Model<Workwear> {
   Set<String> options({required String property}) {
     Set<String> options = Set<String>();
     for (var article in skuToArticle.values) {
-      if(article.configuration[property] != null) {
+      if (article.configuration[property] != null) {
         options.add(article.configuration[property]!);
       }
     }
@@ -129,5 +128,19 @@ class Workwear extends Model<Workwear> {
       }
     }
     return propertiesToOptions;
+  }
+
+  Article? cheapestArticle() {
+    double? minCost;
+    Article? cheapestArticle;
+    for (var article in skuToArticle.values) {
+      for (var cost in article.cost.values) {
+        if (minCost == null || cost < minCost) {
+          minCost = cost;
+          cheapestArticle = article;
+        }
+      }
+    }
+    return cheapestArticle;
   }
 }
