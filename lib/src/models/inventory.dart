@@ -129,4 +129,14 @@ class Inventory {
     }
     return results;
   }
+
+  void addInventory({required Inventory inventory}) {
+    inventory.iterateSync(
+      (workwearId, sku, amount) => updateAmountInInventory(
+        workwearId: workwearId,
+        sku: sku,
+        amount: amount,
+      ),
+    );
+  }
 }
