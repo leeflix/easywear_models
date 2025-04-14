@@ -143,4 +143,12 @@ class Workwear extends Model<Workwear> {
     }
     return cheapestArticle;
   }
+
+  Set<int> quantityBreaks() {
+    Set<int> quantityBreaks = Set<int>();
+    for (var article in skuToArticle.values) {
+      quantityBreaks.addAll(article.cost.keys);
+    }
+    return quantityBreaks;
+  }
 }
