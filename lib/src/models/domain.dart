@@ -89,8 +89,11 @@ class Domain extends Model<Domain> {
             : Intratool.fromJson(json["intratool"]),
         beekeeperAccessToken = json["beekeeperAccessToken"],
         shop = Map<String, double?>.from(json["shop"]),
-        startKitNameToWorkwearIdToAmount =
-            Map<String, Map<String, int>>.from(json["startKitNameToWorkwearIdToAmount"]),
+        startKitNameToWorkwearIdToAmount = (json["startKitNameToWorkwearIdToAmount"] as Map)
+            .map((key, value) => MapEntry(
+                key,
+                (value as Map<String, dynamic>)
+                    .map((k, v) => MapEntry(k, v.toInt())))),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),
