@@ -1,3 +1,5 @@
+import 'package:easywear_models/src/models/order_prompt.dart';
+
 import 'address.dart';
 import 'inventory.dart';
 import 'language.dart';
@@ -33,6 +35,8 @@ class User extends Model<User> {
   int? intratoolUserId;
   String? beekeeperUserId;
 
+  List<OrderPrompt> orderPrompts;
+
   User({
     String? id,
     DateTime? created,
@@ -65,6 +69,7 @@ class User extends Model<User> {
     required this.showFirstLoginMessage,
     required this.intratoolUserId,
     required this.beekeeperUserId,
+    required this.orderPrompts,
   }) : super(
           id: id,
           created: created,
@@ -138,6 +143,9 @@ class User extends Model<User> {
         showFirstLoginMessage = json["showFirstLoginMessage"],
         intratoolUserId = json["intratoolUserId"],
         beekeeperUserId = json["beekeeperUserId"],
+        orderPrompts = List.from(json["orderPrompts"])
+            .map((orderPrompt) => OrderPrompt.fromJson(orderPrompt))
+            .toList(),
         super(
           id: json["id"],
           created: DateTime.parse(json["created"]),
