@@ -106,6 +106,7 @@ class User extends Model<User> {
         "showFirstLoginMessage": showFirstLoginMessage,
         "intratoolUserId": intratoolUserId,
         "beekeeperUserId": beekeeperUserId,
+        "orderPrompts": orderPrompts.map((orderPrompt) => orderPrompt.toJson()).toList(),
         ...super.toJson(),
       };
 
