@@ -26,7 +26,7 @@ class Domain extends Model<Domain> {
   Intratool? intratool;
   String? beekeeperAccessToken;
   Map<String, double?> shop;
-  Map<String, Map<String, int>> startKitNameToWorkwearIdToAmount;
+  Map<String, Map<String, int>> starterKitNameToWorkwearIdToAmount;
 
   Domain({
     String? id,
@@ -52,7 +52,7 @@ class Domain extends Model<Domain> {
     required this.intratool,
     required this.beekeeperAccessToken,
     required this.shop,
-    required this.startKitNameToWorkwearIdToAmount,
+    required this.starterKitNameToWorkwearIdToAmount,
   }) : super(
           id: id ?? domain,
           created: created,
@@ -89,7 +89,7 @@ class Domain extends Model<Domain> {
             : Intratool.fromJson(json["intratool"]),
         beekeeperAccessToken = json["beekeeperAccessToken"],
         shop = Map<String, double?>.from(json["shop"]),
-        startKitNameToWorkwearIdToAmount = (json["startKitNameToWorkwearIdToAmount"] as Map)
+        starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map)
             .map((key, value) => MapEntry(
                 key,
                 (value as Map<String, dynamic>)
@@ -122,7 +122,7 @@ class Domain extends Model<Domain> {
         "intratool": intratool?.toJson(),
         "beekeeperAccessToken": beekeeperAccessToken,
         "shop": shop,
-        "startKitNameToWorkwearIdToAmount": startKitNameToWorkwearIdToAmount,
+        "starterKitNameToWorkwearIdToAmount": starterKitNameToWorkwearIdToAmount,
         ...super.toJson(),
       };
 
