@@ -1,3 +1,5 @@
+import 'package:easywear_models/easywear_models.dart';
+
 import 'easy_type.dart';
 import 'feature_level.dart';
 import 'features.dart';
@@ -27,8 +29,10 @@ class Domain extends Model<Domain> {
   String? beekeeperAccessToken;
   Map<String, double?> shop;
   Map<String, Map<String, int>> starterKitNameToWorkwearIdToAmount;
+  Inventory warehouse;
 
   Domain({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -53,6 +57,7 @@ class Domain extends Model<Domain> {
     required this.beekeeperAccessToken,
     required this.shop,
     required this.starterKitNameToWorkwearIdToAmount,
+    required this.warehouse,
   }) : super(
           id: id ?? domain,
           created: created,
@@ -89,12 +94,15 @@ class Domain extends Model<Domain> {
             : Intratool.fromJson(json["intratool"]),
         beekeeperAccessToken = json["beekeeperAccessToken"],
         shop = Map<String, double?>.from(json["shop"]),
-        starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map)
-            .map((key, value) => MapEntry(
-                key,
-                (value as Map<String, dynamic>)
-                    .map((k, v) => MapEntry(k, v.toInt())))),
+        starterKitNameToWorkwearIdToAmount =
+            (json["starterKitNameToWorkwearIdToAmount"] as Map).map(
+                (key, value) => MapEntry(
+                    key,
+                    (value as Map<String, dynamic>)
+                        .map((k, v) => MapEntry(k, v.toInt())))),
+        warehouse = Inventory.fromJson(json["warehouse"]),
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),
@@ -122,7 +130,8 @@ class Domain extends Model<Domain> {
         "intratool": intratool?.toJson(),
         "beekeeperAccessToken": beekeeperAccessToken,
         "shop": shop,
-        "starterKitNameToWorkwearIdToAmount": starterKitNameToWorkwearIdToAmount,
+        "starterKitNameToWorkwearIdToAmount":
+            starterKitNameToWorkwearIdToAmount,
         ...super.toJson(),
       };
 

@@ -18,6 +18,7 @@ sealed class Request extends Model<Request> {
   String? userMessage;
 
   Request({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -68,6 +69,7 @@ class Order extends Request {
   List<Package> packages;
 
   Order({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -89,6 +91,7 @@ class Order extends Request {
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),
@@ -193,6 +196,7 @@ class Correction extends Request {
   Inventory inventory;
 
   Correction({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -214,6 +218,7 @@ class Correction extends Request {
   Correction.fromJson(Map<String, dynamic> json)
       : inventory = Inventory.fromJson(json["inventory"]),
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),
@@ -251,6 +256,7 @@ class Claim extends Order {
   Set<String> imageIds;
 
   Claim({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,

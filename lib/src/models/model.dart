@@ -8,8 +8,10 @@ abstract class Model<T extends Model<T>> {
   DateTime created;
   DateTime updated;
   bool isArchived;
+  String domainId;
 
   Model({
+    required this.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -23,6 +25,7 @@ abstract class Model<T extends Model<T>> {
 
   Map<String, dynamic> toJson() {
     return {
+      "domainId": domainId,
       "id": id,
       "created": created.toIso8601String(),
       "updated": updated.toIso8601String(),

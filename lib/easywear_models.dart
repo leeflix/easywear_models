@@ -21,7 +21,6 @@ export 'src/models/request_status.dart';
 export 'src/models/request_type.dart';
 export 'src/models/supplier_config.dart';
 export 'src/models/user.dart';
-export 'src/models/warehouse.dart';
 export 'src/models/white_label.dart';
 export 'src/models/workwear.dart';
 export 'src/models/package_entry.dart';

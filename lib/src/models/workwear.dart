@@ -9,6 +9,7 @@ class Workwear extends Model<Workwear> {
   String? supplierDomainId;
 
   Workwear({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -32,6 +33,7 @@ class Workwear extends Model<Workwear> {
         skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
         supplierDomainId = json["supplierDomainId"],
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),

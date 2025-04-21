@@ -6,6 +6,7 @@ class Location extends Model<Location> {
   Map<String, double?> shop;
 
   Location({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -25,6 +26,7 @@ class Location extends Model<Location> {
         departmentIds = Set<String>.from(json["departmentIds"]),
         shop = Map.from(json["shop"]),
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),

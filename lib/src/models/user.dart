@@ -38,6 +38,7 @@ class User extends Model<User> {
   List<OrderPrompt> orderPrompts;
 
   User({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -148,6 +149,7 @@ class User extends Model<User> {
             .map((orderPrompt) => OrderPrompt.fromJson(orderPrompt))
             .toList(),
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),

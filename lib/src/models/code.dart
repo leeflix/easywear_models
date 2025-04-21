@@ -11,6 +11,7 @@ class Code extends Model<Code> {
   bool askForInventoryAfterFirstLogin;
 
   Code({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -40,6 +41,7 @@ class Code extends Model<Code> {
         budgetPerMonth = json["budgetPerMonth"].toDouble(),
         askForInventoryAfterFirstLogin = json["askForInventoryAfterFirstLogin"],
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),

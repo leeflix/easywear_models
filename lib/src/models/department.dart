@@ -6,6 +6,7 @@ class Department extends Model<Department> {
   Map<String, double?> shop;
 
   Department({
+    required super.domainId,
     String? id,
     DateTime? created,
     DateTime? updated,
@@ -25,6 +26,7 @@ class Department extends Model<Department> {
         userIds = Set.from(json["userIds"]),
         shop = Map.from(json["shop"]),
         super(
+          domainId: json["domainId"],
           id: json["id"],
           created: DateTime.parse(json["created"]),
           updated: DateTime.parse(json["updated"]),
