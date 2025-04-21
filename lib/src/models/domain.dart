@@ -132,6 +132,7 @@ class Domain extends Model<Domain> {
         "shop": shop,
         "starterKitNameToWorkwearIdToAmount":
             starterKitNameToWorkwearIdToAmount,
+        "warehouse": warehouse.toJson(),
         ...super.toJson(),
       };
 
