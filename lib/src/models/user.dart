@@ -14,7 +14,7 @@ class User extends Model<User> {
   String? lastName;
   String? personnelNumber;
   String? imageId;
-  String userName;
+  String? userName;
   String? companyMail;
   String? contactMail;
   String? phoneNumber;
