@@ -74,6 +74,7 @@ class Order extends Request {
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
+    required this.supplierDomainId,
     required super.userId,
     required super.requested,
     required super.canceled,
@@ -90,6 +91,7 @@ class Order extends Request {
 
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
+        supplierDomainId = json["supplierDomainId"],
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -107,6 +109,7 @@ class Order extends Request {
   @override
   Map<String, dynamic> toJson() => {
         "type": "order",
+        "supplierDomainId": supplierDomainId,
         "packages": packages.map((package) => package.toJson()).toList(),
         ...super.toJson(),
       };
@@ -261,6 +264,7 @@ class Claim extends Order {
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
+    required super.supplierDomainId,
     required super.userId,
     required super.requested,
     required super.canceled,
