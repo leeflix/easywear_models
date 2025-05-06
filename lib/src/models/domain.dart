@@ -49,7 +49,7 @@ class Domain extends Model<Domain> {
     required this.starterKitNameToWorkwearIdToAmount,
     required this.warehouse,
   }) : super(
-          id: id,
+          id: id ?? domainId,
           created: created,
           updated: updated,
           isArchived: isArchived,
