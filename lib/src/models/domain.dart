@@ -1,17 +1,8 @@
 import 'package:easywear_models/easywear_models.dart';
 
-import 'easy_type.dart';
-import 'feature_level.dart';
-import 'features.dart';
-import 'intratool.dart';
-import 'model.dart';
-import 'supplier_config.dart';
-import 'white_label.dart';
-
 class Domain extends Model<Domain> {
-  String name;
-  String domain;
-  String tenant;
+  String? name;
+  String? tenant;
   Set<String> aliases;
   EasyType type;
   SupplierConfig? supplierConfig;
@@ -38,7 +29,6 @@ class Domain extends Model<Domain> {
     DateTime? updated,
     bool? isArchived,
     required this.name,
-    required this.domain,
     required this.tenant,
     required this.aliases,
     required this.type,
@@ -59,7 +49,7 @@ class Domain extends Model<Domain> {
     required this.starterKitNameToWorkwearIdToAmount,
     required this.warehouse,
   }) : super(
-          id: id ?? domain,
+          id: id,
           created: created,
           updated: updated,
           isArchived: isArchived,
@@ -67,7 +57,6 @@ class Domain extends Model<Domain> {
 
   Domain.fromJson(Map<String, dynamic> json)
       : name = json["name"],
-        domain = json["domain"],
         tenant = json["tenant"],
         aliases = Set<String>.from(json["aliases"]),
         type = EasyTypeExt.fromString(json["type"]),
@@ -112,7 +101,6 @@ class Domain extends Model<Domain> {
   @override
   Map<String, dynamic> toJson() => {
         "name": name,
-        "domain": domain,
         "tenant": tenant,
         "aliases": aliases.toList(),
         "type": type.string,
