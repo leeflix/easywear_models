@@ -2,17 +2,17 @@ import 'dart:convert';
 
 class WhiteLabel {
   String? solutionName;
-  String? logoLightBackground;
-  String? logoDarkBackground;
-  String? faviconUrl;
+  String? logoLightBackgroundImageId;
+  String? logoDarkBackgroundImageId;
+  String? faviconImageId;
   String? primaryColor;
   String? secondaryColor;
   String? tertiaryColor;
 
   WhiteLabel({
-    required this.logoLightBackground,
-    required this.logoDarkBackground,
-    required this.faviconUrl,
+    required this.logoLightBackgroundImageId,
+    required this.logoDarkBackgroundImageId,
+    required this.faviconImageId,
     required this.primaryColor,
     required this.secondaryColor,
     required this.tertiaryColor,
@@ -21,18 +21,18 @@ class WhiteLabel {
 
   WhiteLabel.fromJson(Map<String, dynamic> json)
       : solutionName = json["solutionName"],
-        logoLightBackground = json["logoLightBackground"],
-        logoDarkBackground = json["logoDarkBackground"],
-        faviconUrl = json["faviconUrl"],
+        logoLightBackgroundImageId = json["logoLightBackgroundImageId"],
+        logoDarkBackgroundImageId = json["logoDarkBackgroundImageId"],
+        faviconImageId = json["faviconImageId"],
         primaryColor = json["primaryColor"],
         secondaryColor = json["secondaryColor"],
         tertiaryColor = json["tertiaryColor"];
 
   Map<String, dynamic> toJson() => {
         "solutionName": solutionName,
-        "logoLightBackground": logoLightBackground,
-        "logoDarkBackground": logoDarkBackground,
-        "faviconUrl": faviconUrl,
+        "logoLightBackground": logoLightBackgroundImageId,
+        "logoDarkBackground": logoDarkBackgroundImageId,
+        "faviconUrl": faviconImageId,
         "primaryColor": primaryColor,
         "secondaryColor": secondaryColor,
         "tertiaryColor": tertiaryColor,
@@ -44,12 +44,12 @@ class WhiteLabel {
   String getSolutionName() => solutionName ?? _defaultSolutionName;
 
   String getLogoLightBackground() =>
-      logoLightBackground ?? _defaultLogoLightBackground;
+      logoLightBackgroundImageId ?? _defaultLogoLightBackground;
 
   String getLogoDarkBackground() =>
-      logoDarkBackground ?? _defaultLogoDarkBackground;
+      logoDarkBackgroundImageId ?? _defaultLogoDarkBackground;
 
-  String getFaviconUrl() => faviconUrl ?? _defaultFaviconUrl;
+  String getFaviconUrl() => faviconImageId ?? _defaultFaviconUrl;
 
   String getPrimaryColor() => primaryColor ?? _defaultPrimaryColor;
 
@@ -69,10 +69,10 @@ class WhiteLabel {
 
   WhiteLabel.null_()
       : solutionName = null,
-        logoDarkBackground = null,
-        faviconUrl = null,
+        logoDarkBackgroundImageId = null,
+        faviconImageId = null,
         primaryColor = null,
         secondaryColor = null,
         tertiaryColor = null,
-        logoLightBackground = null;
+        logoLightBackgroundImageId = null;
 }
