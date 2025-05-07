@@ -30,9 +30,9 @@ class WhiteLabel {
 
   Map<String, dynamic> toJson() => {
         "solutionName": solutionName,
-        "logoLightBackground": logoLightBackgroundImageId,
-        "logoDarkBackground": logoDarkBackgroundImageId,
-        "faviconUrl": faviconImageId,
+        "logoLightBackgroundImageId": logoLightBackgroundImageId,
+        "logoDarkBackgroundImageId": logoDarkBackgroundImageId,
+        "faviconImageId": faviconImageId,
         "primaryColor": primaryColor,
         "secondaryColor": secondaryColor,
         "tertiaryColor": tertiaryColor,
