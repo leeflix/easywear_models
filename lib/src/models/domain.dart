@@ -82,7 +82,7 @@ class Domain extends Model<Domain> {
             ? null
             : Intratool.fromJson(json["intratool"]),
         beekeeperAccessToken = json["beekeeperAccessToken"],
-        shop = Map<String, double?>.from(json["shop"]),
+        shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
         starterKitNameToWorkwearIdToAmount =
             (json["starterKitNameToWorkwearIdToAmount"] as Map).map(
                 (key, value) => MapEntry(
