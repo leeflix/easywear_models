@@ -50,4 +50,10 @@ class Address {
 
   @override
   String toString() => jsonEncode(this);
+
+  @override
+  bool operator ==(Object other) => jsonEncode(this) == jsonEncode(other);
+
+  @override
+  int get hashCode => jsonEncode(this).hashCode;
 }

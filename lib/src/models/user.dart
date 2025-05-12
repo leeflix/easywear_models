@@ -18,7 +18,7 @@ class User extends Model<User> {
   String? companyMail;
   String? contactMail;
   String? phoneNumber;
-  List<Address> addresses;
+  Set<Address> addresses;
   String? password;
   String? passwordHash;
   Language language;
@@ -34,7 +34,6 @@ class User extends Model<User> {
   bool showFirstLoginMessage;
   int? intratoolUserId;
   String? beekeeperUserId;
-
   List<OrderPrompt> orderPrompts;
 
   User({
@@ -123,9 +122,9 @@ class User extends Model<User> {
         companyMail = json["companyMail"],
         contactMail = json["contactMail"],
         phoneNumber = json["phoneNumber"],
-        addresses = List.from(json["addresses"])
+        addresses = (json["addresses"] as List)
             .map((address) => Address.fromJson(address))
-            .toList(),
+            .toSet(),
         password = json["password"],
         passwordHash = json["passwordHash"],
         language = LanguageExt.fromString(json["language"]),
