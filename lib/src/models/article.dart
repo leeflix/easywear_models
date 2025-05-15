@@ -46,7 +46,11 @@ class Article {
     return cost;
   }
 
-  bool matchConfiguration({required Map<String, String?> configuration}) {
+  bool matchConfiguration({
+    required Map<String, String?> configuration,
+    required bool strict,
+  }) {
+    if(strict && configuration.length != this.configuration.length) return false;
     for (var entry in configuration.entries) {
       if (this.configuration[entry.key] == null) return false;
       if (this.configuration[entry.key] != entry.value) return false;

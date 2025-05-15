@@ -30,8 +30,10 @@ class Workwear extends Model<Workwear> {
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         imageIds = Set<String>.from(json["imageIds"]),
-        categories = Set<Category>.from(json["categories"].map((e) => CategoryExt.fromString(e))),
-        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
+        categories = Set<Category>.from(
+            json["categories"].map((e) => CategoryExt.fromString(e))),
+        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
+            MapEntry<String, Article>(key, Article.fromJson(value))),
         supplierDomainId = json["supplierDomainId"],
         super(
           domainId: json["domainId"],
@@ -155,7 +157,17 @@ class Workwear extends Model<Workwear> {
     return quantityBreaks;
   }
 
-  Set<Article> hasArticleWithConfiguration({required Map<String, String?> configuration}) {
-    return skuToArticle.values.where((article) => article.matchConfiguration(configuration: configuration)).toSet();
+  Set<Article> hasArticleWithConfiguration({
+    required Map<String, String?> configuration,
+    required bool strict,
+  }) {
+    return skuToArticle.values
+        .where(
+          (article) => article.matchConfiguration(
+            configuration: configuration,
+            strict: strict,
+          ),
+        )
+        .toSet();
   }
 }
