@@ -30,7 +30,7 @@ class Workwear extends Model<Workwear> {
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         imageIds = Set<String>.from(json["imageIds"]),
-        categories = Set<Category>.from(json["categoryIds"].map((e) => CategoryExt.fromString(e))),
+        categories = Set<Category>.from(json["categories"].map((e) => CategoryExt.fromString(e))),
         skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
         supplierDomainId = json["supplierDomainId"],
         super(
