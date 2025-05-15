@@ -26,3 +26,4 @@ export 'src/models/workwear.dart';
 export 'src/models/package_entry.dart';
 export 'src/models/package.dart';
 export 'src/models/order_prompt.dart';
+export 'src/models/category.dart';

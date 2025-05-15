@@ -1,10 +1,11 @@
 import 'article.dart';
+import 'category.dart';
 import 'model.dart';
 
 class Workwear extends Model<Workwear> {
   String name;
   Set<String> imageIds;
-  Set<String> categoryIds;
+  Set<Category> categories;
   Map<String, Article> skuToArticle;
   String? supplierDomainId;
 
@@ -16,7 +17,7 @@ class Workwear extends Model<Workwear> {
     bool? isArchived,
     required this.name,
     required this.imageIds,
-    required this.categoryIds,
+    required this.categories,
     required this.skuToArticle,
     required this.supplierDomainId,
   }) : super(
@@ -29,7 +30,7 @@ class Workwear extends Model<Workwear> {
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         imageIds = Set<String>.from(json["imageIds"]),
-        categoryIds = Set<String>.from(json["categoryIds"]),
+        categories = Set<Category>.from(json["categoryIds"].map((e) => CategoryExt.fromString(e))),
         skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
         supplierDomainId = json["supplierDomainId"],
         super(
@@ -44,7 +45,7 @@ class Workwear extends Model<Workwear> {
   Map<String, dynamic> toJson() => {
         "name": name,
         "imageIds": imageIds.toList(),
-        "categoryIds": categoryIds.toList(),
+        "categories": categories.map((e) => e.toString()).toList(),
         "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
         "supplierDomainId": supplierDomainId,
         ...super.toJson(),
