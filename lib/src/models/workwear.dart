@@ -45,7 +45,7 @@ class Workwear extends Model<Workwear> {
   Map<String, dynamic> toJson() => {
         "name": name,
         "imageIds": imageIds.toList(),
-        "categories": categories.map((e) => e.toString()).toList(),
+        "categories": categories.map((e) => e.string).toList(),
         "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
         "supplierDomainId": supplierDomainId,
         ...super.toJson(),
