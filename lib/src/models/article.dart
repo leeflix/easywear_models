@@ -45,4 +45,12 @@ class Article {
     }
     return cost;
   }
+
+  bool matchConfiguration({required Map<String, String?> configuration}) {
+    for (var entry in configuration.entries) {
+      if (this.configuration[entry.key] == null) return false;
+      if (this.configuration[entry.key] != entry.value) return false;
+    }
+    return true;
+  }
 }
