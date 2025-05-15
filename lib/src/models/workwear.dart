@@ -155,7 +155,7 @@ class Workwear extends Model<Workwear> {
     return quantityBreaks;
   }
 
-  bool hasArticleWithConfiguration({required Map<String, String?> configuration}) {
-    return skuToArticle.values.any((article) => article.matchConfiguration(configuration: configuration));
+  Set<Article> hasArticleWithConfiguration({required Map<String, String?> configuration}) {
+    return skuToArticle.values.where((article) => article.matchConfiguration(configuration: configuration)).toSet();
   }
 }
