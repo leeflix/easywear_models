@@ -40,6 +40,7 @@ sealed class Request extends Model<Request> {
   Map<String, dynamic> toJson() => {
         "userId": userId,
         "requested": requested?.toIso8601String(),
+        "canceled": canceled?.toIso8601String(),
         "created": created.toIso8601String(),
         "status": status.string,
         "adminMessage": adminMessage,
