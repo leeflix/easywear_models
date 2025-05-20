@@ -4,8 +4,8 @@ class SupplierConfig {
   Set<String> customerDomainIds;
   Map<String, Set<String>> domainIdToWorkwearIds;
   String? returnPolicyUrl;
-  String supportEmail;
-  String supportPhone;
+  String? supportEmail;
+  String? supportPhone;
 
   SupplierConfig({
     required this.customerDomainIds,
