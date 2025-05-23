@@ -5,6 +5,7 @@ class PackageEntry {
 
   // workwearId + sku
   int amount;
+  int? amountHandled;
 
   bool? rejected;
   int? toBuy;
@@ -20,6 +21,7 @@ class PackageEntry {
 
   PackageEntry({
     required this.amount,
+    this.amountHandled,
     required this.userPays,
     required this.toBuy,
     required this.fromWarehouse,
@@ -31,6 +33,7 @@ class PackageEntry {
 
   Map<String, dynamic> toJson() => {
         "amount": amount,
+        "amountHandled": amountHandled,
         "userPays": userPays,
         "toBuy": toBuy,
         "fromWarehouse": fromWarehouse,
@@ -42,6 +45,7 @@ class PackageEntry {
 
   PackageEntry.fromJson(Map<String, dynamic> json)
       : amount = json["amount"],
+        amountHandled = json["amountHandled"],
         userPays = json["userPays"],
         toBuy = json["toBuy"],
         fromWarehouse = json["fromWarehouse"],
