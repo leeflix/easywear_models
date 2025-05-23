@@ -66,7 +66,7 @@ sealed class Request extends Model<Request> {
 }
 
 class Order extends Request {
-  String? supplierDomainId;
+  String supplierDomainId;
   List<Package> packages;
 
   Order({
