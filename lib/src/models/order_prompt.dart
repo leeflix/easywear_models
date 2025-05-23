@@ -3,12 +3,12 @@ import 'dart:convert';
 class OrderPrompt {
   String? starterKitName;
   Map<String, int> workwearIdToAmount;
-  String? supplierDomainId;
+  String supplierDomainId;
 
   OrderPrompt({
-    this.starterKitName,
+    required this.starterKitName,
     required this.workwearIdToAmount,
-    this.supplierDomainId,
+    required this.supplierDomainId,
   });
 
   OrderPrompt.fromJson(Map<String, dynamic> json)
