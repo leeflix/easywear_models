@@ -13,6 +13,7 @@ sealed class Request extends Model<Request> {
   String userId;
   DateTime? requested;
   DateTime? canceled;
+  String? cancelReason;
   RequestStatus status;
   String? adminMessage;
   String? userMessage;
@@ -26,6 +27,7 @@ sealed class Request extends Model<Request> {
     required this.userId,
     required this.requested,
     required this.canceled,
+    required this.cancelReason,
     required this.status,
     required this.adminMessage,
     required this.userMessage,
@@ -41,6 +43,7 @@ sealed class Request extends Model<Request> {
         "userId": userId,
         "requested": requested?.toIso8601String(),
         "canceled": canceled?.toIso8601String(),
+        "cancelReason": cancelReason,
         "created": created.toIso8601String(),
         "status": status.string,
         "adminMessage": adminMessage,
@@ -79,6 +82,7 @@ class Order extends Request {
     required super.userId,
     required super.requested,
     required super.canceled,
+    required super.cancelReason,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
@@ -102,6 +106,7 @@ class Order extends Request {
           userId: json["userId"],
           requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
           canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
+          cancelReason: json["cancelReason"],
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
@@ -208,6 +213,7 @@ class Correction extends Request {
     required super.userId,
     required super.requested,
     required super.canceled,
+    required super.cancelReason,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
@@ -230,6 +236,7 @@ class Correction extends Request {
           userId: json["userId"],
           requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
           canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
+          cancelReason: json["cancelReason"],
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
@@ -269,6 +276,7 @@ class Claim extends Order {
     required super.userId,
     required super.requested,
     required super.canceled,
+    required super.cancelReason,
     required super.status,
     required super.adminMessage,
     required super.userMessage,
