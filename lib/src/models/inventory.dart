@@ -74,6 +74,18 @@ class Inventory {
     return true;
   }
 
+  int? minAmount() {
+    int? minAmount;
+    for (var workwearId in items.keys) {
+      for (var sku in items[workwearId]!.keys) {
+        if (minAmount == null || items[workwearId]![sku]! < minAmount) {
+          minAmount = items[workwearId]![sku]!;
+        }
+      }
+    }
+    return minAmount;
+  }
+
   int? maxAmount() {
     int? maxAmount;
     for (var workwearId in items.keys) {
