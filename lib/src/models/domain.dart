@@ -22,6 +22,7 @@ class Domain extends Model<Domain> {
   Map<String, Map<String, int>> starterKitNameToWorkwearIdToAmount;
   Inventory warehouse;
   bool? defaultFromSupplier;
+  bool? defaultUserPays;
 
   Domain({
     required super.domainId,
@@ -50,6 +51,7 @@ class Domain extends Model<Domain> {
     required this.starterKitNameToWorkwearIdToAmount,
     required this.warehouse,
     required this.defaultFromSupplier,
+    required this.defaultUserPays,
   }) : super(
     id: id ?? domainId,
     created: created,
@@ -94,6 +96,7 @@ class Domain extends Model<Domain> {
                     .map((k, v) => MapEntry(k, v.toInt())))),
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
+        defaultUserPays = json["defaultUserPays"],
         super(
         domainId: json["domainId"],
         id: json["id"],
@@ -125,6 +128,7 @@ class Domain extends Model<Domain> {
     "starterKitNameToWorkwearIdToAmount": starterKitNameToWorkwearIdToAmount,
     "warehouse": warehouse.toJson(),
     "defaultFromSupplier": defaultFromSupplier,
+    "defaultUserPays": defaultUserPays,
     ...super.toJson(),
   };
 
