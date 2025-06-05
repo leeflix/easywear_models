@@ -7,6 +7,7 @@ class Workwear extends Model<Workwear> {
   Set<String> imageIds;
   Set<Category> categories;
   Map<String, Article> skuToArticle;
+  String? customSupplier;
 
   Workwear({
     required super.domainId,
@@ -18,6 +19,7 @@ class Workwear extends Model<Workwear> {
     required this.imageIds,
     required this.categories,
     required this.skuToArticle,
+    required this.customSupplier,
   }) : super(
           id: id,
           created: created,
@@ -32,6 +34,7 @@ class Workwear extends Model<Workwear> {
             json["categories"].map((e) => CategoryExt.fromString(e))),
         skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
             MapEntry<String, Article>(key, Article.fromJson(value))),
+        customSupplier = json["customSupplier"],
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -46,6 +49,7 @@ class Workwear extends Model<Workwear> {
         "imageIds": imageIds.toList(),
         "categories": categories.map((e) => e.string).toList(),
         "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
+        "customSupplier": customSupplier,
         ...super.toJson(),
       };
 

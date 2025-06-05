@@ -23,6 +23,7 @@ class Domain extends Model<Domain> {
   Inventory warehouse;
   bool? defaultFromSupplier;
   bool? defaultUserPays;
+  Set<String> customSuppliers;
 
   Domain({
     required super.domainId,
@@ -52,12 +53,13 @@ class Domain extends Model<Domain> {
     required this.warehouse,
     required this.defaultFromSupplier,
     required this.defaultUserPays,
+    required this.customSuppliers,
   }) : super(
-    id: id ?? domainId,
-    created: created,
-    updated: updated,
-    isArchived: isArchived,
-  );
+          id: id ?? domainId,
+          created: created,
+          updated: updated,
+          isArchived: isArchived,
+        );
 
   Domain.fromJson(Map<String, dynamic> json)
       : name = json["name"],
@@ -72,7 +74,7 @@ class Domain extends Model<Domain> {
             ? null
             : DateTime.parse(json["registered"]),
         verified =
-        json["verified"] == null ? null : DateTime.parse(json["verified"]),
+            json["verified"] == null ? null : DateTime.parse(json["verified"]),
         licensesQuantity = json["licensesQuantity"],
         featureLevel = FeatureLevelExt.fromString(json["featureLevel"]),
         premiumTrialStartDate = json["premiumTrialStartDate"] == null
@@ -89,48 +91,51 @@ class Domain extends Model<Domain> {
         shop = (json["shop"] as Map)
             .map((key, value) => MapEntry(key, value?.toDouble())),
         starterKitNameToWorkwearIdToAmount =
-        (json["starterKitNameToWorkwearIdToAmount"] as Map).map(
+            (json["starterKitNameToWorkwearIdToAmount"] as Map).map(
                 (key, value) => MapEntry(
-                key,
-                (value as Map<String, dynamic>)
-                    .map((k, v) => MapEntry(k, v.toInt())))),
+                    key,
+                    (value as Map<String, dynamic>)
+                        .map((k, v) => MapEntry(k, v.toInt())))),
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],
+        customSuppliers = Set<String>.from(json["customSuppliers"]),
         super(
-        domainId: json["domainId"],
-        id: json["id"],
-        created: DateTime.parse(json["created"]),
-        updated: DateTime.parse(json["updated"]),
-        isArchived: json["isArchived"],
-      );
+          domainId: json["domainId"],
+          id: json["id"],
+          created: DateTime.parse(json["created"]),
+          updated: DateTime.parse(json["updated"]),
+          isArchived: json["isArchived"],
+        );
 
   @override
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "tenant": tenant,
-    "aliases": aliases.toList(),
-    "type": type.string,
-    "supplierConfig": supplierConfig?.toJson(),
-    "whiteLabelData": whiteLabelData.toJson(),
-    "registered": registered?.toIso8601String(),
-    "verified": verified?.toIso8601String(),
-    "licensesQuantity": licensesQuantity,
-    "featureLevel": featureLevel.string,
-    "premiumTrialStartDate": premiumTrialStartDate?.toIso8601String(),
-    "features": features.toJson(),
-    "currency": currency,
-    "useCurrencyForBudget": useCurrencyForBudget,
-    "delimiter": delimiter,
-    "intratool": intratool?.toJson(),
-    "beekeeperAccessToken": beekeeperAccessToken,
-    "shop": shop,
-    "starterKitNameToWorkwearIdToAmount": starterKitNameToWorkwearIdToAmount,
-    "warehouse": warehouse.toJson(),
-    "defaultFromSupplier": defaultFromSupplier,
-    "defaultUserPays": defaultUserPays,
-    ...super.toJson(),
-  };
+        "name": name,
+        "tenant": tenant,
+        "aliases": aliases.toList(),
+        "type": type.string,
+        "supplierConfig": supplierConfig?.toJson(),
+        "whiteLabelData": whiteLabelData.toJson(),
+        "registered": registered?.toIso8601String(),
+        "verified": verified?.toIso8601String(),
+        "licensesQuantity": licensesQuantity,
+        "featureLevel": featureLevel.string,
+        "premiumTrialStartDate": premiumTrialStartDate?.toIso8601String(),
+        "features": features.toJson(),
+        "currency": currency,
+        "useCurrencyForBudget": useCurrencyForBudget,
+        "delimiter": delimiter,
+        "intratool": intratool?.toJson(),
+        "beekeeperAccessToken": beekeeperAccessToken,
+        "shop": shop,
+        "starterKitNameToWorkwearIdToAmount":
+            starterKitNameToWorkwearIdToAmount,
+        "warehouse": warehouse.toJson(),
+        "defaultFromSupplier": defaultFromSupplier,
+        "defaultUserPays": defaultUserPays,
+        "customSuppliers": customSuppliers.toList(),
+        ...super.toJson(),
+      };
 
   @override
   Domain fromJson(Map<String, dynamic> json) => Domain.fromJson(json);
