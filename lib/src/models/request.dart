@@ -71,6 +71,7 @@ sealed class Request extends Model<Request> {
 class Order extends Request {
   String supplierDomainId;
   List<Package> packages;
+  Set<String> sourceOrderIds;
 
   Order({
     required super.domainId,
@@ -87,6 +88,7 @@ class Order extends Request {
     required super.adminMessage,
     required super.userMessage,
     required this.packages,
+    required this.sourceOrderIds,
   }) : super(
           id: id,
           created: created,
@@ -97,6 +99,7 @@ class Order extends Request {
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         supplierDomainId = json["supplierDomainId"],
+        sourceOrderIds = Set<String>.from(json["sourceOrderIds"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -117,6 +120,7 @@ class Order extends Request {
         "type": "order",
         "supplierDomainId": supplierDomainId,
         "packages": packages.map((package) => package.toJson()).toList(),
+        "sourceOrderIds": sourceOrderIds.toList(),
         ...super.toJson(),
       };
 
@@ -281,6 +285,7 @@ class Claim extends Order {
     required super.adminMessage,
     required super.userMessage,
     required super.packages,
+    required super.sourceOrderIds,
     required this.userInventory,
     required this.imageIds,
   }) : super(
