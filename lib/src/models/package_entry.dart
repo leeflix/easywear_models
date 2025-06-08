@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class PackageEntry {
-  bool userPays;
+  bool? userPays;
 
   // workwearId + sku
   int amount;
