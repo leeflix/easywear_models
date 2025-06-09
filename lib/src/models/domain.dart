@@ -1,4 +1,5 @@
 import 'package:easywear_models/easywear_models.dart';
+import 'package:easywear_models/src/models/beekeeper.dart';
 
 class Domain extends Model<Domain> {
   String? name;
@@ -17,7 +18,7 @@ class Domain extends Model<Domain> {
   bool useCurrencyForBudget;
   String delimiter;
   Intratool? intratool;
-  String? beekeeperAccessToken;
+  Beekeeper? beekeeper;
   Map<String, double?> shop;
   Map<String, Map<String, int>> starterKitNameToWorkwearIdToAmount;
   Inventory warehouse;
@@ -47,7 +48,7 @@ class Domain extends Model<Domain> {
     required this.useCurrencyForBudget,
     required this.delimiter,
     required this.intratool,
-    required this.beekeeperAccessToken,
+    required this.beekeeper,
     required this.shop,
     required this.starterKitNameToWorkwearIdToAmount,
     required this.warehouse,
@@ -87,7 +88,9 @@ class Domain extends Model<Domain> {
         intratool = json["intratool"] == null
             ? null
             : Intratool.fromJson(json["intratool"]),
-        beekeeperAccessToken = json["beekeeperAccessToken"],
+        beekeeper = json["beekeeper"] == null
+            ? null
+            : Beekeeper.fromJson(json["beekeeper"]),
         shop = (json["shop"] as Map)
             .map((key, value) => MapEntry(key, value?.toDouble())),
         starterKitNameToWorkwearIdToAmount =
@@ -126,7 +129,7 @@ class Domain extends Model<Domain> {
         "useCurrencyForBudget": useCurrencyForBudget,
         "delimiter": delimiter,
         "intratool": intratool?.toJson(),
-        "beekeeperAccessToken": beekeeperAccessToken,
+        "beekeeper": beekeeper?.toJson(),
         "shop": shop,
         "starterKitNameToWorkwearIdToAmount":
             starterKitNameToWorkwearIdToAmount,
