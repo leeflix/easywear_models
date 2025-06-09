@@ -22,7 +22,7 @@ class Domain extends Model<Domain> {
   Map<String, double?> shop;
   Map<String, Map<String, int>> starterKitNameToWorkwearIdToAmount;
   Inventory warehouse;
-  bool? defaultFromSupplier;
+  bool defaultFromSupplier;
   bool? defaultUserPays;
   Set<String> customSuppliers;
 
