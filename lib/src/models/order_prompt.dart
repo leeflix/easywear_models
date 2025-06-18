@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class OrderPrompt {
-  String? starterKitName;
+  String starterKitName;
   String supplierDomainId;
 
   OrderPrompt({
