@@ -136,7 +136,7 @@ class Order extends Request {
   @override
   String className() => "Order";
 
-  Set<String> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToPackageEntry.keys).flattened.toSet();
+  Set<String> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys).flattened.toSet();
 
   List<T> iterateSync<T>(
     T Function(
