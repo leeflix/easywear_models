@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
+import 'package:easywear_models/src/models/view_mode.dart';
 
 import 'inventory.dart';
 import 'model.dart';
@@ -73,7 +74,7 @@ class Order extends Request {
   String supplierDomainId;
   List<Package> packages;
   Set<String> sourceOrderIds;
-  View view;
+  ViewMode view;
 
   Order({
     required super.domainId,
@@ -103,7 +104,7 @@ class Order extends Request {
       : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         supplierDomainId = json["supplierDomainId"],
         sourceOrderIds = Set<String>.from(json["sourceOrderIds"]),
-        view = ViewExt.fromString(json["view"]),
+        view = ViewModeExt.fromString(json["view"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
