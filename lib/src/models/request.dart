@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 import 'inventory.dart';
 import 'model.dart';
@@ -72,6 +73,7 @@ class Order extends Request {
   String supplierDomainId;
   List<Package> packages;
   Set<String> sourceOrderIds;
+  View view;
 
   Order({
     required super.domainId,
@@ -89,6 +91,7 @@ class Order extends Request {
     required super.userMessage,
     required this.packages,
     required this.sourceOrderIds,
+    required this.view,
   }) : super(
           id: id,
           created: created,
@@ -100,6 +103,7 @@ class Order extends Request {
       : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         supplierDomainId = json["supplierDomainId"],
         sourceOrderIds = Set<String>.from(json["sourceOrderIds"]),
+        view = ViewExt.fromString(json["view"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -121,6 +125,7 @@ class Order extends Request {
         "supplierDomainId": supplierDomainId,
         "packages": packages.map((package) => package.toJson()).toList(),
         "sourceOrderIds": sourceOrderIds.toList(),
+        "view": view.string,
         ...super.toJson(),
       };
 
@@ -286,6 +291,7 @@ class Claim extends Order {
     required super.userMessage,
     required super.packages,
     required super.sourceOrderIds,
+    required super.view,
     required this.userInventory,
     required this.imageIds,
   }) : super(

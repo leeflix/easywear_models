@@ -28,3 +28,4 @@ export 'src/models/package.dart';
 export 'src/models/order_prompt.dart';
 export 'src/models/category.dart';
 export 'src/models/beekeeper.dart';
+export 'src/models/view.dart';
