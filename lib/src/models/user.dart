@@ -162,4 +162,15 @@ class User extends Model<User> {
 
   @override
   String className() => "User";
+
+  double currentBudget() {
+    DateTime now = DateTime.now();
+    double budget = budgetBeforeCalculation;
+    if (budgetPerMonth != 0) {
+      double daysSinceLastBudgetCalculation = (now.millisecondsSinceEpoch - lastBudgetCalculation.millisecondsSinceEpoch) / 1000.0 / 60.0 / 60.0 / 24.0;
+      double budgetPerDay = budgetPerMonth / 30.4167;
+      budget += budgetPerDay * daysSinceLastBudgetCalculation;
+    }
+    return budget;
+  }
 }
