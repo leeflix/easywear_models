@@ -5,7 +5,7 @@ import 'package:easywear_models/easywear_models.dart';
 
 class Package {
   Address? address;
-  Map<String, Map<String, Map<bool, PackageEntry>>>
+  Map<String, Map<String, Map<bool?, PackageEntry>>>
       workwearIdToSkuToUserPaysToPackageEntry;
 
   Package({
