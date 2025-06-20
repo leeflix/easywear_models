@@ -24,7 +24,7 @@ class Package {
                 sku,
                 userPaysToPackageEntry.map(
                   (userPays, packageEntry) => MapEntry(
-                    userPays,
+                    userPays.toString(),
                     packageEntry.toJson(),
                   ),
                 ),
@@ -46,7 +46,7 @@ class Package {
                 sku,
                 Map.from(userPaysToPackageEntry).map(
                   (userPays, packageEntry) =>
-                      MapEntry(userPays, PackageEntry.fromJson(packageEntry)),
+                      MapEntry(userPays == "null" ? null : bool.parse(userPays), PackageEntry.fromJson(packageEntry)),
                 ),
               ),
             ),
