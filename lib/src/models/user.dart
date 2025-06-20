@@ -71,14 +71,15 @@ class User extends Model<User> {
     required this.beekeeperUserId,
     required this.orderPrompts,
   }) : super(
-          id: id,
-          created: created,
-          updated: updated,
-          isArchived: isArchived,
-        );
+    id: id,
+    created: created,
+    updated: updated,
+    isArchived: isArchived,
+  );
 
   @override
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "isAdmin": isAdmin,
         "permissions": permissions.toJson(),
         "isVerified": isVerified,
@@ -131,8 +132,8 @@ class User extends Model<User> {
         companyInventory = Inventory.fromJson(json["companyInventory"]),
         userInventory = Inventory.fromJson(json["userInventory"]),
         workwearIdToDefaultConfig =
-            Map.from(json["workwearIdToDefaultConfig"]).map(
-          (workwearId, defaultConfig) =>
+        Map.from(json["workwearIdToDefaultConfig"]).map(
+              (workwearId, defaultConfig) =>
               MapEntry(workwearId, Map.from(defaultConfig)),
         ),
         budgetBeforeCalculation = json["budgetBeforeCalculation"].toDouble(),
@@ -148,12 +149,12 @@ class User extends Model<User> {
             .map((orderPrompt) => OrderPrompt.fromJson(orderPrompt))
             .toList(),
         super(
-          domainId: json["domainId"],
-          id: json["id"],
-          created: DateTime.parse(json["created"]),
-          updated: DateTime.parse(json["updated"]),
-          isArchived: json["isArchived"],
-        );
+        domainId: json["domainId"],
+        id: json["id"],
+        created: DateTime.parse(json["created"]),
+        updated: DateTime.parse(json["updated"]),
+        isArchived: json["isArchived"],
+      );
 
   String fullName() => "$firstName $lastName";
 
@@ -173,4 +174,10 @@ class User extends Model<User> {
     }
     return budget;
   }
-}
+
+  void setBudget({required double budget}) {
+    budgetBeforeCalculation = budget;
+    lastBudgetCalculation = DateTime.now();
+  }
+
+  void updateBudget({required double amount}) => setBudget(budget: currentBudget() + amount);
