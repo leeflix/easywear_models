@@ -1,9 +1,12 @@
+import 'package:easywear_models/easywear_models.dart';
+
 import 'model.dart';
 
 class Location extends Model<Location> {
   String name;
   Set<String> departmentIds;
   Map<String, double?> shop;
+  Inventory inventory;
 
   Location({
     required super.domainId,
@@ -14,6 +17,7 @@ class Location extends Model<Location> {
     required this.name,
     required this.departmentIds,
     required this.shop,
+    required this.inventory,
   }) : super(
           id: id,
           created: created,
@@ -25,6 +29,7 @@ class Location extends Model<Location> {
       : name = json["name"],
         departmentIds = Set<String>.from(json["departmentIds"]),
         shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
+        inventory = Inventory.fromJson(json["inventory"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -38,6 +43,7 @@ class Location extends Model<Location> {
         "name": name,
         "departmentIds": departmentIds.toList(),
         "shop": shop,
+        "inventory": inventory.toJson(),
         ...super.toJson(),
       };
 
