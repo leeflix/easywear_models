@@ -98,48 +98,40 @@ class Inventory {
     return maxAmount;
   }
 
-  List<T> iterateSync<T>(
-    T Function(
+  void iterateSync(
+    void Function(
       String workwearId,
       String sku,
       int amount,
     ) fn,
   ) {
-    List<T> results = [];
     for (var workwearId in workwearIds()) {
       for (var sku in items[workwearId]!.keys) {
-        results.add(
-          fn(
-            workwearId,
-            sku,
-            items[workwearId]![sku]!,
-          ),
+        fn(
+          workwearId,
+          sku,
+          items[workwearId]![sku]!,
         );
       }
     }
-    return results;
   }
 
-  FutureOr<List<T>> iterateAsync<T>(
-    FutureOr<T> Function(
+  Future<void> iterateAsync(
+    Future<void> Function(
       String workwearId,
       String sku,
       int amount,
     ) fn,
   ) async {
-    List<T> results = [];
     for (var workwearId in workwearIds()) {
       for (var sku in items[workwearId]!.keys) {
-        results.add(
-          await fn(
-            workwearId,
-            sku,
-            items[workwearId]![sku]!,
-          ),
+        await fn(
+          workwearId,
+          sku,
+          items[workwearId]![sku]!,
         );
       }
     }
-    return results;
   }
 
   void addInventory({required Inventory inventory}) {

@@ -45,8 +45,9 @@ class Package {
               (sku, userPaysToPackageEntry) => MapEntry(
                 sku,
                 Map.from(userPaysToPackageEntry).map(
-                  (userPays, packageEntry) =>
-                      MapEntry(userPays == "null" ? null : bool.parse(userPays), PackageEntry.fromJson(packageEntry)),
+                  (userPays, packageEntry) => MapEntry(
+                      userPays == "null" ? null : bool.parse(userPays),
+                      PackageEntry.fromJson(packageEntry)),
                 ),
               ),
             ),
@@ -56,60 +57,52 @@ class Package {
   @override
   String toString() => jsonEncode(this);
 
-  List<T> iterateSync<T>(
-    T Function(
+  void iterateSync(
+    void Function(
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
   ) {
-    List<T> res = [];
     for (var workwearId in workwearIdToSkuToUserPaysToPackageEntry.keys) {
       for (var sku
           in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
         for (var userPays
             in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!
                 .keys) {
-          res.add(
-            fn(
-              workwearId,
-              sku,
-              workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![
-                  userPays]!,
-            ),
+          fn(
+            workwearId,
+            sku,
+            workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![
+                userPays]!,
           );
         }
       }
     }
-    return res;
   }
 
-  FutureOr<List<T>> iterateAsync<T>(
-    FutureOr<T> Function(
+  Future<void> iterateAsync(
+    Future<void> Function(
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
   ) async {
-    List<T> res = [];
     for (var workwearId in workwearIdToSkuToUserPaysToPackageEntry.keys) {
       for (var sku
           in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
         for (var userPays
             in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!
                 .keys) {
-          res.add(
-            await fn(
-              workwearId,
-              sku,
-              workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![
-                  userPays]!,
-            ),
+          await fn(
+            workwearId,
+            sku,
+            workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![
+                userPays]!,
           );
         }
       }
     }
-    return res;
   }
 
   Inventory readInventory() {

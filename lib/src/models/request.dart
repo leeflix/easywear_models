@@ -53,7 +53,8 @@ sealed class Request extends Model<Request> {
         ...super.toJson(),
       };
 
-  static Request fromJson2(Map<String, dynamic> json) => switch (RequestTypeE.fromString(json["type"])) {
+  static Request fromJson2(Map<String, dynamic> json) =>
+      switch (RequestTypeE.fromString(json["type"])) {
         RequestType.order => Order.fromJson(json),
         RequestType.claim => Claim.fromJson(json),
         RequestType.correction => Correction.fromJson(json),
@@ -101,7 +102,9 @@ class Order extends Request {
         );
 
   Order.fromJson(Map<String, dynamic> json)
-      : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
+      : packages = json["packages"]
+            .map<Package>((package) => Package.fromJson(package))
+            .toList(),
         supplierDomainId = json["supplierDomainId"],
         sourceOrderIds = Set<String>.from(json["sourceOrderIds"]),
         view = ViewModeExt.fromString(json["view"]),
@@ -112,8 +115,12 @@ class Order extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
-          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
+          requested: json["requested"] == null
+              ? null
+              : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null
+              ? null
+              : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
@@ -136,64 +143,60 @@ class Order extends Request {
   @override
   String className() => "Order";
 
-  Set<String> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys).flattened.toSet();
+  Set<String> readWorkwearIds() => packages
+      .map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys)
+      .flattened
+      .toSet();
 
-  List<T> iterateSync<T>(
-    T Function(
+  void iterateSync(
+    void Function(
       int packageIndex,
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
   ) {
-    List<T> res = [];
-    int pacakgeIndex = 0;
-    for (var package in packages) {
-      res.addAll(
-        package.iterateSync(
-          (workwearId, sku, packageEntry) => fn(
-            pacakgeIndex,
-            workwearId,
-            sku,
-            packageEntry,
-          ),
+    for (var e in packages.asMap().entries) {
+      var packageIndex = e.key;
+      var package = e.value;
+      package.iterateSync(
+        (workwearId, sku, packageEntry) => fn(
+          packageIndex,
+          workwearId,
+          sku,
+          packageEntry,
         ),
       );
-      pacakgeIndex += 1;
     }
-    return res;
   }
 
-  FutureOr<List<T>> iterateAsync<T>(
-    FutureOr<T> Function(
+  Future<void> iterateAsync(
+    Future<void> Function(
       int packageIndex,
       String workwearId,
       String sku,
       PackageEntry packageEntry,
     ) fn,
   ) async {
-    List<T> res = [];
-    int pacakgeIndex = 0;
-    for (var package in packages) {
-      res.addAll(
-        await package.iterateAsync(
-          (workwearId, sku, packageEntry) => fn(
-            pacakgeIndex,
-            workwearId,
-            sku,
-            packageEntry,
-          ),
+    for (var e in packages.asMap().entries) {
+      var packageIndex = e.key;
+      var package = e.value;
+      await package.iterateAsync(
+        (workwearId, sku, packageEntry) => fn(
+          packageIndex,
+          workwearId,
+          sku,
+          packageEntry,
         ),
       );
-      pacakgeIndex += 1;
     }
-    return res;
   }
 
   Inventory readInventory() {
     Inventory inventory = Inventory.empty();
     iterateSync(
-      (packageIndex, workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
+      (packageIndex, workwearId, sku, packageEntry) =>
+          inventory.updateAmountInInventory(
         workwearId: workwearId,
         sku: sku,
         amount: packageEntry.amount,
@@ -205,7 +208,8 @@ class Order extends Request {
   double cost() {
     double cost = 0;
     iterateSync(
-      (packageIndex, workwearId, sku, packageEntry) => cost += packageEntry.amount * (packageEntry.cost ?? 0),
+      (packageIndex, workwearId, sku, packageEntry) =>
+          cost += packageEntry.amount * (packageEntry.cost ?? 0),
     );
     return cost;
   }
@@ -244,8 +248,12 @@ class Correction extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
-          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
+          requested: json["requested"] == null
+              ? null
+              : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null
+              ? null
+              : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
