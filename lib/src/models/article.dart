@@ -96,7 +96,7 @@ class Article {
   }
 
   double? getCostByPerItemByAmount({
-    required String domainId,
+    required String? domainId,
     required int amount,
   }) {
     Map<int, double> cost = getCost(domainId: domainId);
@@ -111,7 +111,7 @@ class Article {
   }
 
   double? getOldCostByPerItemByAmount({
-    required String domainId,
+    required String? domainId,
     required int amount,
   }) {
     Map<int, double> oldCost = getOldCost(domainId: domainId);
