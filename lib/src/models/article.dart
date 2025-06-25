@@ -42,8 +42,8 @@ class Article {
         "sku": sku,
         "configuration": configuration,
         "imageIds": imageIds.toList(),
-        "cost": defaultCost.map((k, v) => MapEntry(k.toString(), v)),
-        "oldCost": defaultOldCost.map((k, v) => MapEntry(k.toString(), v)),
+        "defaultCost": defaultCost.map((k, v) => MapEntry(k.toString(), v)),
+        "defaultOldCost": defaultOldCost.map((k, v) => MapEntry(k.toString(), v)),
         "domainIdToCost": domainIdToCost.map(
           (key, value) => MapEntry(
             key,
