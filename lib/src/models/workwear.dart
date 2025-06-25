@@ -59,31 +59,24 @@ class Workwear extends Model<Workwear> {
   @override
   String className() => "Workwear";
 
-  bool sale() {
-    for (var article in skuToArticle.values) {
-      if (article.oldCost.isNotEmpty) return true;
-    }
-    return false;
-  }
-
-  double? minCost() {
+  double? minCost({required String domainId}) {
     double? minCost;
     for (var article in skuToArticle.values) {
-      for (var cost in article.cost.values) {
-        if (minCost == null || cost < minCost) {
-          minCost = cost;
+      if (article.minCost(domainId: domainId) != null) {
+        if (minCost == null || article.minCost(domainId: domainId)! < minCost) {
+          minCost = article.minCost(domainId: domainId);
         }
       }
     }
     return minCost;
   }
 
-  double? maxCost() {
+  double? maxCost({required String domainId}) {
     double? maxCost;
     for (var article in skuToArticle.values) {
-      for (var cost in article.cost.values) {
-        if (maxCost == null || cost > maxCost) {
-          maxCost = cost;
+      if (article.maxCost(domainId: domainId) != null) {
+        if (maxCost == null || article.maxCost(domainId: domainId)! > maxCost) {
+          maxCost = article.maxCost(domainId: domainId);
         }
       }
     }
@@ -135,24 +128,22 @@ class Workwear extends Model<Workwear> {
     return propertiesToOptions;
   }
 
-  Article? cheapestArticle() {
-    double? minCost;
-    Article? cheapestArticle;
+  Article? cheapestArticle({required String domainId}) {
+    Article? cheapest;
     for (var article in skuToArticle.values) {
-      for (var cost in article.cost.values) {
-        if (minCost == null || cost < minCost) {
-          minCost = cost;
-          cheapestArticle = article;
-        }
+      double? minCost = article.minCost(domainId: domainId);
+      if (minCost == null) continue;
+      if (cheapest == null || minCost < cheapest.minCost(domainId: domainId)!) {
+        cheapest = article;
       }
     }
-    return cheapestArticle;
+    return cheapest;
   }
 
   Set<int> quantityBreaks() {
     Set<int> quantityBreaks = Set<int>();
     for (var article in skuToArticle.values) {
-      quantityBreaks.addAll(article.cost.keys);
+      quantityBreaks.addAll(article.defaultCost.keys);
     }
     return quantityBreaks;
   }
