@@ -4,17 +4,13 @@ class Article {
   String sku;
   Map<String, String> configuration;
   Set<String> imageIds;
-  Map<int, double> defaultCost;
-  Map<int, double> defaultOldCost;
-  Map<String, Map<int, double>> domainIdToCost = {};
-  Map<String, Map<int, double>> domainIdToOldCost = {};
+  Map<String?, Map<int, double>> domainIdToCost = {};
+  Map<String?, Map<int, double>> domainIdToOldCost = {};
 
   Article({
     required this.sku,
     required this.configuration,
     required this.imageIds,
-    required this.defaultCost,
-    required this.defaultOldCost,
     required this.domainIdToCost,
     required this.domainIdToOldCost,
   });
@@ -23,17 +19,15 @@ class Article {
       : sku = json["sku"],
         configuration = json["configuration"].map<String, String>((key, value) => MapEntry<String, String>(key, value)),
         imageIds = Set<String>.from(json["imageIds"]),
-        defaultCost = (json["defaultCost"] as Map).map<int, double>((key, value) => MapEntry<int, double>(int.parse(key), value.toDouble())),
-        defaultOldCost = (json["defaultOldCost"] as Map).map<int, double>((key, value) => MapEntry<int, double>(int.parse(key), value.toDouble())),
-        domainIdToCost = (json["domainIdToCost"] as Map).map<String, Map<int, double>>(
-          (key, value) => MapEntry<String, Map<int, double>>(
-            key,
+        domainIdToCost = (json["domainIdToCost"] as Map).map<String?, Map<int, double>>(
+          (key, value) => MapEntry<String?, Map<int, double>>(
+            key == "null" ? null : key,
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
         ),
-        domainIdToOldCost = (json["domainIdToOldCost"] as Map).map<String, Map<int, double>>(
-          (key, value) => MapEntry<String, Map<int, double>>(
-            key,
+        domainIdToOldCost = (json["domainIdToOldCost"] as Map).map<String?, Map<int, double>>(
+          (key, value) => MapEntry<String?, Map<int, double>>(
+            key == "null" ? null : key,
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
         );
@@ -42,17 +36,15 @@ class Article {
         "sku": sku,
         "configuration": configuration,
         "imageIds": imageIds.toList(),
-        "defaultCost": defaultCost.map((k, v) => MapEntry(k.toString(), v)),
-        "defaultOldCost": defaultOldCost.map((k, v) => MapEntry(k.toString(), v)),
         "domainIdToCost": domainIdToCost.map(
           (key, value) => MapEntry(
-            key,
+            key ?? "null",
             value.map((k, v) => MapEntry(k.toString(), v)),
           ),
         ),
         "domainIdToOldCost": domainIdToOldCost.map(
           (key, value) => MapEntry(
-            key,
+            key ?? "null",
             value.map((k, v) => MapEntry(k.toString(), v)),
           ),
         ),
@@ -62,7 +54,7 @@ class Article {
   String toString() => jsonEncode(this);
 
   Map<int, double> getCost({required String? domainId}) {
-    var defaultCostCopy = Map<int, double>.from(defaultCost);
+    var defaultCostCopy = Map<int, double>.from(domainIdToCost[null]!);
     if (domainId != null && domainIdToCost.containsKey(domainId)) {
       var costMap = domainIdToCost[domainId]!;
       for (var entry in costMap.entries) {
@@ -73,7 +65,7 @@ class Article {
   }
 
   Map<int, double> getOldCost({required String? domainId}) {
-    var defaultOldCostCopy = Map<int, double>.from(defaultOldCost);
+    var defaultOldCostCopy = Map<int, double>.from(domainIdToOldCost[null]!);
     if (domainId != null && domainIdToOldCost.containsKey(domainId)) {
       var costMap = domainIdToOldCost[domainId]!;
       for (var entry in costMap.entries) {

@@ -143,7 +143,7 @@ class Workwear extends Model<Workwear> {
   Set<int> quantityBreaks() {
     Set<int> quantityBreaks = Set<int>();
     for (var article in skuToArticle.values) {
-      quantityBreaks.addAll(article.defaultCost.keys);
+      quantityBreaks.addAll(article.domainIdToCost[null]!.keys);
     }
     return quantityBreaks;
   }
