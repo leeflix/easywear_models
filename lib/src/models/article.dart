@@ -21,29 +21,20 @@ class Article {
 
   Article.fromJson(Map<String, dynamic> json)
       : sku = json["sku"],
-        configuration = json["configuration"].map<String, String>(
-            (key, value) => MapEntry<String, String>(key, value)),
+        configuration = json["configuration"].map<String, String>((key, value) => MapEntry<String, String>(key, value)),
         imageIds = Set<String>.from(json["imageIds"]),
-        defaultCost = (json["defaultCost"] as Map).map<int, double>(
-            (key, value) =>
-                MapEntry<int, double>(int.parse(key), value.toDouble())),
-        defaultOldCost = (json["defaultOldCost"] as Map).map<int, double>(
-            (key, value) =>
-                MapEntry<int, double>(int.parse(key), value.toDouble())),
-        domainIdToCost =
-            (json["domainIdToCost"] as Map).map<String, Map<int, double>>(
+        defaultCost = (json["defaultCost"] as Map).map<int, double>((key, value) => MapEntry<int, double>(int.parse(key), value.toDouble())),
+        defaultOldCost = (json["defaultOldCost"] as Map).map<int, double>((key, value) => MapEntry<int, double>(int.parse(key), value.toDouble())),
+        domainIdToCost = (json["domainIdToCost"] as Map).map<String, Map<int, double>>(
           (key, value) => MapEntry<String, Map<int, double>>(
             key,
-            (value as Map).map<int, double>(
-                (k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
+            (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
         ),
-        domainIdToOldCost =
-            (json["domainIdToOldCost"] as Map).map<String, Map<int, double>>(
+        domainIdToOldCost = (json["domainIdToOldCost"] as Map).map<String, Map<int, double>>(
           (key, value) => MapEntry<String, Map<int, double>>(
             key,
-            (value as Map).map<int, double>(
-                (k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
+            (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
         );
 
@@ -70,66 +61,75 @@ class Article {
   @override
   String toString() => jsonEncode(this);
 
-  double? minCost({required String domainId}) {
-    if (domainIdToCost.containsKey(domainId)) {
+  Map<int, double> getCost({required String? domainId}) {
+    var defaultCostCopy = Map<int, double>.from(defaultCost);
+    if (domainId != null && domainIdToCost.containsKey(domainId)) {
       var costMap = domainIdToCost[domainId]!;
-      return costMap.values.reduce((a, b) => a < b ? a : b);
-    } else {
-      return null;
+      for (var entry in costMap.entries) {
+        defaultCostCopy[entry.key] = entry.value;
+      }
     }
+    return defaultCostCopy;
   }
 
-  double? maxCost({required String domainId}) {
-    if (domainIdToCost.containsKey(domainId)) {
-      var costMap = domainIdToCost[domainId]!;
-      return costMap.values.reduce((a, b) => a > b ? a : b);
-    } else {
-      return null;
+  Map<int, double> getOldCost({required String? domainId}) {
+    var defaultOldCostCopy = Map<int, double>.from(defaultOldCost);
+    if (domainId != null && domainIdToOldCost.containsKey(domainId)) {
+      var costMap = domainIdToOldCost[domainId]!;
+      for (var entry in costMap.entries) {
+        defaultOldCostCopy[entry.key] = entry.value;
+      }
     }
+    return defaultOldCostCopy;
+  }
+
+  double? minCost({required String? domainId}) {
+    Map<int, double> cost = getCost(domainId: domainId);
+    double? minCost = cost.values.reduce((a, b) => a < b ? a : b);
+    return minCost;
+  }
+
+  double? maxCost({required String? domainId}) {
+    Map<int, double> cost = getCost(domainId: domainId);
+    double? maxCost = cost.values.reduce((a, b) => a > b ? a : b);
+    return maxCost;
   }
 
   double? getCostByPerItemByAmount({
     required String domainId,
     required int amount,
   }) {
-    if (domainIdToCost.containsKey(domainId)) {
-      var costMap = domainIdToCost[domainId]!;
-      double? cost;
-      for (var entry in costMap.entries) {
-        if (entry.key <= amount && (cost == null || entry.value < cost)) {
-          cost = entry.value;
-        }
+    Map<int, double> cost = getCost(domainId: domainId);
+    if (cost.isEmpty) return null;
+    double? costValue;
+    for (var entry in cost.entries) {
+      if (entry.key <= amount && (costValue == null || entry.value < costValue)) {
+        costValue = entry.value;
       }
-      return cost;
-    } else {
-      return null;
     }
+    return costValue;
   }
 
   double? getOldCostByPerItemByAmount({
     required String domainId,
     required int amount,
   }) {
-    if (domainIdToOldCost.containsKey(domainId)) {
-      var costMap = domainIdToOldCost[domainId]!;
-      double? cost;
-      for (var entry in costMap.entries) {
-        if (entry.key <= amount && (cost == null || entry.value < cost)) {
-          cost = entry.value;
-        }
+    Map<int, double> oldCost = getOldCost(domainId: domainId);
+    if (oldCost.isEmpty) return null;
+    double? costValue;
+    for (var entry in oldCost.entries) {
+      if (entry.key <= amount && (costValue == null || entry.value < costValue)) {
+        costValue = entry.value;
       }
-      return cost;
-    } else {
-      return null;
     }
+    return costValue;
   }
 
   bool matchConfiguration({
     required Map<String, String?> configuration,
     required bool strict,
   }) {
-    if (strict && configuration.length != this.configuration.length)
-      return false;
+    if (strict && configuration.length != this.configuration.length) return false;
     for (var entry in configuration.entries) {
       if (this.configuration[entry.key] == null) return false;
       if (this.configuration[entry.key] != entry.value) return false;
