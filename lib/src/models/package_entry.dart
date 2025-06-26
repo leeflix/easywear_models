@@ -3,7 +3,6 @@ import 'dart:convert';
 class PackageEntry {
   bool? userPays;
 
-  // workwearId + sku
   int amount;
   int? amountHandled;
 
@@ -17,11 +16,12 @@ class PackageEntry {
 
   double? shopPrice;
 
+  DateTime? received;
 
 
   PackageEntry({
     required this.amount,
-    this.amountHandled,
+    required this.amountHandled,
     required this.userPays,
     required this.toBuy,
     required this.fromWarehouse,
@@ -29,6 +29,7 @@ class PackageEntry {
     required this.cost,
     required this.departmentId,
     required this.booked,
+    required this.received,
   });
 
   Map<String, dynamic> toJson() => {
@@ -41,6 +42,7 @@ class PackageEntry {
         "cost": cost,
         "departmentId": departmentId,
         "booked": booked?.toIso8601String(),
+        "received": received?.toIso8601String(),
       };
 
   PackageEntry.fromJson(Map<String, dynamic> json)
@@ -52,7 +54,8 @@ class PackageEntry {
         shopPrice = json["shopPrice"]?.toDouble(),
         cost = json["cost"]?.toDouble(),
         departmentId = json["departmentId"],
-        booked = json["booked"] == null ? null : DateTime.parse(json["booked"]);
+        booked = json["booked"] == null ? null : DateTime.parse(json["booked"]),
+        received = json["received"] == null ? null : DateTime.parse(json["received"]);
 
   @override
   String toString() => jsonEncode(this);
