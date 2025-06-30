@@ -259,7 +259,7 @@ class Correction extends Request {
 
 class Claim extends Order {
   bool userInventory;
-  Set<Id<Request>> imageIds;
+  Set<ImageId> imageIds;
 
   Claim({
     required super.domainId,
@@ -290,7 +290,7 @@ class Claim extends Order {
   @override
   Claim.fromJson(Map<String, dynamic> json)
       : userInventory = json["userInventory"],
-        imageIds = Set<Id<Request>>.from(json["imageIds"]),
+        imageIds = Set<ImageId>.from(json["imageIds"]),
         super.fromJson(json);
 
   @override
