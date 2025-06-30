@@ -1,4 +1,4 @@
-import 'language.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 enum RequestStatus {
   inShoppingCart,
@@ -12,8 +12,7 @@ enum RequestStatus {
 extension RequestStatusExt on RequestStatus {
   String get string => toString().split(".").last;
 
-  static RequestStatus fromString(String s) =>
-      RequestStatus.values.firstWhere((e) => e.string == s);
+  static RequestStatus fromString(String s) => RequestStatus.values.firstWhere((e) => e.string == s);
 
   String uiText(Language currentLanguage) {
     switch (this) {

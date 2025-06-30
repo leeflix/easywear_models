@@ -1,11 +1,9 @@
 import 'package:easywear_models/easywear_models.dart';
 
-import 'model.dart';
-
 class Location extends Model<Location> {
   String name;
-  Set<String> departmentIds;
-  Map<String, double?> shop;
+  Set<DepartmentId> departmentIds;
+  Map<WorkwearId, double?> shop;
   Inventory inventory;
 
   Location({

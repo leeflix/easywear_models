@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easywear_models/easywear_models.dart';
 import 'package:easywear_models/util.dart';
 import 'package:uuid/uuid.dart';
 
@@ -8,7 +9,7 @@ abstract class Model<T extends Model<T>> {
   DateTime created;
   DateTime updated;
   bool isArchived;
-  String domainId;
+  DomainId domainId;
 
   Model({
     required this.domainId,
@@ -33,8 +34,7 @@ abstract class Model<T extends Model<T>> {
     };
   }
 
-  T fromMongoDoc(Map<String, dynamic> doc) =>
-      fromJson(removeUnderscoreFromId(doc));
+  T fromMongoDoc(Map<String, dynamic> doc) => fromJson(removeUnderscoreFromId(doc));
 
   Map<String, dynamic> toMongoDoc() => addUnderscoreToId(toJson());
 

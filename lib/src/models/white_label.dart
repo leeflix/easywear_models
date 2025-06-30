@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:easywear_models/easywear_models.dart';
+
 class WhiteLabel {
   String? solutionName;
-  String? logoLightBackgroundImageId;
-  String? logoDarkBackgroundImageId;
-  String? faviconImageId;
+  ImageId? logoLightBackgroundImageId;
+  ImageId? logoDarkBackgroundImageId;
+  ImageId? faviconImageId;
   String? primaryColor;
   String? secondaryColor;
   String? tertiaryColor;
@@ -43,11 +45,9 @@ class WhiteLabel {
 
   String getSolutionName() => solutionName ?? _defaultSolutionName;
 
-  String getLogoLightBackgroundImageId() =>
-      logoLightBackgroundImageId ?? _defaultLogoLightBackgroundImageId;
+  String getLogoLightBackgroundImageId() => logoLightBackgroundImageId ?? _defaultLogoLightBackgroundImageId;
 
-  String getLogoDarkBackgroundImageId() =>
-      logoDarkBackgroundImageId ?? _defaultLogoDarkBackground;
+  String getLogoDarkBackgroundImageId() => logoDarkBackgroundImageId ?? _defaultLogoDarkBackground;
 
   String getFaviconImageId() => faviconImageId ?? _defaultFaviconImageId;
 

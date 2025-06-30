@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:easywear_models/easywear_models.dart';
+
 class PackageEntry {
   bool? userPays;
 
@@ -11,7 +13,7 @@ class PackageEntry {
   int? fromWarehouse;
 
   double? cost;
-  String? departmentId;
+  DepartmentId? departmentId;
   DateTime? booked;
 
   double? shopPrice;

@@ -1,10 +1,4 @@
-import 'package:easywear_models/src/models/order_prompt.dart';
-
-import 'address.dart';
-import 'inventory.dart';
-import 'language.dart';
-import 'model.dart';
-import 'permissions.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 class User extends Model<User> {
   bool isAdmin;
@@ -13,7 +7,7 @@ class User extends Model<User> {
   String? firstName;
   String? lastName;
   String? personnelNumber;
-  String? imageId;
+  ImageId? imageId;
   String? userName;
   String? companyMail;
   String? contactMail;
@@ -24,7 +18,7 @@ class User extends Model<User> {
   Language language;
   Inventory companyInventory;
   Inventory userInventory;
-  Map<String, Map<String, String?>> workwearIdToDefaultConfig;
+  Map<WorkwearId, Map<String, String?>> workwearIdToDefaultConfig;
   double budgetBeforeCalculation;
   double budgetPerMonth;
   DateTime lastBudgetCalculation;

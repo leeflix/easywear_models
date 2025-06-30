@@ -1,10 +1,9 @@
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/models/beekeeper.dart';
 
 class Domain extends Model<Domain> {
   String? name;
   String? tenant;
-  Set<String> aliases;
+  Set<DomainId> aliases;
   EasyType type;
   SupplierConfig? supplierConfig;
   WhiteLabel whiteLabelData;
@@ -19,12 +18,11 @@ class Domain extends Model<Domain> {
   String delimiter;
   Intratool? intratool;
   Beekeeper? beekeeper;
-  Map<String, double?> shop;
-  Map<String, Map<String, int>> starterKitNameToWorkwearIdToAmount;
+  Map<WorkwearId, double?> shop;
+  Map<StarterKitId, Map<WorkwearId, int>> starterKitNameToWorkwearIdToAmount;
   Inventory warehouse;
   bool defaultFromSupplier;
   bool? defaultUserPays;
-  Set<String> customSuppliers;
 
   Domain({
     required super.domainId,
@@ -54,7 +52,6 @@ class Domain extends Model<Domain> {
     required this.warehouse,
     required this.defaultFromSupplier,
     required this.defaultUserPays,
-    required this.customSuppliers,
   }) : super(
           id: id ?? domainId,
           created: created,
@@ -67,42 +64,24 @@ class Domain extends Model<Domain> {
         tenant = json["tenant"],
         aliases = Set<String>.from(json["aliases"]),
         type = EasyTypeExt.fromString(json["type"]),
-        supplierConfig = json["supplierConfig"] == null
-            ? null
-            : SupplierConfig.fromJson(json["supplierConfig"]),
+        supplierConfig = json["supplierConfig"] == null ? null : SupplierConfig.fromJson(json["supplierConfig"]),
         whiteLabelData = WhiteLabel.fromJson(json["whiteLabelData"]),
-        registered = json["registered"] == null
-            ? null
-            : DateTime.parse(json["registered"]),
-        verified =
-            json["verified"] == null ? null : DateTime.parse(json["verified"]),
+        registered = json["registered"] == null ? null : DateTime.parse(json["registered"]),
+        verified = json["verified"] == null ? null : DateTime.parse(json["verified"]),
         licensesQuantity = json["licensesQuantity"],
         featureLevel = FeatureLevelExt.fromString(json["featureLevel"]),
-        premiumTrialStartDate = json["premiumTrialStartDate"] == null
-            ? null
-            : DateTime.parse(json["premiumTrialStartDate"]),
+        premiumTrialStartDate = json["premiumTrialStartDate"] == null ? null : DateTime.parse(json["premiumTrialStartDate"]),
         features = Features.fromJson(json["features"]),
         currency = json["currency"],
         useCurrencyForBudget = json["useCurrencyForBudget"],
         delimiter = json["delimiter"],
-        intratool = json["intratool"] == null
-            ? null
-            : Intratool.fromJson(json["intratool"]),
-        beekeeper = json["beekeeper"] == null
-            ? null
-            : Beekeeper.fromJson(json["beekeeper"]),
-        shop = (json["shop"] as Map)
-            .map((key, value) => MapEntry(key, value?.toDouble())),
-        starterKitNameToWorkwearIdToAmount =
-            (json["starterKitNameToWorkwearIdToAmount"] as Map).map(
-                (key, value) => MapEntry(
-                    key,
-                    (value as Map<String, dynamic>)
-                        .map((k, v) => MapEntry(k, v.toInt())))),
+        intratool = json["intratool"] == null ? null : Intratool.fromJson(json["intratool"]),
+        beekeeper = json["beekeeper"] == null ? null : Beekeeper.fromJson(json["beekeeper"]),
+        shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
+        starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map).map((key, value) => MapEntry(key, (value as Map<String, dynamic>).map((k, v) => MapEntry(k, v.toInt())))),
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],
-        customSuppliers = Set<String>.from(json["customSuppliers"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -131,12 +110,10 @@ class Domain extends Model<Domain> {
         "intratool": intratool?.toJson(),
         "beekeeper": beekeeper?.toJson(),
         "shop": shop,
-        "starterKitNameToWorkwearIdToAmount":
-            starterKitNameToWorkwearIdToAmount,
+        "starterKitNameToWorkwearIdToAmount": starterKitNameToWorkwearIdToAmount,
         "warehouse": warehouse.toJson(),
         "defaultFromSupplier": defaultFromSupplier,
         "defaultUserPays": defaultUserPays,
-        "customSuppliers": customSuppliers.toList(),
         ...super.toJson(),
       };
 

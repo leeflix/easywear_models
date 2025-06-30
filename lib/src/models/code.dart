@@ -1,8 +1,8 @@
-import 'model.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 class Code extends Model<Code> {
   String code;
-  String? departmentId;
+  DepartmentId? departmentId;
   bool isAdmin;
   int uses;
   int maxUses;

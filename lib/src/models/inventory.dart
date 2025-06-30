@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:easywear_models/easywear_models.dart';
+
 class Inventory {
-  Map<String, Map<String, int>> items;
+  Map<WorkwearId, Map<ArticleId, int>> items;
 
   Inventory({required this.items});
 

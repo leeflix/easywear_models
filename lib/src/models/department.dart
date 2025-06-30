@@ -1,9 +1,9 @@
-import 'model.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 class Department extends Model<Department> {
   String name;
-  Set<String> userIds;
-  Map<String, double?> shop;
+  Set<UserId> userIds;
+  Map<WorkwearId, double?> shop;
 
   Department({
     required super.domainId,

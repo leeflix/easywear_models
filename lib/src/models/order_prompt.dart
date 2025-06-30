@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:easywear_models/easywear_models.dart';
+
 class OrderPrompt {
-  String starterKitName;
-  String supplierDomainId;
+  StarterKitId starterKitName;
+  DomainId supplierDomainId;
 
   OrderPrompt({
     required this.starterKitName,

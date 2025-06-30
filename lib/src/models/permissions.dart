@@ -1,7 +1,9 @@
+import 'package:easywear_models/easywear_models.dart';
+
 class Permissions {
-  Set<String> domainIds;
-  Set<String> locationIds;
-  Set<String> departmentIds;
+  Set<DomainId> domainIds;
+  Set<LocationId> locationIds;
+  Set<DepartmentId> departmentIds;
 
   Permissions({
     required this.domainIds,

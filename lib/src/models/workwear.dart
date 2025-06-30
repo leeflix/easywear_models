@@ -1,12 +1,10 @@
-import 'article.dart';
-import 'category.dart';
-import 'model.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 class Workwear extends Model<Workwear> {
   String name;
-  Set<String> imageIds;
+  Set<ImageId> imageIds;
   Set<Category> categories;
-  Map<String, Article> skuToArticle;
+  Map<ArticleId, Article> skuToArticle;
   String? customSupplier;
 
   Workwear({
@@ -30,10 +28,8 @@ class Workwear extends Model<Workwear> {
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         imageIds = Set<String>.from(json["imageIds"]),
-        categories = Set<Category>.from(
-            json["categories"].map((e) => CategoryExt.fromString(e))),
-        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
-            MapEntry<String, Article>(key, Article.fromJson(value))),
+        categories = Set<Category>.from(json["categories"].map((e) => CategoryExt.fromString(e))),
+        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
         customSupplier = json["customSupplier"],
         super(
           domainId: json["domainId"],

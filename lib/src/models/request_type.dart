@@ -1,4 +1,4 @@
-import 'language.dart';
+import 'package:easywear_models/easywear_models.dart';
 
 enum RequestType {
   order,
@@ -9,8 +9,7 @@ enum RequestType {
 extension RequestTypeE on RequestType {
   String get string => toString().split(".").last;
 
-  static RequestType fromString(String string) =>
-      RequestType.values.firstWhere((e) => e.string == string);
+  static RequestType fromString(String string) => RequestType.values.firstWhere((e) => e.string == string);
 
   String uiText(Language language) => switch (this) {
         RequestType.order => switch (language) {

@@ -12,7 +12,7 @@ import 'request_status.dart';
 import 'request_type.dart';
 
 sealed class Request extends Model<Request> {
-  String userId;
+  UserId userId;
   DateTime? requested;
   DateTime? canceled;
   String? cancelReason;

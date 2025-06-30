@@ -1,14 +1,14 @@
 import 'dart:convert';
 
+import 'package:easywear_models/src/models/ids.dart';
+
 class Article {
-  String sku;
   Map<String, String> configuration;
-  Set<String> imageIds;
-  Map<String?, Map<int, double>> domainIdToCost = {};
-  Map<String?, Map<int, double>> domainIdToOldCost = {};
+  Set<ImageId> imageIds;
+  Map<DomainId?, Map<int, double>> domainIdToCost = {};
+  Map<DomainId?, Map<int, double>> domainIdToOldCost = {};
 
   Article({
-    required this.sku,
     required this.configuration,
     required this.imageIds,
     required this.domainIdToCost,
@@ -16,8 +16,7 @@ class Article {
   });
 
   Article.fromJson(Map<String, dynamic> json)
-      : sku = json["sku"],
-        configuration = json["configuration"].map<String, String>((key, value) => MapEntry<String, String>(key, value)),
+      : configuration = json["configuration"].map<String, String>((key, value) => MapEntry<String, String>(key, value)),
         imageIds = Set<String>.from(json["imageIds"]),
         domainIdToCost = (json["domainIdToCost"] as Map).map<String?, Map<int, double>>(
           (key, value) => MapEntry<String?, Map<int, double>>(
@@ -33,7 +32,6 @@ class Article {
         );
 
   Map<String, dynamic> toJson() => {
-        "sku": sku,
         "configuration": configuration,
         "imageIds": imageIds.toList(),
         "domainIdToCost": domainIdToCost.map(

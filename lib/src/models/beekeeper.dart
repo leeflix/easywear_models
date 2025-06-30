@@ -12,7 +12,7 @@ class Beekeeper {
         fqdn = json["fqdn"];
 
   Map<String, dynamic> toJson() => {
-    "accessToken": accessToken,
-    "fqdn": fqdn,
-  };
+        "accessToken": accessToken,
+        "fqdn": fqdn,
+      };
 }
