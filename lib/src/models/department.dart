@@ -7,7 +7,7 @@ class Department extends Model<Department> {
 
   Department({
     required super.domainId,
-    String? id,
+    DepartmentId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

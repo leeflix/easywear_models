@@ -45,11 +45,11 @@ class WhiteLabel {
 
   String getSolutionName() => solutionName ?? _defaultSolutionName;
 
-  String getLogoLightBackgroundImageId() => logoLightBackgroundImageId ?? _defaultLogoLightBackgroundImageId;
+  ImageId getLogoLightBackgroundImageId() => logoLightBackgroundImageId ?? _defaultLogoLightBackgroundImageId;
 
-  String getLogoDarkBackgroundImageId() => logoDarkBackgroundImageId ?? _defaultLogoDarkBackground;
+  ImageId getLogoDarkBackgroundImageId() => logoDarkBackgroundImageId ?? _defaultLogoDarkBackgroundImageId;
 
-  String getFaviconImageId() => faviconImageId ?? _defaultFaviconImageId;
+  ImageId getFaviconImageId() => faviconImageId ?? _defaultFaviconImageId;
 
   String getPrimaryColor() => primaryColor ?? _defaultPrimaryColor;
 
@@ -58,9 +58,9 @@ class WhiteLabel {
   String getTertiaryColor() => tertiaryColor ?? _defaultTertiaryColor;
 
   static const String _defaultSolutionName = "EasyWear";
-  static const String _defaultLogoLightBackgroundImageId = "d9a74ceefd8eabf8884f6c8b9de49028462e6f8a8eeb3f878086b81905ec87a1.png";
-  static const String _defaultLogoDarkBackground = "bcd4f05924ca5d3fa547683a398eb13b6482ac75238b8d6104dedb7896c7c805.png";
-  static const String _defaultFaviconImageId = "44f0eca8d6071f86405a87bbbedb06405b240315ebc75e132b6c9191bbdd4caf.png";
+  static ImageId _defaultLogoLightBackgroundImageId = ImageId("d9a74ceefd8eabf8884f6c8b9de49028462e6f8a8eeb3f878086b81905ec87a1.png");
+  static ImageId _defaultLogoDarkBackgroundImageId = ImageId("bcd4f05924ca5d3fa547683a398eb13b6482ac75238b8d6104dedb7896c7c805.png");
+  static ImageId _defaultFaviconImageId = ImageId("44f0eca8d6071f86405a87bbbedb06405b240315ebc75e132b6c9191bbdd4caf.png");
   static const String _defaultPrimaryColor = "FF213449";
   static const String _defaultSecondaryColor = "FF5883F2";
   static const String _defaultTertiaryColor = "FFEFF5F8";

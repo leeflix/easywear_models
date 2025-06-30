@@ -8,7 +8,7 @@ class Location extends Model<Location> {
 
   Location({
     required super.domainId,
-    String? id,
+    LocationId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -25,7 +25,7 @@ class Location extends Model<Location> {
 
   Location.fromJson(Map<String, dynamic> json)
       : name = json["name"],
-        departmentIds = Set<String>.from(json["departmentIds"]),
+        departmentIds = Set<DepartmentId>.from(json["departmentIds"]),
         shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
         inventory = Inventory.fromJson(json["inventory"]),
         super(

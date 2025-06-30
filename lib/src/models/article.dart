@@ -17,15 +17,15 @@ class Article {
 
   Article.fromJson(Map<String, dynamic> json)
       : configuration = json["configuration"].map<String, String>((key, value) => MapEntry<String, String>(key, value)),
-        imageIds = Set<String>.from(json["imageIds"]),
-        domainIdToCost = (json["domainIdToCost"] as Map).map<String?, Map<int, double>>(
-          (key, value) => MapEntry<String?, Map<int, double>>(
+        imageIds = Set<ImageId>.from(json["imageIds"]),
+        domainIdToCost = (json["domainIdToCost"] as Map).map<DomainId?, Map<int, double>>(
+          (key, value) => MapEntry<DomainId?, Map<int, double>>(
             key == "null" ? null : key,
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
         ),
-        domainIdToOldCost = (json["domainIdToOldCost"] as Map).map<String?, Map<int, double>>(
-          (key, value) => MapEntry<String?, Map<int, double>>(
+        domainIdToOldCost = (json["domainIdToOldCost"] as Map).map<DomainId?, Map<int, double>>(
+          (key, value) => MapEntry<DomainId?, Map<int, double>>(
             key == "null" ? null : key,
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),

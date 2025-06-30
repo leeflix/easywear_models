@@ -12,9 +12,9 @@
     });
 
     Permissions.fromJson(Map<String, dynamic> json)
-        : domainIds = Set<String>.from(json["domainIds"]),
-          locationIds = Set<String>.from(json["locationIds"]),
-          departmentIds = Set<String>.from(json["departmentIds"]);
+        : domainIds = Set<DomainId>.from(json["domainIds"]),
+          locationIds = Set<LocationId>.from(json["locationIds"]),
+          departmentIds = Set<DepartmentId>.from(json["departmentIds"]);
 
     Map<String, dynamic> toJson() => {
           "domainIds": domainIds.toList(),

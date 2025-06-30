@@ -32,7 +32,7 @@ class User extends Model<User> {
 
   User({
     required super.domainId,
-    String? id,
+    UserId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

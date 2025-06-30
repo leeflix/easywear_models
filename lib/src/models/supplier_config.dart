@@ -26,9 +26,9 @@ class SupplierConfig {
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
-      : customerDomainIds = Set<String>.from(json["customerDomainIds"]),
+      : customerDomainIds = Set<DomainId>.from(json["customerDomainIds"]),
         domainIdToWorkwearIds = (json["domainIdToWorkwearIds"] as Map).map(
-          (key, value) => MapEntry(key, Set<String>.from(value)),
+          (key, value) => MapEntry(key, Set<WorkwearId>.from(value)),
         ),
         returnPolicyUrl = json["returnPolicyUrl"],
         supportEmail = json["supportEmail"],

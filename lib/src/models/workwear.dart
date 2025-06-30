@@ -9,7 +9,7 @@ class Workwear extends Model<Workwear> {
 
   Workwear({
     required super.domainId,
-    String? id,
+    WorkwearId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -27,7 +27,7 @@ class Workwear extends Model<Workwear> {
 
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
-        imageIds = Set<String>.from(json["imageIds"]),
+        imageIds = Set<ImageId>.from(json["imageIds"]),
         categories = Set<Category>.from(json["categories"].map((e) => CategoryExt.fromString(e))),
         skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
         customSupplier = json["customSupplier"],
@@ -87,8 +87,8 @@ class Workwear extends Model<Workwear> {
     return false;
   }
 
-  Set<String> allImages() {
-    Set<String> images = Set<String>.from(imageIds);
+  Set<ImageId> allImages() {
+    Set<ImageId> images = Set<ImageId>.from(imageIds);
     for (var article in skuToArticle.values) {
       images.addAll(article.imageIds);
     }

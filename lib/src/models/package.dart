@@ -59,8 +59,8 @@ class Package {
 
   void iterateSync(
     void Function(
-      String workwearId,
-      String sku,
+      WorkwearId workwearId,
+      ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
   ) {
@@ -83,8 +83,8 @@ class Package {
 
   Future<void> iterateAsync(
     Future<void> Function(
-      String workwearId,
-      String sku,
+      WorkwearId workwearId,
+      ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
   ) async {
@@ -119,8 +119,8 @@ class Package {
 
   List<T> mapSync<T>(
     T Function(
-      String workwearId,
-      String sku,
+      WorkwearId workwearId,
+      ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
   ) {

@@ -26,7 +26,7 @@ class Domain extends Model<Domain> {
 
   Domain({
     required super.domainId,
-    String? id,
+    DomainId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -62,7 +62,7 @@ class Domain extends Model<Domain> {
   Domain.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         tenant = json["tenant"],
-        aliases = Set<String>.from(json["aliases"]),
+        aliases = Set<DomainId>.from(json["aliases"]),
         type = EasyTypeExt.fromString(json["type"]),
         supplierConfig = json["supplierConfig"] == null ? null : SupplierConfig.fromJson(json["supplierConfig"]),
         whiteLabelData = WhiteLabel.fromJson(json["whiteLabelData"]),
@@ -78,7 +78,7 @@ class Domain extends Model<Domain> {
         intratool = json["intratool"] == null ? null : Intratool.fromJson(json["intratool"]),
         beekeeper = json["beekeeper"] == null ? null : Beekeeper.fromJson(json["beekeeper"]),
         shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
-        starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map).map((key, value) => MapEntry(key, (value as Map<String, dynamic>).map((k, v) => MapEntry(k, v.toInt())))),
+        starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map).map((key, value) => MapEntry(key, (value as Map<String, dynamic>).map((k, v) => MapEntry(WorkwearId(k), v.toInt())))),
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],

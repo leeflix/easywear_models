@@ -2,14 +2,6 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/models/view_mode.dart';
-
-import 'inventory.dart';
-import 'model.dart';
-import 'package.dart';
-import 'package_entry.dart';
-import 'request_status.dart';
-import 'request_type.dart';
 
 sealed class Request extends Model<Request> {
   UserId userId;
@@ -22,7 +14,7 @@ sealed class Request extends Model<Request> {
 
   Request({
     required super.domainId,
-    String? id,
+    RequestId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -53,8 +45,7 @@ sealed class Request extends Model<Request> {
         ...super.toJson(),
       };
 
-  static Request fromJson2(Map<String, dynamic> json) =>
-      switch (RequestTypeE.fromString(json["type"])) {
+  static Request fromJson2(Map<String, dynamic> json) => switch (RequestTypeE.fromString(json["type"])) {
         RequestType.order => Order.fromJson(json),
         RequestType.claim => Claim.fromJson(json),
         RequestType.correction => Correction.fromJson(json),
@@ -66,7 +57,7 @@ sealed class Request extends Model<Request> {
         Correction _ => RequestType.correction,
       };
 
-  Set<String> readWorkwearIds();
+  Set<WorkwearId> readWorkwearIds();
 
   Inventory readInventory();
 }
@@ -79,7 +70,7 @@ class Order extends Request {
 
   Order({
     required super.domainId,
-    String? id,
+    RequestId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -102,9 +93,7 @@ class Order extends Request {
         );
 
   Order.fromJson(Map<String, dynamic> json)
-      : packages = json["packages"]
-            .map<Package>((package) => Package.fromJson(package))
-            .toList(),
+      : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         supplierDomainId = json["supplierDomainId"],
         sourceOrderIds = Set<String>.from(json["sourceOrderIds"]),
         view = ViewModeExt.fromString(json["view"]),
@@ -115,12 +104,8 @@ class Order extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: json["requested"] == null
-              ? null
-              : DateTime.parse(json["requested"]),
-          canceled: json["canceled"] == null
-              ? null
-              : DateTime.parse(json["canceled"]),
+          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
@@ -143,16 +128,14 @@ class Order extends Request {
   @override
   String className() => "Order";
 
-  Set<String> readWorkwearIds() => packages
-      .map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys)
-      .flattened
-      .toSet();
+  @override
+  Set<WorkwearId> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys).flattened.toSet();
 
   void iterateSync(
     void Function(
       int packageIndex,
-      String workwearId,
-      String sku,
+      WorkwearId workwearId,
+      ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
   ) {
@@ -173,8 +156,8 @@ class Order extends Request {
   Future<void> iterateAsync(
     Future<void> Function(
       int packageIndex,
-      String workwearId,
-      String sku,
+      WorkwearId workwearId,
+      ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
   ) async {
@@ -195,8 +178,7 @@ class Order extends Request {
   Inventory readInventory() {
     Inventory inventory = Inventory.empty();
     iterateSync(
-      (packageIndex, workwearId, sku, packageEntry) =>
-          inventory.updateAmountInInventory(
+      (packageIndex, workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
         workwearId: workwearId,
         sku: sku,
         amount: packageEntry.amount,
@@ -208,8 +190,7 @@ class Order extends Request {
   double cost() {
     double cost = 0;
     iterateSync(
-      (packageIndex, workwearId, sku, packageEntry) =>
-          cost += packageEntry.amount * (packageEntry.cost ?? 0),
+      (packageIndex, workwearId, sku, packageEntry) => cost += packageEntry.amount * (packageEntry.cost ?? 0),
     );
     return cost;
   }
@@ -220,7 +201,7 @@ class Correction extends Request {
 
   Correction({
     required super.domainId,
-    String? id,
+    RequestId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -248,12 +229,8 @@ class Correction extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: json["requested"] == null
-              ? null
-              : DateTime.parse(json["requested"]),
-          canceled: json["canceled"] == null
-              ? null
-              : DateTime.parse(json["canceled"]),
+          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
@@ -274,7 +251,7 @@ class Correction extends Request {
   String className() => "Correction";
 
   @override
-  Set<String> readWorkwearIds() => inventory.workwearIds();
+  Set<WorkwearId> readWorkwearIds() => inventory.workwearIds();
 
   @override
   Inventory readInventory() => inventory;
@@ -286,7 +263,7 @@ class Claim extends Order {
 
   Claim({
     required super.domainId,
-    String? id,
+    RequestId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

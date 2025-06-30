@@ -12,7 +12,7 @@ class Code extends Model<Code> {
 
   Code({
     required super.domainId,
-    String? id,
+    CodeId? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

@@ -15,15 +15,15 @@ class Inventory {
       : items = Map.from(json["items"]).map(
           (workwearId, skuToAmount) => MapEntry(
             workwearId,
-            Map<String, int>.from(skuToAmount),
+            Map<ArticleId, int>.from(skuToAmount),
           ),
         );
 
-  Set<String> workwearIds() => items.keys.toSet();
+  Set<WorkwearId> workwearIds() => items.keys.toSet();
 
   void setAmountInInventory({
-    required String workwearId,
-    required String sku,
+    required WorkwearId workwearId,
+    required ArticleId sku,
     required int amount,
   }) {
     if (!items.containsKey(workwearId)) items[workwearId] = {};
@@ -38,8 +38,8 @@ class Inventory {
   }
 
   void updateAmountInInventory({
-    required String workwearId,
-    required String sku,
+    required WorkwearId workwearId,
+    required ArticleId sku,
     required int amount,
   }) =>
       setAmountInInventory(
@@ -49,14 +49,14 @@ class Inventory {
       );
 
   int readAmountOfItem({
-    required String workwearId,
-    required String sku,
+    required WorkwearId workwearId,
+    required ArticleId sku,
   }) =>
       items[workwearId]?[sku] ?? 0;
 
   bool has({
-    required String workwearId,
-    required String sku,
+    required WorkwearId workwearId,
+    required ArticleId sku,
     required int amount,
   }) =>
       readAmountOfItem(workwearId: workwearId, sku: sku) >= amount;
@@ -102,8 +102,8 @@ class Inventory {
 
   void iterateSync(
     void Function(
-      String workwearId,
-      String sku,
+      WorkwearId workwearId,
+      ArticleId sku,
       int amount,
     ) fn,
   ) {
@@ -120,8 +120,8 @@ class Inventory {
 
   Future<void> iterateAsync(
     Future<void> Function(
-      String workwearId,
-      String sku,
+      WorkwearId workwearId,
+      ArticleId sku,
       int amount,
     ) fn,
   ) async {
