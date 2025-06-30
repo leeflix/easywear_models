@@ -55,7 +55,7 @@ class Workwear extends Model<Workwear> {
   @override
   String className() => "Workwear";
 
-  double? minCost({required String? domainId}) {
+  double? minCost({required Id<Domain>? domainId}) {
     double? minCost;
     for (var article in skuToArticle.values) {
       if (article.minCost(domainId: domainId) != null) {
@@ -67,7 +67,7 @@ class Workwear extends Model<Workwear> {
     return minCost;
   }
 
-  double? maxCost({required String? domainId}) {
+  double? maxCost({required Id<Domain>? domainId}) {
     double? maxCost;
     for (var article in skuToArticle.values) {
       if (article.maxCost(domainId: domainId) != null) {
@@ -124,7 +124,7 @@ class Workwear extends Model<Workwear> {
     return propertiesToOptions;
   }
 
-  Article? cheapestArticle({required String? domainId}) {
+  Article? cheapestArticle({required Id<Domain>? domainId}) {
     Article? cheapest;
     for (var article in skuToArticle.values) {
       double? minCost = article.minCost(domainId: domainId);

@@ -52,7 +52,7 @@ class Article {
   @override
   String toString() => jsonEncode(this);
 
-  Map<int, double> getCost({required String? domainId}) {
+  Map<int, double> getCost({required Id<Domain>? domainId}) {
     var defaultCostCopy = Map<int, double>.from(domainIdToCost[null]!);
     if (domainId != null && domainIdToCost.containsKey(domainId)) {
       var costMap = domainIdToCost[domainId]!;
@@ -74,20 +74,20 @@ class Article {
     return defaultOldCostCopy;
   }
 
-  double? minCost({required String? domainId}) {
+  double? minCost({required Id<Domain>? domainId}) {
     Map<int, double> cost = getCost(domainId: domainId);
     double? minCost = cost.values.reduce((a, b) => a < b ? a : b);
     return minCost;
   }
 
-  double? maxCost({required String? domainId}) {
+  double? maxCost({required Id<Domain>? domainId}) {
     Map<int, double> cost = getCost(domainId: domainId);
     double? maxCost = cost.values.reduce((a, b) => a > b ? a : b);
     return maxCost;
   }
 
   double? getCostByPerItemByAmount({
-    required String? domainId,
+    required Id<Domain>? domainId,
     required int amount,
   }) {
     Map<int, double> cost = getCost(domainId: domainId);
