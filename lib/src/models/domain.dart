@@ -3,7 +3,7 @@ import 'package:easywear_models/easywear_models.dart';
 class Domain extends Model<Domain> {
   String? name;
   String? tenant;
-  Set<DomainId> aliases;
+  Set<Id<Domain>> aliases;
   EasyType type;
   SupplierConfig? supplierConfig;
   WhiteLabel whiteLabelData;
@@ -18,15 +18,15 @@ class Domain extends Model<Domain> {
   String delimiter;
   Intratool? intratool;
   Beekeeper? beekeeper;
-  Map<WorkwearId, double?> shop;
-  Map<StarterKitId, Map<WorkwearId, int>> starterKitNameToWorkwearIdToAmount;
+  Map<Id<Workwear>, double?> shop;
+  Map<StarterKitId, Map<Id<Workwear>, int>> starterKitNameToWorkwearIdToAmount;
   Inventory warehouse;
   bool defaultFromSupplier;
   bool? defaultUserPays;
 
   Domain({
     required super.domainId,
-    DomainId? id,
+    Id<Domain>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -62,7 +62,7 @@ class Domain extends Model<Domain> {
   Domain.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         tenant = json["tenant"],
-        aliases = Set<DomainId>.from(json["aliases"]),
+        aliases = Set<Id<Domain>>.from(json["aliases"]),
         type = EasyTypeExt.fromString(json["type"]),
         supplierConfig = json["supplierConfig"] == null ? null : SupplierConfig.fromJson(json["supplierConfig"]),
         whiteLabelData = WhiteLabel.fromJson(json["whiteLabelData"]),
@@ -78,7 +78,7 @@ class Domain extends Model<Domain> {
         intratool = json["intratool"] == null ? null : Intratool.fromJson(json["intratool"]),
         beekeeper = json["beekeeper"] == null ? null : Beekeeper.fromJson(json["beekeeper"]),
         shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
-        starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map).map((key, value) => MapEntry(key, (value as Map<String, dynamic>).map((k, v) => MapEntry(WorkwearId(k), v.toInt())))),
+        starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map).map((key, value) => MapEntry(key, (value as Map<String, dynamic>).map((k, v) => MapEntry(Id<Workwear>(k), v.toInt())))),
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],

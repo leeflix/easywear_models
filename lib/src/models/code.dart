@@ -2,7 +2,7 @@ import 'package:easywear_models/easywear_models.dart';
 
 class Code extends Model<Code> {
   String code;
-  DepartmentId? departmentId;
+  Id<Department>? departmentId;
   bool isAdmin;
   int uses;
   int maxUses;
@@ -12,7 +12,7 @@ class Code extends Model<Code> {
 
   Code({
     required super.domainId,
-    CodeId? id,
+    Id<Code>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

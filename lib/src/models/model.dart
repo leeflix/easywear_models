@@ -5,19 +5,19 @@ import 'package:easywear_models/util.dart';
 import 'package:uuid/uuid.dart';
 
 abstract class Model<T extends Model<T>> {
-  ModelId<T> id;
+  Id<T> id;
   DateTime created;
   DateTime updated;
   bool isArchived;
-  DomainId domainId;
+  Id<Domain> domainId;
 
   Model({
     required this.domainId,
-    ModelId<T>? id,
+    Id<T>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
-  })  : id = id ?? ModelId<T>(Uuid().v4()),
+  })  : id = id ?? Id<T>(Uuid().v4()),
         created = created ?? DateTime.now(),
         updated = updated ?? DateTime.now(),
         isArchived = isArchived ?? false;

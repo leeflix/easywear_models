@@ -5,7 +5,7 @@ import 'package:easywear_models/easywear_models.dart';
 
 class Package {
   Address? address;
-  Map<WorkwearId, Map<ArticleId, Map<bool?, PackageEntry>>>
+  Map<Id<Workwear>, Map<ArticleId, Map<bool?, PackageEntry>>>
       workwearIdToSkuToUserPaysToPackageEntry;
 
   Package({
@@ -59,7 +59,7 @@ class Package {
 
   void iterateSync(
     void Function(
-      WorkwearId workwearId,
+        Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
@@ -83,7 +83,7 @@ class Package {
 
   Future<void> iterateAsync(
     Future<void> Function(
-      WorkwearId workwearId,
+        Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
@@ -119,7 +119,7 @@ class Package {
 
   List<T> mapSync<T>(
     T Function(
-      WorkwearId workwearId,
+        Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,

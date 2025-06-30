@@ -2,13 +2,13 @@ import 'package:easywear_models/easywear_models.dart';
 
 class Location extends Model<Location> {
   String name;
-  Set<DepartmentId> departmentIds;
-  Map<WorkwearId, double?> shop;
+  Set<Id<Department>> departmentIds;
+  Map<Id<Workwear>, double?> shop;
   Inventory inventory;
 
   Location({
     required super.domainId,
-    LocationId? id,
+    Id<Location>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -25,7 +25,7 @@ class Location extends Model<Location> {
 
   Location.fromJson(Map<String, dynamic> json)
       : name = json["name"],
-        departmentIds = Set<DepartmentId>.from(json["departmentIds"]),
+        departmentIds = Set<Id<Department>>.from(json["departmentIds"]),
         shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
         inventory = Inventory.fromJson(json["inventory"]),
         super(

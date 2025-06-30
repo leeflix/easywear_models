@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:easywear_models/easywear_models.dart';
 
 class SupplierConfig {
-  Set<DomainId> customerDomainIds;
-  Map<DomainId, Set<WorkwearId>> domainIdToWorkwearIds;
+  Set<Id<Domain>> customerDomainIds;
+  Map<Id<Domain>, Set<Id<Workwear>>> domainIdToWorkwearIds;
   String? returnPolicyUrl;
   String? supportEmail;
   String? supportPhone;
@@ -26,9 +26,9 @@ class SupplierConfig {
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
-      : customerDomainIds = Set<DomainId>.from(json["customerDomainIds"]),
+      : customerDomainIds = Set<Id<Domain>>.from(json["customerDomainIds"]),
         domainIdToWorkwearIds = (json["domainIdToWorkwearIds"] as Map).map(
-          (key, value) => MapEntry(key, Set<WorkwearId>.from(value)),
+          (key, value) => MapEntry(key, Set<Id<Workwear>>.from(value)),
         ),
         returnPolicyUrl = json["returnPolicyUrl"],
         supportEmail = json["supportEmail"],

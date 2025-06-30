@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:easywear_models/easywear_models.dart';
 
 class Inventory {
-  Map<WorkwearId, Map<ArticleId, int>> items;
+  Map<Id<Workwear>, Map<ArticleId, int>> items;
 
   Inventory({required this.items});
 
@@ -19,10 +19,10 @@ class Inventory {
           ),
         );
 
-  Set<WorkwearId> workwearIds() => items.keys.toSet();
+  Set<Id<Workwear>> workwearIds() => items.keys.toSet();
 
   void setAmountInInventory({
-    required WorkwearId workwearId,
+    required Id<Workwear> workwearId,
     required ArticleId sku,
     required int amount,
   }) {
@@ -38,7 +38,7 @@ class Inventory {
   }
 
   void updateAmountInInventory({
-    required WorkwearId workwearId,
+    required Id<Workwear> workwearId,
     required ArticleId sku,
     required int amount,
   }) =>
@@ -49,13 +49,13 @@ class Inventory {
       );
 
   int readAmountOfItem({
-    required WorkwearId workwearId,
+    required Id<Workwear> workwearId,
     required ArticleId sku,
   }) =>
       items[workwearId]?[sku] ?? 0;
 
   bool has({
-    required WorkwearId workwearId,
+    required Id<Workwear> workwearId,
     required ArticleId sku,
     required int amount,
   }) =>
@@ -102,7 +102,7 @@ class Inventory {
 
   void iterateSync(
     void Function(
-      WorkwearId workwearId,
+        Id<Workwear> workwearId,
       ArticleId sku,
       int amount,
     ) fn,
@@ -120,7 +120,7 @@ class Inventory {
 
   Future<void> iterateAsync(
     Future<void> Function(
-      WorkwearId workwearId,
+        Id<Workwear> workwearId,
       ArticleId sku,
       int amount,
     ) fn,

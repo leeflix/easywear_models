@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
 
 sealed class Request extends Model<Request> {
-  UserId userId;
+  Id<User> userId;
   DateTime? requested;
   DateTime? canceled;
   String? cancelReason;
@@ -14,7 +14,7 @@ sealed class Request extends Model<Request> {
 
   Request({
     required super.domainId,
-    RequestId? id,
+    Id<Request>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -57,20 +57,20 @@ sealed class Request extends Model<Request> {
         Correction _ => RequestType.correction,
       };
 
-  Set<WorkwearId> readWorkwearIds();
+  Set<Id<Workwear>> readWorkwearIds();
 
   Inventory readInventory();
 }
 
 class Order extends Request {
-  String supplierDomainId;
+  Id<Domain> supplierDomainId;
   List<Package> packages;
   Set<String> sourceOrderIds;
   ViewMode view;
 
   Order({
     required super.domainId,
-    RequestId? id,
+    Id<Request>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -129,12 +129,12 @@ class Order extends Request {
   String className() => "Order";
 
   @override
-  Set<WorkwearId> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys).flattened.toSet();
+  Set<Id<Workwear>> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys).flattened.toSet();
 
   void iterateSync(
     void Function(
       int packageIndex,
-      WorkwearId workwearId,
+      Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
@@ -156,7 +156,7 @@ class Order extends Request {
   Future<void> iterateAsync(
     Future<void> Function(
       int packageIndex,
-      WorkwearId workwearId,
+      Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
@@ -201,7 +201,7 @@ class Correction extends Request {
 
   Correction({
     required super.domainId,
-    RequestId? id,
+    Id<Request>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
@@ -251,7 +251,7 @@ class Correction extends Request {
   String className() => "Correction";
 
   @override
-  Set<WorkwearId> readWorkwearIds() => inventory.workwearIds();
+  Set<Id<Workwear>> readWorkwearIds() => inventory.workwearIds();
 
   @override
   Inventory readInventory() => inventory;
@@ -263,7 +263,7 @@ class Claim extends Order {
 
   Claim({
     required super.domainId,
-    RequestId? id,
+    Id<Request>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

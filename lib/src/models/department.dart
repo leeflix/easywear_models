@@ -2,12 +2,12 @@ import 'package:easywear_models/easywear_models.dart';
 
 class Department extends Model<Department> {
   String name;
-  Set<UserId> userIds;
-  Map<WorkwearId, double?> shop;
+  Set<Id<User>> userIds;
+  Map<Id<Workwear>, double?> shop;
 
   Department({
     required super.domainId,
-    DepartmentId? id,
+    Id<Department>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

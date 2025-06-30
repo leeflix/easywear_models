@@ -18,7 +18,7 @@ class User extends Model<User> {
   Language language;
   Inventory companyInventory;
   Inventory userInventory;
-  Map<WorkwearId, Map<String, String?>> workwearIdToDefaultConfig;
+  Map<Id<Workwear>, Map<String, String?>> workwearIdToDefaultConfig;
   double budgetBeforeCalculation;
   double budgetPerMonth;
   DateTime lastBudgetCalculation;
@@ -32,7 +32,7 @@ class User extends Model<User> {
 
   User({
     required super.domainId,
-    UserId? id,
+    Id<User>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

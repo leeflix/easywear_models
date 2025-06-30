@@ -9,7 +9,7 @@ class Workwear extends Model<Workwear> {
 
   Workwear({
     required super.domainId,
-    WorkwearId? id,
+    Id<Workwear>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,

@@ -1,12 +1,13 @@
 import 'dart:convert';
 
+import 'package:easywear_models/easywear_models.dart';
 import 'package:easywear_models/src/models/ids.dart';
 
 class Article {
   Map<String, String> configuration;
   Set<ImageId> imageIds;
-  Map<DomainId?, Map<int, double>> domainIdToCost = {};
-  Map<DomainId?, Map<int, double>> domainIdToOldCost = {};
+  Map<Id<Domain>?, Map<int, double>> domainIdToCost = {};
+  Map<Id<Domain>?, Map<int, double>> domainIdToOldCost = {};
 
   Article({
     required this.configuration,
@@ -18,14 +19,14 @@ class Article {
   Article.fromJson(Map<String, dynamic> json)
       : configuration = json["configuration"].map<String, String>((key, value) => MapEntry<String, String>(key, value)),
         imageIds = Set<ImageId>.from(json["imageIds"]),
-        domainIdToCost = (json["domainIdToCost"] as Map).map<DomainId?, Map<int, double>>(
-          (key, value) => MapEntry<DomainId?, Map<int, double>>(
+        domainIdToCost = (json["domainIdToCost"] as Map).map<Id<Domain>?, Map<int, double>>(
+          (key, value) => MapEntry<Id<Domain>?, Map<int, double>>(
             key == "null" ? null : key,
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
         ),
-        domainIdToOldCost = (json["domainIdToOldCost"] as Map).map<DomainId?, Map<int, double>>(
-          (key, value) => MapEntry<DomainId?, Map<int, double>>(
+        domainIdToOldCost = (json["domainIdToOldCost"] as Map).map<Id<Domain>?, Map<int, double>>(
+          (key, value) => MapEntry<Id<Domain>?, Map<int, double>>(
             key == "null" ? null : key,
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),

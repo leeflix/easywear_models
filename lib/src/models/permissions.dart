@@ -1,9 +1,9 @@
   import 'package:easywear_models/easywear_models.dart';
 
   class Permissions {
-    Set<DomainId> domainIds;
-    Set<LocationId> locationIds;
-    Set<DepartmentId> departmentIds;
+    Set<Id<Domain>> domainIds;
+    Set<Id<Location>> locationIds;
+    Set<Id<Department>> departmentIds;
 
     Permissions({
       required this.domainIds,
@@ -12,9 +12,9 @@
     });
 
     Permissions.fromJson(Map<String, dynamic> json)
-        : domainIds = Set<DomainId>.from(json["domainIds"]),
-          locationIds = Set<LocationId>.from(json["locationIds"]),
-          departmentIds = Set<DepartmentId>.from(json["departmentIds"]);
+        : domainIds = Set<Id<Domain>>.from(json["domainIds"]),
+          locationIds = Set<Id<Location>>.from(json["locationIds"]),
+          departmentIds = Set<Id<Department>>.from(json["departmentIds"]);
 
     Map<String, dynamic> toJson() => {
           "domainIds": domainIds.toList(),

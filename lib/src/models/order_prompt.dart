@@ -4,7 +4,7 @@ import 'package:easywear_models/easywear_models.dart';
 
 class OrderPrompt {
   StarterKitId starterKitName;
-  DomainId supplierDomainId;
+  Id<Domain> supplierDomainId;
 
   OrderPrompt({
     required this.starterKitName,

@@ -13,7 +13,7 @@ class PackageEntry {
   int? fromWarehouse;
 
   double? cost;
-  DepartmentId? departmentId;
+  Id<Department>? departmentId;
   DateTime? booked;
 
   double? shopPrice;
