@@ -65,7 +65,7 @@ sealed class Request extends Model<Request> {
 class Order extends Request {
   Id<Domain> supplierDomainId;
   List<Package> packages;
-  Set<String> sourceOrderIds;
+  Set<Id<Request>> sourceOrderIds;
   ViewMode view;
 
   Order({
@@ -95,7 +95,7 @@ class Order extends Request {
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         supplierDomainId = json["supplierDomainId"],
-        sourceOrderIds = Set<String>.from(json["sourceOrderIds"]),
+        sourceOrderIds = Set<Id<Request>>.from(json["sourceOrderIds"]),
         view = ViewModeExt.fromString(json["view"]),
         super(
           domainId: json["domainId"],
