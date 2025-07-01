@@ -73,7 +73,7 @@ abstract class Model<T extends Model<T>> {
   T deepCopy() => fromJson(jsonDecode(jsonEncode(this)));
 
   @override
-  String toString() => jsonEncode(this);
+  String toString() => JsonEncoder.withIndent("  ").convert(this);
 
   T fromJson(Map<String, dynamic> json);
 }
