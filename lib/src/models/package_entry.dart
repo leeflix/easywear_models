@@ -14,6 +14,7 @@ class PackageEntry {
 
   double? cost;
   Id<Department>? departmentId;
+  Id<Location>? locationId;
   DateTime? booked;
 
   double? shopPrice;
@@ -30,6 +31,7 @@ class PackageEntry {
     required this.shopPrice,
     required this.cost,
     required this.departmentId,
+    required this.locationId,
     required this.booked,
     required this.received,
   });
@@ -43,6 +45,7 @@ class PackageEntry {
         "shopPrice": shopPrice,
         "cost": cost,
         "departmentId": departmentId,
+        "locationId": locationId,
         "booked": booked?.toIso8601String(),
         "received": received?.toIso8601String(),
       };
@@ -56,6 +59,7 @@ class PackageEntry {
         shopPrice = json["shopPrice"]?.toDouble(),
         cost = json["cost"]?.toDouble(),
         departmentId = json["departmentId"],
+        locationId = json["locationId"],
         booked = json["booked"] == null ? null : DateTime.parse(json["booked"]),
         received = json["received"] == null ? null : DateTime.parse(json["received"]);
 
