@@ -148,9 +148,6 @@ class User extends Model<User> {
   @override
   User fromJson(Map<String, dynamic> json) => User.fromJson(json);
 
-  @override
-  String className() => "User";
-
   double currentBudget() {
     DateTime now = DateTime.now();
     double budget = budgetBeforeCalculation;

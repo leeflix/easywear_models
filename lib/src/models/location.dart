@@ -47,7 +47,4 @@ class Location extends Model<Location> {
 
   @override
   Location fromJson(Map<String, dynamic> json) => Location.fromJson(json);
-
-  @override
-  String className() => "Location";
 }

@@ -4,6 +4,39 @@ import 'package:easywear_models/easywear_models.dart';
 import 'package:easywear_models/util.dart';
 import 'package:uuid/uuid.dart';
 
+enum Models {
+  domain,
+  user,
+  workwear,
+  request,
+  code,
+  department,
+  location,
+}
+
+Type modelsToType(Models modelType) => switch (modelType) {
+      Models.domain => Domain,
+      Models.user => User,
+      Models.workwear => Workwear,
+      Models.request => Request,
+      Models.code => Code,
+      Models.department => Department,
+      Models.location => Location,
+    };
+
+Models typeToModels(Type type) => Models.values
+    .firstWhere((modelType) => modelsToType(modelType) == type);
+
+String modelsToName(Models modelType) => switch (modelType) {
+      Models.domain => "Domain",
+      Models.user => "User",
+      Models.workwear => "Workwear",
+      Models.request => "Request",
+      Models.code => "Code",
+      Models.department => "Department",
+      Models.location => "Location",
+    };
+
 abstract class Model<T extends Model<T>> {
   Id<T> id;
   DateTime created;
@@ -22,8 +55,6 @@ abstract class Model<T extends Model<T>> {
         updated = updated ?? DateTime.now(),
         isArchived = isArchived ?? false;
 
-  String className();
-
   Map<String, dynamic> toJson() {
     return {
       "domainId": domainId,
@@ -34,7 +65,8 @@ abstract class Model<T extends Model<T>> {
     };
   }
 
-  T fromMongoDoc(Map<String, dynamic> doc) => fromJson(removeUnderscoreFromId(doc));
+  T fromMongoDoc(Map<String, dynamic> doc) =>
+      fromJson(removeUnderscoreFromId(doc));
 
   Map<String, dynamic> toMongoDoc() => addUnderscoreToId(toJson());
 

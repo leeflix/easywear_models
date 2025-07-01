@@ -52,9 +52,6 @@ class Workwear extends Model<Workwear> {
   @override
   Workwear fromJson(Map<String, dynamic> json) => Workwear.fromJson(json);
 
-  @override
-  String className() => "Workwear";
-
   double? minCost({required Id<Domain>? domainId}) {
     double? minCost;
     for (var article in skuToArticle.values) {

@@ -119,7 +119,4 @@ class Domain extends Model<Domain> {
 
   @override
   Domain fromJson(Map<String, dynamic> json) => Domain.fromJson(json);
-
-  @override
-  String className() => "Domain";
 }

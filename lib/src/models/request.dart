@@ -126,9 +126,6 @@ class Order extends Request {
   Request fromJson(Map<String, dynamic> json) => Order.fromJson(json);
 
   @override
-  String className() => "Order";
-
-  @override
   Set<Id<Workwear>> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys).flattened.toSet();
 
   void iterateSync(
@@ -248,9 +245,6 @@ class Correction extends Request {
   Request fromJson(Map<String, dynamic> json) => Correction.fromJson(json);
 
   @override
-  String className() => "Correction";
-
-  @override
   Set<Id<Workwear>> readWorkwearIds() => inventory.workwearIds();
 
   @override
@@ -303,7 +297,4 @@ class Claim extends Order {
 
   @override
   Request fromJson(Map<String, dynamic> json) => Claim.fromJson(json);
-
-  @override
-  String className() => "Claim";
 }
