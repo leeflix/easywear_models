@@ -145,7 +145,7 @@ class Workwear extends Model<Workwear> {
     required Map<String, String?> configuration,
     required bool strict,
   }) {
-    return Map.fromIterable(
+    return Map.fromEntries(
       skuToArticle.entries.where(
         (skuToArticle) => skuToArticle.value.matchConfiguration(
           configuration: configuration,
