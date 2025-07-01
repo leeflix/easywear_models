@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
 import 'package:easywear_models/src/models/ids.dart';
 
@@ -76,13 +77,13 @@ class Article {
 
   double? minCost({required Id<Domain>? domainId}) {
     Map<int, double> cost = getCost(domainId: domainId);
-    double? minCost = cost.values.reduce((a, b) => a < b ? a : b);
+    double? minCost = cost.values.minOrNull;
     return minCost;
   }
 
   double? maxCost({required Id<Domain>? domainId}) {
     Map<int, double> cost = getCost(domainId: domainId);
-    double? maxCost = cost.values.reduce((a, b) => a > b ? a : b);
+    double? maxCost = cost.values.maxOrNull;
     return maxCost;
   }
 
