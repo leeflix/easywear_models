@@ -9,6 +9,7 @@ class SupplierConfig {
   String? supportEmail;
   String? supportPhone;
   String? returnUrl;
+  String? agbUrl;
 
   SupplierConfig({
     required this.customerDomainIds,
@@ -17,6 +18,7 @@ class SupplierConfig {
     required this.supportEmail,
     required this.supportPhone,
     required this.returnUrl,
+    required this.agbUrl,
   });
 
   Map<String, dynamic> toJson() => {
@@ -26,6 +28,7 @@ class SupplierConfig {
         "supportEmail": supportEmail,
         "supportPhone": supportPhone,
         "returnUrl": returnUrl,
+        "agbUrl": agbUrl,
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
@@ -36,7 +39,8 @@ class SupplierConfig {
         returnPolicyUrl = json["returnPolicyUrl"],
         supportEmail = json["supportEmail"],
         supportPhone = json["supportPhone"],
-        returnUrl = json["returnUrl"];
+        returnUrl = json["returnUrl"],
+        agbUrl = json["agbUrl"];
 
   @override
   String toString() => jsonEncode(this);
