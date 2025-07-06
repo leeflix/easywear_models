@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:easywear_models/easywear_models.dart';
+import 'package:easywear_models/util.dart';
 
 class Workwear extends Model<Workwear> {
   String name;
@@ -28,8 +31,10 @@ class Workwear extends Model<Workwear> {
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         imageIds = Set<ImageId>.from(json["imageIds"]),
-        categories = Set<Category>.from(json["categories"].map((e) => CategoryExt.fromString(e))),
-        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
+        categories = Set<Category>.from(
+            json["categories"].map((e) => CategoryExt.fromString(e))),
+        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
+            MapEntry<String, Article>(key, Article.fromJson(value))),
         customSupplier = json["customSupplier"],
         super(
           domainId: json["domainId"],
@@ -102,23 +107,41 @@ class Workwear extends Model<Workwear> {
     return options;
   }
 
+  Map<String, Set<String>> propertiesToOptions() {
+    Map<String, Set<String>> propertiesToOptionsUnordered = {};
+    for (var article in skuToArticle.values) {
+      for (var property in article.configuration.keys) {
+        propertiesToOptionsUnordered[property] ??= {};
+        propertiesToOptionsUnordered[property]!
+            .add(article.configuration[property]!);
+      }
+    }
+
+    // 1. Use SplayTreeMap with the custom naturalCompare function for keys
+    final SplayTreeMap<String, Set<String>> orderedProperties =
+        SplayTreeMap(compareAlphanumeric);
+
+    propertiesToOptionsUnordered.forEach((propertyName, unorderedOptions) {
+      // 2. Sort the options using the naturalCompare function
+      final List<String> sortedOptionsList = unorderedOptions.toList()
+        ..sort(compareAlphanumeric);
+      final Set<String> orderedOptionsSet = sortedOptionsList.toSet();
+      // Reminder: Dart's Set does not guarantee iteration order itself.
+      // The elements are added from a sorted source.
+
+      orderedProperties[propertyName] = orderedOptionsSet;
+    });
+
+    return orderedProperties;
+  }
+
   Set<String> properties() {
-    Set<String> properties = Set<String>();
+    List<String> properties = [];
     for (var article in skuToArticle.values) {
       properties.addAll(article.configuration.keys);
     }
-    return properties;
-  }
-
-  Map<String, Set<String>> propertiesToOptions() {
-    Map<String, Set<String>> propertiesToOptions = Map<String, Set<String>>();
-    for (var article in skuToArticle.values) {
-      for (var property in article.configuration.keys) {
-        propertiesToOptions[property] ??= {};
-        propertiesToOptions[property]!.add(article.configuration[property]!);
-      }
-    }
-    return propertiesToOptions;
+    properties.sort(compareAlphanumeric);
+    return properties.toSet();
   }
 
   Article? cheapestArticle({required Id<Domain>? domainId}) {
