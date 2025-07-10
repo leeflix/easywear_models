@@ -1,12 +1,10 @@
+import 'package:easywear_models/easywear_models.dart';
+
 enum Gender {
-  mrs,
-  mr,
-  diverse,
-  preferNotToSay,
-}
+  women,
+  men,
+  diverse;
 
-extension GenderExt on Gender {
-  String get string => toString().split(".").last;
-
-  static Gender fromString(String s) => Gender.values.firstWhere((gender) => gender.string == s);
+  static Gender fromString(String s) =>
+      Gender.values.firstWhere((gender) => gender.string == s);
 }

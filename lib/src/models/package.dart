@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:easywear_models/easywear_models.dart';
 
-class Package {
+class Package extends DataClass<Package> {
   Address? address;
   Map<Id<Workwear>, Map<ArticleId, Map<bool?, PackageEntry>>>
       workwearIdToSkuToUserPaysToPackageEntry;
@@ -55,11 +54,11 @@ class Package {
         );
 
   @override
-  String toString() => jsonEncode(this);
+  Package fromJson(Map<String, dynamic> json) => Package.fromJson(json);
 
   void iterateSync(
     void Function(
-        Id<Workwear> workwearId,
+      Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
@@ -83,7 +82,7 @@ class Package {
 
   Future<void> iterateAsync(
     Future<void> Function(
-        Id<Workwear> workwearId,
+      Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,
@@ -119,7 +118,7 @@ class Package {
 
   List<T> mapSync<T>(
     T Function(
-        Id<Workwear> workwearId,
+      Id<Workwear> workwearId,
       ArticleId sku,
       PackageEntry packageEntry,
     ) fn,

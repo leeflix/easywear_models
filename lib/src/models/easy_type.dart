@@ -1,10 +1,9 @@
+import 'package:easywear_models/easywear_models.dart';
+
 enum EasyType {
   wear,
-  it,
-}
+  it;
 
-extension EasyTypeExt on EasyType {
-  String get string => toString().split(".").last;
-
-  static EasyType fromString(String s) => EasyType.values.firstWhere((e) => e.string == s);
+  static EasyType fromString(String s) =>
+      EasyType.values.firstWhere((v) => v.string == s);
 }

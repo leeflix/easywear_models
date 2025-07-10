@@ -1,3 +1,5 @@
+import 'package:easywear_models/easywear_models.dart';
+
 enum Language {
   de,
   en,
@@ -25,14 +27,10 @@ enum Language {
   ur,
   bg,
   af,
-  hi
-}
-
-extension LanguageExt on Language {
-  String get string => toString().split(".").last;
+  hi;
 
   static Language fromString(String s) =>
-      Language.values.firstWhere((e) => e.string == s);
+      Language.values.firstWhere((v) => v.string == s);
 
   String get uiString => switch (this) {
         Language.de => "Deutsch",

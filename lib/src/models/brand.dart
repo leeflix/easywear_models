@@ -1,19 +1,17 @@
 import 'package:easywear_models/easywear_models.dart';
 
-class Department extends Model<Department> {
-  String name;
-  Set<Id<User>> userIds;
-  Map<Id<Workwear>, double?> shop;
+class Brand extends Model<Brand> {
+  final String name;
+  final ImageId logoImageId;
 
-  Department({
+  Brand({
     required super.domainId,
-    Id<Department>? id,
+    Id<Brand>? id,
     DateTime? created,
     DateTime? updated,
     bool? isArchived,
     required this.name,
-    required this.userIds,
-    required this.shop,
+    required this.logoImageId,
   }) : super(
           id: id,
           created: created,
@@ -21,11 +19,9 @@ class Department extends Model<Department> {
           isArchived: isArchived,
         );
 
-  Department.fromJson(Map<String, dynamic> json)
+  Brand.fromJson(Map<String, dynamic> json)
       : name = json["name"],
-        userIds = Set.from(json["userIds"]),
-        shop = (json["shop"] as Map)
-            .map((key, value) => MapEntry(key, value?.toDouble())),
+        logoImageId = json["logoImageId"],
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -35,14 +31,12 @@ class Department extends Model<Department> {
         );
 
   @override
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "userIds": userIds.toList(),
-        "created": created.toIso8601String(),
-        "shop": shop,
-        ...super.toJson(),
-      };
+  Brand fromJson(Map<String, dynamic> json) => Brand.fromJson(json);
 
   @override
-  Department fromJson(Map<String, dynamic> json) => Department.fromJson(json);
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "logoImageId": logoImageId,
+        ...super.toJson(),
+      };
 }

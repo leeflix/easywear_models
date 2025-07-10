@@ -1,7 +1,10 @@
-enum ViewMode { user, admin, supplier }
+import 'package:easywear_models/easywear_models.dart';
 
-extension ViewModeExt on ViewMode {
-  String get string => toString().split('.').last;
+enum ViewMode {
+  user,
+  admin,
+  supplier;
 
-  static ViewMode fromString(String value) => ViewMode.values.firstWhere((e) => e.string == value);
+  static ViewMode fromString(String s) =>
+      ViewMode.values.firstWhere((v) => v.string == s);
 }

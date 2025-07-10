@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'country.dart';
-import 'gender.dart';
+import 'package:easywear_models/easywear_models.dart';
 
-class Address {
+class Address extends DataClass<Address> {
   final String companyName;
-  final Gender gender;
+  final Gender? gender;
   final String firstName;
   final String lastName;
   final Country country;
@@ -28,7 +27,7 @@ class Address {
 
   Map<String, dynamic> toJson() => {
         "companyName": companyName,
-        "gender": gender.string,
+        "gender": gender?.string,
         "firstName": firstName,
         "lastName": lastName,
         "country": country.string,
@@ -40,17 +39,18 @@ class Address {
 
   Address.fromJson(Map<String, dynamic> json)
       : companyName = json["companyName"],
-        gender = GenderExt.fromString(json["gender"]),
+        gender =
+            json["gender"] == null ? null : Gender.fromString(json["gender"]),
         firstName = json["firstName"],
         lastName = json["lastName"],
-        country = CountryExt.fromString(json["country"]),
+        country = Country.fromString(json["country"]),
         city = json["city"],
         zipCode = json["zipCode"],
         streetAndHouseNumber = json["streetAndHouseNumber"],
         addressLine2 = json["addressLine2"];
 
   @override
-  String toString() => jsonEncode(this);
+  Address fromJson(Map<String, dynamic> json) => Address.fromJson(json);
 
   @override
   bool operator ==(Object other) => jsonEncode(this) == jsonEncode(other);

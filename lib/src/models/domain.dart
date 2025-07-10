@@ -13,7 +13,7 @@ class Domain extends Model<Domain> {
   FeatureLevel featureLevel;
   DateTime? premiumTrialStartDate;
   Features features;
-  String currency;
+  Currency currency;
   bool useCurrencyForBudget;
   String delimiter;
   Intratool? intratool;
@@ -23,6 +23,7 @@ class Domain extends Model<Domain> {
   Inventory warehouse;
   bool defaultFromSupplier;
   bool? defaultUserPays;
+  Set<Id<Domain>>? enabledSupplierIds;
 
   Domain({
     required super.domainId,
@@ -52,6 +53,7 @@ class Domain extends Model<Domain> {
     required this.warehouse,
     required this.defaultFromSupplier,
     required this.defaultUserPays,
+    required this.enabledSupplierIds,
   }) : super(
           id: id ?? domainId,
           created: created,
@@ -63,16 +65,16 @@ class Domain extends Model<Domain> {
       : name = json["name"],
         tenant = json["tenant"],
         aliases = Set<Id<Domain>>.from(json["aliases"]),
-        type = EasyTypeExt.fromString(json["type"]),
+        type = EasyType.fromString(json["type"]),
         supplierConfig = json["supplierConfig"] == null ? null : SupplierConfig.fromJson(json["supplierConfig"]),
         whiteLabelData = WhiteLabel.fromJson(json["whiteLabelData"]),
         registered = json["registered"] == null ? null : DateTime.parse(json["registered"]),
         verified = json["verified"] == null ? null : DateTime.parse(json["verified"]),
         licensesQuantity = json["licensesQuantity"],
-        featureLevel = FeatureLevelExt.fromString(json["featureLevel"]),
+        featureLevel = FeatureLevel.fromString(json["featureLevel"]),
         premiumTrialStartDate = json["premiumTrialStartDate"] == null ? null : DateTime.parse(json["premiumTrialStartDate"]),
         features = Features.fromJson(json["features"]),
-        currency = json["currency"],
+        currency = Currency.fromString(json["currency"]),
         useCurrencyForBudget = json["useCurrencyForBudget"],
         delimiter = json["delimiter"],
         intratool = json["intratool"] == null ? null : Intratool.fromJson(json["intratool"]),
@@ -82,6 +84,7 @@ class Domain extends Model<Domain> {
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],
+        enabledSupplierIds = json["enabledSupplierIds"] == null ? null : Set<Id<Domain>>.from(json["enabledSupplierIds"].map((e) => Id<Domain>(e))),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -104,7 +107,7 @@ class Domain extends Model<Domain> {
         "featureLevel": featureLevel.string,
         "premiumTrialStartDate": premiumTrialStartDate?.toIso8601String(),
         "features": features.toJson(),
-        "currency": currency,
+        "currency": currency.string,
         "useCurrencyForBudget": useCurrencyForBudget,
         "delimiter": delimiter,
         "intratool": intratool?.toJson(),
@@ -114,6 +117,7 @@ class Domain extends Model<Domain> {
         "warehouse": warehouse.toJson(),
         "defaultFromSupplier": defaultFromSupplier,
         "defaultUserPays": defaultUserPays,
+        "enabledSupplierIds": enabledSupplierIds?.map((e) => e.toString()).toList(),
         ...super.toJson(),
       };
 

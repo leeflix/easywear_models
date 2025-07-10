@@ -1,4 +1,6 @@
-class Beekeeper {
+import 'package:easywear_models/easywear_models.dart';
+
+class Beekeeper extends DataClass<Beekeeper> {
   final String? accessToken;
   final String fqdn;
 
@@ -15,4 +17,7 @@ class Beekeeper {
         "accessToken": accessToken,
         "fqdn": fqdn,
       };
+
+  @override
+  Beekeeper fromJson(Map<String, dynamic> json) => Beekeeper.fromJson(json);
 }

@@ -26,7 +26,8 @@ class Location extends Model<Location> {
   Location.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         departmentIds = Set<Id<Department>>.from(json["departmentIds"]),
-        shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
+        shop = (json["shop"] as Map)
+            .map((key, value) => MapEntry(key, value?.toDouble())),
         inventory = Inventory.fromJson(json["inventory"]),
         super(
           domainId: json["domainId"],

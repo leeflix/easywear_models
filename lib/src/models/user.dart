@@ -100,7 +100,8 @@ class User extends Model<User> {
         "showFirstLoginMessage": showFirstLoginMessage,
         "intratoolUserId": intratoolUserId,
         "beekeeperUserId": beekeeperUserId,
-        "orderPrompts": orderPrompts.map((orderPrompt) => orderPrompt.toJson()).toList(),
+        "orderPrompts":
+            orderPrompts.map((orderPrompt) => orderPrompt.toJson()).toList(),
         ...super.toJson(),
       };
 
@@ -116,14 +117,18 @@ class User extends Model<User> {
         companyMail = json["companyMail"],
         contactMail = json["contactMail"],
         phoneNumber = json["phoneNumber"],
-        addresses = (json["addresses"] as List).map((address) => Address.fromJson(address)).toSet(),
+        addresses = (json["addresses"] as List)
+            .map((address) => Address.fromJson(address))
+            .toSet(),
         password = json["password"],
         passwordHash = json["passwordHash"],
-        language = LanguageExt.fromString(json["language"]),
+        language = Language.fromString(json["language"]),
         companyInventory = Inventory.fromJson(json["companyInventory"]),
         userInventory = Inventory.fromJson(json["userInventory"]),
-        workwearIdToDefaultConfig = Map.from(json["workwearIdToDefaultConfig"]).map(
-          (workwearId, defaultConfig) => MapEntry(workwearId, Map.from(defaultConfig)),
+        workwearIdToDefaultConfig =
+            Map.from(json["workwearIdToDefaultConfig"]).map(
+          (workwearId, defaultConfig) =>
+              MapEntry(workwearId, Map.from(defaultConfig)),
         ),
         budgetBeforeCalculation = json["budgetBeforeCalculation"].toDouble(),
         budgetPerMonth = json["budgetPerMonth"].toDouble(),
@@ -134,7 +139,9 @@ class User extends Model<User> {
         showFirstLoginMessage = json["showFirstLoginMessage"],
         intratoolUserId = json["intratoolUserId"],
         beekeeperUserId = json["beekeeperUserId"],
-        orderPrompts = List.from(json["orderPrompts"]).map((orderPrompt) => OrderPrompt.fromJson(orderPrompt)).toList(),
+        orderPrompts = List.from(json["orderPrompts"])
+            .map((orderPrompt) => OrderPrompt.fromJson(orderPrompt))
+            .toList(),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -152,7 +159,12 @@ class User extends Model<User> {
     DateTime now = DateTime.now();
     double budget = budgetBeforeCalculation;
     if (budgetPerMonth != 0) {
-      double daysSinceLastBudgetCalculation = (now.millisecondsSinceEpoch - lastBudgetCalculation.millisecondsSinceEpoch) / 1000.0 / 60.0 / 60.0 / 24.0;
+      double daysSinceLastBudgetCalculation = (now.millisecondsSinceEpoch -
+              lastBudgetCalculation.millisecondsSinceEpoch) /
+          1000.0 /
+          60.0 /
+          60.0 /
+          24.0;
       double budgetPerDay = budgetPerMonth / 30.4167;
       budget += budgetPerDay * daysSinceLastBudgetCalculation;
     }
@@ -164,5 +176,6 @@ class User extends Model<User> {
     lastBudgetCalculation = DateTime.now();
   }
 
-  void updateBudget({required double amount}) => setBudget(budget: currentBudget() + amount);
+  void updateBudget({required double amount}) =>
+      setBudget(budget: currentBudget() + amount);
 }

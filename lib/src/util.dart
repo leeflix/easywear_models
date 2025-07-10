@@ -35,3 +35,7 @@ int compareAlphanumeric(String a, String b) {
 
   return a.length - b.length;
 }
+
+extension EnumExtension<T> on T {
+  String get string => toString().split('.').last;
+}

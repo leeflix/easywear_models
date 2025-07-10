@@ -1,4 +1,6 @@
-class Features {
+import 'package:easywear_models/easywear_models.dart';
+
+class Features extends DataClass<Features> {
   bool deposit;
   bool correction;
 
@@ -15,4 +17,7 @@ class Features {
         "deposit": deposit,
         "correction": correction,
       };
+
+  @override
+  Features fromJson(Map<String, dynamic> json) => Features.fromJson(json);
 }

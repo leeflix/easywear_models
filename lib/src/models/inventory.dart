@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:easywear_models/easywear_models.dart';
 
-class Inventory {
+class Inventory extends DataClass<Inventory> {
   Map<Id<Workwear>, Map<ArticleId, int>> items;
 
   Inventory({required this.items});
@@ -18,6 +18,9 @@ class Inventory {
             Map<ArticleId, int>.from(skuToAmount),
           ),
         );
+
+  @override
+  Inventory fromJson(Map<String, dynamic> json) => Inventory.fromJson(json);
 
   Set<Id<Workwear>> workwearIds() => items.keys.toSet();
 
@@ -102,7 +105,7 @@ class Inventory {
 
   void iterateSync(
     void Function(
-        Id<Workwear> workwearId,
+      Id<Workwear> workwearId,
       ArticleId sku,
       int amount,
     ) fn,
@@ -120,7 +123,7 @@ class Inventory {
 
   Future<void> iterateAsync(
     Future<void> Function(
-        Id<Workwear> workwearId,
+      Id<Workwear> workwearId,
       ArticleId sku,
       int amount,
     ) fn,

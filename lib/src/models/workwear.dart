@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/util.dart';
+import 'package:easywear_models/src/models/brand.dart';
 
 class Workwear extends Model<Workwear> {
   String name;
@@ -9,6 +9,10 @@ class Workwear extends Model<Workwear> {
   Set<Category> categories;
   Map<ArticleId, Article> skuToArticle;
   String? customSupplier;
+  Gender gender;
+  Set<Country>? enabledCountries;
+  Set<Id<Domain>>? enabledDomainIds;
+  Id<Brand>? brandId;
 
   Workwear({
     required super.domainId,
@@ -21,6 +25,10 @@ class Workwear extends Model<Workwear> {
     required this.categories,
     required this.skuToArticle,
     required this.customSupplier,
+    required this.gender,
+    required this.enabledCountries,
+    required this.enabledDomainIds,
+    required this.brandId,
   }) : super(
           id: id,
           created: created,
@@ -31,11 +39,13 @@ class Workwear extends Model<Workwear> {
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         imageIds = Set<ImageId>.from(json["imageIds"]),
-        categories = Set<Category>.from(
-            json["categories"].map((e) => CategoryExt.fromString(e))),
-        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
-            MapEntry<String, Article>(key, Article.fromJson(value))),
+        categories = Set<Category>.from(json["categories"].map((e) => Category.fromString(e))),
+        skuToArticle = json["skuToArticle"].map<String, Article>((key, value) => MapEntry<String, Article>(key, Article.fromJson(value))),
         customSupplier = json["customSupplier"],
+        gender = Gender.fromString(json["gender"]),
+        enabledCountries = json["enabledCountries"] == null ? null : Set<Country>.from(json["enabledCountries"].map((e) => Country.fromString(e))),
+        enabledDomainIds = json["enabledDomainIds"] == null ? null : Set<Id<Domain>>.from(json["enabledDomainIds"].map((e) => Id<Domain>(e))),
+        brandId = json["brandId"],
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -51,6 +61,9 @@ class Workwear extends Model<Workwear> {
         "categories": categories.map((e) => e.string).toList(),
         "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
         "customSupplier": customSupplier,
+        "enabledCountries": enabledCountries?.map((e) => e.string).toList(),
+        "enabledDomainIds": enabledDomainIds?.toList(),
+        "brandId": brandId,
         ...super.toJson(),
       };
 
@@ -112,19 +125,16 @@ class Workwear extends Model<Workwear> {
     for (var article in skuToArticle.values) {
       for (var property in article.configuration.keys) {
         propertiesToOptionsUnordered[property] ??= {};
-        propertiesToOptionsUnordered[property]!
-            .add(article.configuration[property]!);
+        propertiesToOptionsUnordered[property]!.add(article.configuration[property]!);
       }
     }
 
     // 1. Use SplayTreeMap with the custom naturalCompare function for keys
-    final SplayTreeMap<String, Set<String>> orderedProperties =
-        SplayTreeMap(compareAlphanumeric);
+    final SplayTreeMap<String, Set<String>> orderedProperties = SplayTreeMap(compareAlphanumeric);
 
     propertiesToOptionsUnordered.forEach((propertyName, unorderedOptions) {
       // 2. Sort the options using the naturalCompare function
-      final List<String> sortedOptionsList = unorderedOptions.toList()
-        ..sort(compareAlphanumeric);
+      final List<String> sortedOptionsList = unorderedOptions.toList()..sort(compareAlphanumeric);
       final Set<String> orderedOptionsSet = sortedOptionsList.toSet();
       // Reminder: Dart's Set does not guarantee iteration order itself.
       // The elements are added from a sorted source.

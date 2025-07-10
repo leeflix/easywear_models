@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:easywear_models/easywear_models.dart';
 
-class PackageEntry {
+class PackageEntry extends DataClass<PackageEntry> {
   bool? userPays;
 
   int amount;
@@ -20,7 +18,6 @@ class PackageEntry {
   double? shopPrice;
 
   DateTime? received;
-
 
   PackageEntry({
     required this.amount,
@@ -61,8 +58,10 @@ class PackageEntry {
         departmentId = json["departmentId"],
         locationId = json["locationId"],
         booked = json["booked"] == null ? null : DateTime.parse(json["booked"]),
-        received = json["received"] == null ? null : DateTime.parse(json["received"]);
+        received =
+            json["received"] == null ? null : DateTime.parse(json["received"]);
 
   @override
-  String toString() => jsonEncode(this);
+  PackageEntry fromJson(Map<String, dynamic> json) =>
+      PackageEntry.fromJson(json);
 }

@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:easywear_models/easywear_models.dart';
 
-class OrderPrompt {
+class OrderPrompt extends DataClass<OrderPrompt> {
   StarterKitId starterKitName;
   Id<Domain> supplierDomainId;
 
@@ -21,5 +19,5 @@ class OrderPrompt {
       };
 
   @override
-  String toString() => jsonEncode(this);
+  OrderPrompt fromJson(Map<String, dynamic> json) => OrderPrompt.fromJson(json);
 }

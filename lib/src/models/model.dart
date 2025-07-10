@@ -1,43 +1,10 @@
 import 'dart:convert';
 
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/util.dart';
+import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
-enum Models {
-  domain,
-  user,
-  workwear,
-  request,
-  code,
-  department,
-  location,
-}
-
-Type modelsToType(Models modelType) => switch (modelType) {
-      Models.domain => Domain,
-      Models.user => User,
-      Models.workwear => Workwear,
-      Models.request => Request,
-      Models.code => Code,
-      Models.department => Department,
-      Models.location => Location,
-    };
-
-Models typeToModels(Type type) => Models.values
-    .firstWhere((modelType) => modelsToType(modelType) == type);
-
-String modelsToName(Models modelType) => switch (modelType) {
-      Models.domain => "Domain",
-      Models.user => "User",
-      Models.workwear => "Workwear",
-      Models.request => "Request",
-      Models.code => "Code",
-      Models.department => "Department",
-      Models.location => "Location",
-    };
-
-abstract class Model<T extends Model<T>> {
+abstract class Model<T extends Model<T>> extends DataClass<T> {
   Id<T> id;
   DateTime created;
   DateTime updated;
@@ -55,25 +22,34 @@ abstract class Model<T extends Model<T>> {
         updated = updated ?? DateTime.now(),
         isArchived = isArchived ?? false;
 
-  Map<String, dynamic> toJson() {
-    return {
-      "domainId": domainId,
-      "id": id,
-      "created": created.toIso8601String(),
-      "updated": updated.toIso8601String(),
-      "isArchived": isArchived,
-    };
-  }
+  @mustCallSuper
+  @mustBeOverridden
+  Map<String, dynamic> toJson() => {
+        "domainId": domainId,
+        "id": id,
+        "created": created.toIso8601String(),
+        "updated": updated.toIso8601String(),
+        "isArchived": isArchived,
+      };
 
   T fromMongoDoc(Map<String, dynamic> doc) =>
       fromJson(removeUnderscoreFromId(doc));
 
   Map<String, dynamic> toMongoDoc() => addUnderscoreToId(toJson());
 
-  T deepCopy() => fromJson(jsonDecode(jsonEncode(this)));
+  Models get models => Models.fromType(T); // runTimeType
 
-  @override
-  String toString() => JsonEncoder.withIndent("  ").convert(this);
+  String get modelName => models.name;
+}
+
+abstract class DataClass<T extends DataClass<T>> {
+  Map<String, dynamic> toJson();
 
   T fromJson(Map<String, dynamic> json);
+
+  T deepCopy<T extends DataClass<T>>() =>
+      fromJson(jsonDecode(jsonEncode(this))) as T;
+
+  @override
+  String toString() => JsonEncoder.withIndent("  ").convert(toJson());
 }

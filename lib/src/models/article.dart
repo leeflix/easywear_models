@@ -1,20 +1,25 @@
-import 'dart:convert';
-
 import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/models/ids.dart';
 
-class Article {
+class Article extends DataClass<Article> {
   Map<String, String> configuration;
   Set<ImageId> imageIds;
   Map<Id<Domain>?, Map<int, double>> domainIdToCost = {};
   Map<Id<Domain>?, Map<int, double>> domainIdToOldCost = {};
+  int? weightInGrams;
+  int? stockQuantity;
+  int? incomingStockQuantity;
+  (int week, int year)? expectedStockArrival;
 
   Article({
     required this.configuration,
     required this.imageIds,
     required this.domainIdToCost,
     required this.domainIdToOldCost,
+    required this.weightInGrams,
+    required this.stockQuantity,
+    required this.incomingStockQuantity,
+    required this.expectedStockArrival,
   });
 
   Article.fromJson(Map<String, dynamic> json)
@@ -31,7 +36,11 @@ class Article {
             key == "null" ? null : key,
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
-        );
+        ),
+        weightInGrams = json["weightInGrams"] == null ? null : int.parse(json["weightInGrams"]),
+        stockQuantity = json["stockQuantity"] == null ? null : int.parse(json["stockQuantity"]),
+        incomingStockQuantity = json["incomingStockQuantity"] == null ? null : int.parse(json["incomingStockQuantity"]),
+        expectedStockArrival = json["expectedStockArrival"] == null ? null : (int.parse(json["expectedStockArrival"]["week"]), int.parse(json["expectedStockArrival"]["year"]));
 
   Map<String, dynamic> toJson() => {
         "configuration": configuration,
@@ -39,19 +48,28 @@ class Article {
         "domainIdToCost": domainIdToCost.map(
           (key, value) => MapEntry(
             key ?? "null",
-            value.map((k, v) => MapEntry(k.toString(), v)),
+            value.map((k, v) => MapEntry(k, v)),
           ),
         ),
         "domainIdToOldCost": domainIdToOldCost.map(
           (key, value) => MapEntry(
             key ?? "null",
-            value.map((k, v) => MapEntry(k.toString(), v)),
+            value.map((k, v) => MapEntry(k, v)),
           ),
         ),
+        "weightInGrams": weightInGrams,
+        "stockQuantity": stockQuantity,
+        "incomingStockQuantity": incomingStockQuantity,
+        "expectedStockArrival": expectedStockArrival == null
+            ? null
+            : {
+                "week": expectedStockArrival!.$1,
+                "year": expectedStockArrival!.$2,
+              },
       };
 
   @override
-  String toString() => jsonEncode(this);
+  Article fromJson(Map<String, dynamic> json) => Article.fromJson(json);
 
   Map<int, double> getCost({required Id<Domain>? domainId}) {
     var defaultCostCopy = Map<int, double>.from(domainIdToCost[null]!);

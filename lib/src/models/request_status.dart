@@ -6,13 +6,10 @@ enum RequestStatus {
   inProgress,
   completed,
   rejected,
-  canceled,
-}
+  canceled;
 
-extension RequestStatusExt on RequestStatus {
-  String get string => toString().split(".").last;
-
-  static RequestStatus fromString(String s) => RequestStatus.values.firstWhere((e) => e.string == s);
+  static RequestStatus fromString(String s) =>
+      RequestStatus.values.firstWhere((v) => v.string == s);
 
   String uiText(Language currentLanguage) {
     switch (this) {

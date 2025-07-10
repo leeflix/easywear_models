@@ -1,4 +1,6 @@
-class Intratool {
+import 'package:easywear_models/easywear_models.dart';
+
+class Intratool extends DataClass<Intratool> {
   final String accessToken;
   final Map<String, dynamic> jwk;
 
@@ -15,4 +17,7 @@ class Intratool {
         "accessToken": accessToken,
         "jwk": jwk,
       };
+
+  @override
+  Intratool fromJson(Map<String, dynamic> json) => Intratool.fromJson(json);
 }

@@ -45,7 +45,8 @@ sealed class Request extends Model<Request> {
         ...super.toJson(),
       };
 
-  static Request fromJson2(Map<String, dynamic> json) => switch (RequestTypeE.fromString(json["type"])) {
+  static Request fromJson2(Map<String, dynamic> json) =>
+      switch (RequestType.fromString(json["type"])) {
         RequestType.order => Order.fromJson(json),
         RequestType.claim => Claim.fromJson(json),
         RequestType.correction => Correction.fromJson(json),
@@ -93,10 +94,12 @@ class Order extends Request {
         );
 
   Order.fromJson(Map<String, dynamic> json)
-      : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
+      : packages = json["packages"]
+            .map<Package>((package) => Package.fromJson(package))
+            .toList(),
         supplierDomainId = json["supplierDomainId"],
         sourceOrderIds = Set<Id<Request>>.from(json["sourceOrderIds"]),
-        view = ViewModeExt.fromString(json["view"]),
+        view = ViewMode.fromString(json["view"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -104,10 +107,14 @@ class Order extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
-          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
+          requested: json["requested"] == null
+              ? null
+              : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null
+              ? null
+              : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
-          status: RequestStatusExt.fromString(json["status"]),
+          status: RequestStatus.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
         );
@@ -126,7 +133,10 @@ class Order extends Request {
   Request fromJson(Map<String, dynamic> json) => Order.fromJson(json);
 
   @override
-  Set<Id<Workwear>> readWorkwearIds() => packages.map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys).flattened.toSet();
+  Set<Id<Workwear>> readWorkwearIds() => packages
+      .map((package) => package.workwearIdToSkuToUserPaysToPackageEntry.keys)
+      .flattened
+      .toSet();
 
   void iterateSync(
     void Function(
@@ -175,7 +185,8 @@ class Order extends Request {
   Inventory readInventory() {
     Inventory inventory = Inventory.empty();
     iterateSync(
-      (packageIndex, workwearId, sku, packageEntry) => inventory.updateAmountInInventory(
+      (packageIndex, workwearId, sku, packageEntry) =>
+          inventory.updateAmountInInventory(
         workwearId: workwearId,
         sku: sku,
         amount: packageEntry.amount,
@@ -187,7 +198,8 @@ class Order extends Request {
   double cost() {
     double cost = 0;
     iterateSync(
-      (packageIndex, workwearId, sku, packageEntry) => cost += packageEntry.amount * (packageEntry.cost ?? 0),
+      (packageIndex, workwearId, sku, packageEntry) =>
+          cost += packageEntry.amount * (packageEntry.cost ?? 0),
     );
     return cost;
   }
@@ -226,10 +238,14 @@ class Correction extends Request {
           updated: DateTime.parse(json["updated"]),
           isArchived: json["isArchived"],
           userId: json["userId"],
-          requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
-          canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
+          requested: json["requested"] == null
+              ? null
+              : DateTime.parse(json["requested"]),
+          canceled: json["canceled"] == null
+              ? null
+              : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
-          status: RequestStatusExt.fromString(json["status"]),
+          status: RequestStatus.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
         );
