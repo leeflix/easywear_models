@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/models/package_delivery_report.dart';
-import 'package:easywear_models/src/models/shipping_method.dart';
 
 class SupplierConfig extends DataClass<SupplierConfig> {
   Set<Id<Domain>> customerDomainIds;
@@ -61,32 +57,26 @@ class SupplierConfig extends DataClass<SupplierConfig> {
         supportPhone = json["supportPhone"],
         returnUrl = json["returnUrl"],
         agbUrl = json["agbUrl"],
-        maxPackageWeightInKgToCountryToShippingMethod =
-            (json["maxPackageWeightInKgToCountryToShippingMethod"] as Map)
-                .map((weight, countryToShippingMethod) => MapEntry(
-                      int.parse(weight),
-                      (countryToShippingMethod as Map).map(
-                        (country, shippingMethod) => MapEntry(
-                          Country.fromString(country),
-                          ShippingMethod.fromJson(shippingMethod),
-                        ),
-                      ),
-                    )),
-        countryToZipRangesToRemoteAreaInfo =
-            (json["countryToZipsToRemoteAreaInfo"] as Map)
-                .map((country, zipRangesToRemoteAreaInfo) => MapEntry(
-                      Country.fromString(country),
-                      (zipRangesToRemoteAreaInfo as Map)
-                          .map((zipRange, remoteAreaInfo) => MapEntry(
-                                (
-                                  zipRange.split('-')[0],
-                                  zipRange.split('-')[1],
-                                ),
-                                RemoteAreaInfo.fromJson(remoteAreaInfo),
-                              )),
-                    )),
-        remoteAreaTypeToPriceInfo =
-            (json["remoteAreaTypeToPriceInfo"] as Map).map(
+        maxPackageWeightInKgToCountryToShippingMethod = (json["maxPackageWeightInKgToCountryToShippingMethod"] as Map).map((weight, countryToShippingMethod) => MapEntry(
+              int.parse(weight),
+              (countryToShippingMethod as Map).map(
+                (country, shippingMethod) => MapEntry(
+                  Country.fromString(country),
+                  ShippingMethod.fromJson(shippingMethod),
+                ),
+              ),
+            )),
+        countryToZipRangesToRemoteAreaInfo = (json["countryToZipsToRemoteAreaInfo"] as Map).map((country, zipRangesToRemoteAreaInfo) => MapEntry(
+              Country.fromString(country),
+              (zipRangesToRemoteAreaInfo as Map).map((zipRange, remoteAreaInfo) => MapEntry(
+                    (
+                      zipRange.split('-')[0],
+                      zipRange.split('-')[1],
+                    ),
+                    RemoteAreaInfo.fromJson(remoteAreaInfo),
+                  )),
+            )),
+        remoteAreaTypeToPriceInfo = (json["remoteAreaTypeToPriceInfo"] as Map).map(
           (type, priceInfo) => MapEntry(
             RemoteAreaType.fromString(type),
             RemoteAreaTypePriceInfo.fromJson(priceInfo),
@@ -94,8 +84,7 @@ class SupplierConfig extends DataClass<SupplierConfig> {
         );
 
   @override
-  SupplierConfig fromJson(Map<String, dynamic> json) =>
-      SupplierConfig.fromJson(json);
+  SupplierConfig fromJson(Map<String, dynamic> json) => SupplierConfig.fromJson(json);
 
   PackageDeliveryReport? getPackageDeliveryReport({
     required Country country,
@@ -109,9 +98,7 @@ class SupplierConfig extends DataClass<SupplierConfig> {
 
     if (bestPackageWeightInKg == null) return null;
 
-    var shippingMethod =
-        maxPackageWeightInKgToCountryToShippingMethod[bestPackageWeightInKg]
-            ?[country];
+    var shippingMethod = maxPackageWeightInKgToCountryToShippingMethod[bestPackageWeightInKg]?[country];
 
     if (shippingMethod == null) return null;
 
@@ -183,8 +170,7 @@ class SupplierConfig extends DataClass<SupplierConfig> {
     );
     if (bestWeight == null) return null;
 
-    var shippingMethods =
-        maxPackageWeightInKgToCountryToShippingMethod[bestWeight];
+    var shippingMethods = maxPackageWeightInKgToCountryToShippingMethod[bestWeight];
     if (shippingMethods == null) return null;
 
     return shippingMethods[country];
@@ -194,14 +180,7 @@ class SupplierConfig extends DataClass<SupplierConfig> {
     required Country country,
     required double packageWeightInKg,
   }) =>
-      maxPackageWeightInKgToCountryToShippingMethod.entries
-          .where((entry) => entry.value.containsKey(country))
-          .map((entry) => entry.key)
-          .firstWhereOrNull((weight) => weight >= packageWeightInKg);
+      maxPackageWeightInKgToCountryToShippingMethod.entries.where((entry) => entry.value.containsKey(country)).map((entry) => entry.key).firstWhereOrNull((weight) => weight >= packageWeightInKg);
 
-  int? maxPackageWeightInKg({required Country country}) =>
-      maxPackageWeightInKgToCountryToShippingMethod.entries
-          .where((entry) => entry.value.containsKey(country))
-          .map((entry) => entry.key)
-          .max;
+  int? maxPackageWeightInKg({required Country country}) => maxPackageWeightInKgToCountryToShippingMethod.entries.where((entry) => entry.value.containsKey(country)).map((entry) => entry.key).max;
 }

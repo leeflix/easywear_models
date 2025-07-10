@@ -5,8 +5,7 @@ enum RequestType {
   claim,
   correction;
 
-  static RequestType fromString(String s) =>
-      RequestType.values.firstWhere((v) => v.string == s);
+  static RequestType fromString(String s) => RequestType.values.firstWhere((v) => v.string == s);
 
   String uiText(Language language) => switch (this) {
         RequestType.order => switch (language) {

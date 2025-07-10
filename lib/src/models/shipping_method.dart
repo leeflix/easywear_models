@@ -27,16 +27,11 @@ class ShippingMethod extends DataClass<ShippingMethod> {
       : name = json["name"],
         parcelPrice = json["parcelPrice"],
         surchargePricePerKg = json["surchargePricePerKg"],
-        deliveryTimeInDays = json["deliveryTimeInDays"] != null
-            ? MinMax.fromJson(json["deliveryTimeInDays"])
-            : null,
-        remoteAreaAdjustments = json["remoteAreaAdjustments"] != null
-            ? ShippingMethod.fromJson(json["remoteAreaAdjustments"])
-            : null;
+        deliveryTimeInDays = json["deliveryTimeInDays"] != null ? MinMax.fromJson(json["deliveryTimeInDays"]) : null,
+        remoteAreaAdjustments = json["remoteAreaAdjustments"] != null ? ShippingMethod.fromJson(json["remoteAreaAdjustments"]) : null;
 
   @override
-  ShippingMethod fromJson(Map<String, dynamic> json) =>
-      ShippingMethod.fromJson(json);
+  ShippingMethod fromJson(Map<String, dynamic> json) => ShippingMethod.fromJson(json);
 
   String getName({required bool? isRemoteArea}) {
     if (isRemoteArea == true && remoteAreaAdjustments != null) {

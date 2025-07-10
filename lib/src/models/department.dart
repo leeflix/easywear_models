@@ -24,8 +24,7 @@ class Department extends Model<Department> {
   Department.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         userIds = Set.from(json["userIds"]),
-        shop = (json["shop"] as Map)
-            .map((key, value) => MapEntry(key, value?.toDouble())),
+        shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
         super(
           domainId: json["domainId"],
           id: json["id"],

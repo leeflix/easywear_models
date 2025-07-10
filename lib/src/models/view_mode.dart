@@ -5,6 +5,5 @@ enum ViewMode {
   admin,
   supplier;
 
-  static ViewMode fromString(String s) =>
-      ViewMode.values.firstWhere((v) => v.string == s);
+  static ViewMode fromString(String s) => ViewMode.values.firstWhere((v) => v.string == s);
 }

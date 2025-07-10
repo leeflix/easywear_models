@@ -1,6 +1,5 @@
-import 'package:easywear_models/easywear_models.dart';
-
 enum Currency {
+  eur_,
   usd_,
   jpy_,
   bgn_,
@@ -34,6 +33,39 @@ enum Currency {
 
   String get string => toString().split(".").last.replaceAll("_", "");
 
-  static Currency fromString(String s) =>
-      Currency.values.firstWhere((v) => v.string == s);
+  static Currency fromString(String s) => Currency.values.firstWhere((v) => v.string == s);
+
+  String get uiString => switch (this) {
+        Currency.eur_ => "€",
+        Currency.usd_ => "\$",
+        Currency.jpy_ => "¥",
+        Currency.bgn_ => "лв",
+        Currency.czk_ => "Kč",
+        Currency.dkk_ => "kr",
+        Currency.gbp_ => "£",
+        Currency.huf_ => "Ft",
+        Currency.pln_ => "zł",
+        Currency.ron_ => "lei",
+        Currency.sek_ => "kr",
+        Currency.chf_ => "CHF",
+        Currency.isk_ => "kr",
+        Currency.nok_ => "kr",
+        Currency.try_ => "₺",
+        Currency.aud_ => "\$",
+        Currency.brl_ => "R\$",
+        Currency.cad_ => "\$",
+        Currency.cny_ => "¥",
+        Currency.hkd_ => "\$",
+        Currency.idr_ => "Rp",
+        Currency.ils_ => "₪",
+        Currency.inr_ => "₹",
+        Currency.krw_ => "₩",
+        Currency.mxn_ => "\$",
+        Currency.myr_ => "RM",
+        Currency.nzd_ => "\$",
+        Currency.php_ => "₱",
+        Currency.sgd_ => "\$",
+        Currency.thb_ => "฿",
+        Currency.zar_ => "R",
+      };
 }

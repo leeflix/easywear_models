@@ -6,8 +6,7 @@ enum FeatureLevel {
   premium,
   enterprise;
 
-  static FeatureLevel fromString(String s) =>
-      FeatureLevel.values.firstWhere((e) => e.string == s);
+  static FeatureLevel fromString(String s) => FeatureLevel.values.firstWhere((e) => e.string == s);
 
   String uiText(Language language) => switch (this) {
         FeatureLevel.free => switch (language) {

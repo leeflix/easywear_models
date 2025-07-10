@@ -19,6 +19,5 @@ class RemoteAreaInfo extends DataClass<RemoteAreaInfo> {
         isRemoteArea = json["isRemoteArea"];
 
   @override
-  RemoteAreaInfo fromJson(Map<String, dynamic> json) =>
-      RemoteAreaInfo.fromJson(json);
+  RemoteAreaInfo fromJson(Map<String, dynamic> json) => RemoteAreaInfo.fromJson(json);
 }

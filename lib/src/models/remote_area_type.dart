@@ -5,6 +5,5 @@ enum RemoteAreaType {
   sea,
   air;
 
-  static RemoteAreaType fromString(String s) =>
-      RemoteAreaType.values.firstWhere((v) => v.string == s);
+  static RemoteAreaType fromString(String s) => RemoteAreaType.values.firstWhere((v) => v.string == s);
 }

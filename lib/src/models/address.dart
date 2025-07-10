@@ -39,8 +39,7 @@ class Address extends DataClass<Address> {
 
   Address.fromJson(Map<String, dynamic> json)
       : companyName = json["companyName"],
-        gender =
-            json["gender"] == null ? null : Gender.fromString(json["gender"]),
+        gender = json["gender"] == null ? null : Gender.fromString(json["gender"]),
         firstName = json["firstName"],
         lastName = json["lastName"],
         country = Country.fromString(json["country"]),

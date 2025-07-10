@@ -5,6 +5,5 @@ enum Gender {
   men,
   diverse;
 
-  static Gender fromString(String s) =>
-      Gender.values.firstWhere((gender) => gender.string == s);
+  static Gender fromString(String s) => Gender.values.firstWhere((gender) => gender.string == s);
 }

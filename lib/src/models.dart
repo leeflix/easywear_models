@@ -19,9 +19,7 @@ enum Models {
         Models.location => Location,
       };
 
-  String get name =>
-      string[0].toUpperCase() + string.substring(1).toLowerCase();
+  String get name => string[0].toUpperCase() + string.substring(1).toLowerCase();
 
-  static Models fromType(Type type) =>
-      Models.values.firstWhere((modelType) => modelType.type == type);
+  static Models fromType(Type type) => Models.values.firstWhere((modelType) => modelType.type == type);
 }

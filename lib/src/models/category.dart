@@ -131,8 +131,7 @@ enum Category {
   fleischermuetzen,
   basecaps;
 
-  static Category fromString(String s) =>
-      Category.values.firstWhere((v) => v.string == s);
+  static Category fromString(String s) => Category.values.firstWhere((v) => v.string == s);
 
 // String uiText(Language language) {
 //   return switch (this) {

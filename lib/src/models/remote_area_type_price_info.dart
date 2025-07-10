@@ -23,6 +23,5 @@ class RemoteAreaTypePriceInfo extends DataClass<RemoteAreaTypePriceInfo> {
         minPrice = json["minPrice"];
 
   @override
-  RemoteAreaTypePriceInfo fromJson(Map<String, dynamic> json) =>
-      RemoteAreaTypePriceInfo.fromJson(json);
+  RemoteAreaTypePriceInfo fromJson(Map<String, dynamic> json) => RemoteAreaTypePriceInfo.fromJson(json);
 }

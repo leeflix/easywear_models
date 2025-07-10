@@ -8,8 +8,7 @@ enum RequestStatus {
   rejected,
   canceled;
 
-  static RequestStatus fromString(String s) =>
-      RequestStatus.values.firstWhere((v) => v.string == s);
+  static RequestStatus fromString(String s) => RequestStatus.values.firstWhere((v) => v.string == s);
 
   String uiText(Language currentLanguage) {
     switch (this) {

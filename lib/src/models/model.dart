@@ -32,8 +32,7 @@ abstract class Model<T extends Model<T>> extends DataClass<T> {
         "isArchived": isArchived,
       };
 
-  T fromMongoDoc(Map<String, dynamic> doc) =>
-      fromJson(removeUnderscoreFromId(doc));
+  T fromMongoDoc(Map<String, dynamic> doc) => fromJson(removeUnderscoreFromId(doc));
 
   Map<String, dynamic> toMongoDoc() => addUnderscoreToId(toJson());
 
@@ -47,8 +46,7 @@ abstract class DataClass<T extends DataClass<T>> {
 
   T fromJson(Map<String, dynamic> json);
 
-  T deepCopy<T extends DataClass<T>>() =>
-      fromJson(jsonDecode(jsonEncode(this))) as T;
+  T deepCopy<T extends DataClass<T>>() => fromJson(jsonDecode(jsonEncode(this))) as T;
 
   @override
   String toString() => JsonEncoder.withIndent("  ").convert(toJson());

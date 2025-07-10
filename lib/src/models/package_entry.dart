@@ -58,10 +58,8 @@ class PackageEntry extends DataClass<PackageEntry> {
         departmentId = json["departmentId"],
         locationId = json["locationId"],
         booked = json["booked"] == null ? null : DateTime.parse(json["booked"]),
-        received =
-            json["received"] == null ? null : DateTime.parse(json["received"]);
+        received = json["received"] == null ? null : DateTime.parse(json["received"]);
 
   @override
-  PackageEntry fromJson(Map<String, dynamic> json) =>
-      PackageEntry.fromJson(json);
+  PackageEntry fromJson(Map<String, dynamic> json) => PackageEntry.fromJson(json);
 }

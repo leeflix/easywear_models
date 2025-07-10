@@ -29,8 +29,7 @@ enum Language {
   af,
   hi;
 
-  static Language fromString(String s) =>
-      Language.values.firstWhere((v) => v.string == s);
+  static Language fromString(String s) => Language.values.firstWhere((v) => v.string == s);
 
   String get uiString => switch (this) {
         Language.de => "Deutsch",

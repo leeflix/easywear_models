@@ -1,5 +1,4 @@
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/models/shipping_method.dart';
 
 class PackageDeliveryReport extends DataClass<PackageDeliveryReport> {
   int maxPackageWeightInKg;
@@ -26,12 +25,8 @@ class PackageDeliveryReport extends DataClass<PackageDeliveryReport> {
         zip = json["zip"],
         packageWeight = json["packageWeight"],
         shippingMethod = ShippingMethod.fromJson(json["shippingMethod"]),
-        remoteAreaInfo = json["remoteAreaInfo"] != null
-            ? RemoteAreaInfo.fromJson(json["remoteAreaInfo"])
-            : null,
-        remoteAreaPriceInfo = json["remoteAreaPriceInfo"] != null
-            ? RemoteAreaTypePriceInfo.fromJson(json["remoteAreaPriceInfo"])
-            : null;
+        remoteAreaInfo = json["remoteAreaInfo"] != null ? RemoteAreaInfo.fromJson(json["remoteAreaInfo"]) : null,
+        remoteAreaPriceInfo = json["remoteAreaPriceInfo"] != null ? RemoteAreaTypePriceInfo.fromJson(json["remoteAreaPriceInfo"]) : null;
 
   Map<String, dynamic> toJson() => {
         "maxPackageWeightInKg": maxPackageWeightInKg,
@@ -44,8 +39,7 @@ class PackageDeliveryReport extends DataClass<PackageDeliveryReport> {
       };
 
   @override
-  PackageDeliveryReport fromJson(Map<String, dynamic> json) =>
-      PackageDeliveryReport.fromJson(json);
+  PackageDeliveryReport fromJson(Map<String, dynamic> json) => PackageDeliveryReport.fromJson(json);
 
   double totalCost() {
     double totalCost = 0;

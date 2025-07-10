@@ -4,8 +4,7 @@ import 'package:easywear_models/easywear_models.dart';
 
 class Package extends DataClass<Package> {
   Address? address;
-  Map<Id<Workwear>, Map<ArticleId, Map<bool?, PackageEntry>>>
-      workwearIdToSkuToUserPaysToPackageEntry;
+  Map<Id<Workwear>, Map<ArticleId, Map<bool?, PackageEntry>>> workwearIdToSkuToUserPaysToPackageEntry;
 
   Package({
     required this.address,
@@ -14,8 +13,7 @@ class Package extends DataClass<Package> {
 
   Map<String, dynamic> toJson() => {
         "address": address?.toJson(),
-        "workwearIdToSkuToUserPaysToPackageEntry":
-            workwearIdToSkuToUserPaysToPackageEntry.map(
+        "workwearIdToSkuToUserPaysToPackageEntry": workwearIdToSkuToUserPaysToPackageEntry.map(
           (workwearId, skuToUserPaysToPackageEntry) => MapEntry(
             workwearId,
             skuToUserPaysToPackageEntry.map(
@@ -34,19 +32,15 @@ class Package extends DataClass<Package> {
       };
 
   Package.fromJson(Map<String, dynamic> json)
-      : address =
-            json["address"] == null ? null : Address.fromJson(json["address"]),
-        workwearIdToSkuToUserPaysToPackageEntry =
-            Map.from(json["workwearIdToSkuToUserPaysToPackageEntry"]).map(
+      : address = json["address"] == null ? null : Address.fromJson(json["address"]),
+        workwearIdToSkuToUserPaysToPackageEntry = Map.from(json["workwearIdToSkuToUserPaysToPackageEntry"]).map(
           (workwearId, skuToUserPaysToPackageEntry) => MapEntry(
             workwearId,
             Map.from(skuToUserPaysToPackageEntry).map(
               (sku, userPaysToPackageEntry) => MapEntry(
                 sku,
                 Map.from(userPaysToPackageEntry).map(
-                  (userPays, packageEntry) => MapEntry(
-                      userPays == "null" ? null : bool.parse(userPays),
-                      PackageEntry.fromJson(packageEntry)),
+                  (userPays, packageEntry) => MapEntry(userPays == "null" ? null : bool.parse(userPays), PackageEntry.fromJson(packageEntry)),
                 ),
               ),
             ),
@@ -64,16 +58,12 @@ class Package extends DataClass<Package> {
     ) fn,
   ) {
     for (var workwearId in workwearIdToSkuToUserPaysToPackageEntry.keys) {
-      for (var sku
-          in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
-        for (var userPays
-            in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!
-                .keys) {
+      for (var sku in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
+        for (var userPays in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!.keys) {
           fn(
             workwearId,
             sku,
-            workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![
-                userPays]!,
+            workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![userPays]!,
           );
         }
       }
@@ -88,16 +78,12 @@ class Package extends DataClass<Package> {
     ) fn,
   ) async {
     for (var workwearId in workwearIdToSkuToUserPaysToPackageEntry.keys) {
-      for (var sku
-          in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
-        for (var userPays
-            in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!
-                .keys) {
+      for (var sku in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
+        for (var userPays in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!.keys) {
           await fn(
             workwearId,
             sku,
-            workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![
-                userPays]!,
+            workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![userPays]!,
           );
         }
       }
@@ -125,17 +111,13 @@ class Package extends DataClass<Package> {
   ) {
     List<T> res = [];
     for (var workwearId in workwearIdToSkuToUserPaysToPackageEntry.keys) {
-      for (var sku
-          in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
-        for (var userPays
-            in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!
-                .keys) {
+      for (var sku in workwearIdToSkuToUserPaysToPackageEntry[workwearId]!.keys) {
+        for (var userPays in workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]!.keys) {
           res.add(
             fn(
               workwearId,
               sku,
-              workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![
-                  userPays]!,
+              workwearIdToSkuToUserPaysToPackageEntry[workwearId]![sku]![userPays]!,
             ),
           );
         }
