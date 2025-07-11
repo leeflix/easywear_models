@@ -48,13 +48,13 @@ class Article extends DataClass<Article> {
         "domainIdToCost": domainIdToCost.map(
           (key, value) => MapEntry(
             key ?? "null",
-            value.map((k, v) => MapEntry(k, v)),
+            value.map((k, v) => MapEntry(k.toString(), v)),
           ),
         ),
         "domainIdToOldCost": domainIdToOldCost.map(
           (key, value) => MapEntry(
             key ?? "null",
-            value.map((k, v) => MapEntry(k, v)),
+            value.map((k, v) => MapEntry(k.toString(), v)),
           ),
         ),
         "weightInGrams": weightInGrams,
