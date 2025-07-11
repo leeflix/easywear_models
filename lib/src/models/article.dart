@@ -37,9 +37,9 @@ class Article extends DataClass<Article> {
             (value as Map).map<int, double>((k, v) => MapEntry<int, double>(int.parse(k), v.toDouble())),
           ),
         ),
-        weightInGrams = json["weightInGrams"] == null ? null : int.parse(json["weightInGrams"]),
-        stockQuantity = json["stockQuantity"] == null ? null : int.parse(json["stockQuantity"]),
-        incomingStockQuantity = json["incomingStockQuantity"] == null ? null : int.parse(json["incomingStockQuantity"]),
+        weightInGrams = json["weightInGrams"],
+        stockQuantity = json["stockQuantity"] ,
+        incomingStockQuantity = json["incomingStockQuantity"],
         expectedStockArrival = json["expectedStockArrival"] == null ? null : (int.parse(json["expectedStockArrival"]["week"]), int.parse(json["expectedStockArrival"]["year"]));
 
   Map<String, dynamic> toJson() => {
