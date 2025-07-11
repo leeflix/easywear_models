@@ -84,7 +84,7 @@ class Domain extends Model<Domain> {
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],
-        enabledSupplierIds = json["enabledSupplierIds"] == null ? null : Set<Id<Domain>>.from(json["enabledSupplierIds"].map((e) => Id<Domain>(e))),
+        enabledSupplierIds = json["enabledSupplierIds"] == null ? null : Set<Id<Domain>>.from(json["enabledSupplierIds"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
