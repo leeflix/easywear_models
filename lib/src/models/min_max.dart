@@ -22,4 +22,6 @@ class MinMax extends DataClass<MinMax> {
   MinMax fromJson(Map<String, dynamic> json) => MinMax.fromJson(json);
 
   bool isValid() => min >= 0 && max >= min;
+
+  bool intersects(MinMax other) => (min <= other.max && max >= other.min);
 }
