@@ -64,6 +64,7 @@ class Workwear extends Model<Workwear> {
         "enabledCountries": enabledCountries?.map((e) => e.string).toList(),
         "enabledDomainIds": enabledDomainIds?.toList(),
         "brandId": brandId,
+        "gender": gender.string,
         ...super.toJson(),
       };
 
