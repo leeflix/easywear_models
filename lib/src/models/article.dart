@@ -40,7 +40,7 @@ class Article extends DataClass<Article> {
         weightInGrams = json["weightInGrams"],
         stockQuantity = json["stockQuantity"] ,
         incomingStockQuantity = json["incomingStockQuantity"],
-        expectedStockArrival = json["expectedStockArrival"] == null ? null : (int.parse(json["expectedStockArrival"]["week"]), int.parse(json["expectedStockArrival"]["year"]));
+        expectedStockArrival = json["expectedStockArrival"] == null ? null : (json["expectedStockArrival"]["week"], json["expectedStockArrival"]["year"]);
 
   Map<String, dynamic> toJson() => {
         "configuration": configuration,
