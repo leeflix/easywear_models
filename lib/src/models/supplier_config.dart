@@ -48,6 +48,17 @@ class SupplierConfig extends DataClass<SupplierConfig> {
             priceInfo.toJson(),
           ),
         ),
+        "maxPackageWeightInKgToCountryToShippingMethod": maxPackageWeightInKgToCountryToShippingMethod.map(
+          (weight, countryToShippingMethod) => MapEntry(
+            weight.toString(),
+            countryToShippingMethod.map(
+              (country, shippingMethod) => MapEntry(
+                country.string,
+                shippingMethod.toJson(),
+              ),
+            ),
+          ),
+        ),
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
