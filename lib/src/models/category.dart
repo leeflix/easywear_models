@@ -7,11 +7,11 @@ final Map<Category, dynamic> categoryHierarchy = {
       Category.masken: {}, // Atemschutzmasken
       Category.kopfbedeckungen: {
         // Allgemeine Kopfbedeckungen
-        Category.barettmuetzen,
-        Category.kochmuetzen,
-        Category.bandanas,
-        Category.fleischermuetzen,
-        Category.basecaps,
+        Category.barettmuetzen: {},
+        Category.kochmuetzen: {},
+        Category.bandanas: {},
+        Category.fleischermuetzen: {},
+        Category.basecaps: {},
       },
     },
     Category.augenschutz: {},
@@ -22,27 +22,27 @@ final Map<Category, dynamic> categoryHierarchy = {
     Category.oberbekleidung: {
       // Oberteile
       Category.hemden: {
-        Category.langaermligeHemden,
-        Category.kurzaermeligeHemden,
+        Category.langaermligeHemden: {},
+        Category.kurzaermeligeHemden: {},
       },
       Category.blusen: {
-        Category.langaermligeBlusen,
-        Category.kurzaermeligeBlusen,
+        Category.langaermligeBlusen: {},
+        Category.kurzaermeligeBlusen: {},
       },
       Category.shirts: {
-        Category.poloshirts,
-        Category.tShirts,
-        Category.langaermligeShirts,
+        Category.poloshirts: {},
+        Category.tShirts: {},
+        Category.langaermligeShirts: {},
       },
       Category.jacken: {
-        Category.kochjacken,
-        Category.softshelljacken,
-        Category.fleecejacken,
-        Category.hybridjacken,
+        Category.kochjacken: {},
+        Category.softshelljacken: {},
+        Category.fleecejacken: {},
+        Category.hybridjacken: {},
       },
       Category.westen: {
-        Category.kellnerwesten,
-        Category.softshellwesten,
+        Category.kellnerwesten: {},
+        Category.softshellwesten: {},
       },
       Category.kasacks: {},
     },
@@ -54,32 +54,32 @@ final Map<Category, dynamic> categoryHierarchy = {
     Category.berufsbekleidungSpezial: {
       // Spezialisierte Bekleidung
       Category.schuerzen: {
-        Category.bistroschuerzen,
-        Category.latzschuerzen,
-        Category.vorbinder,
+        Category.bistroschuerzen: {},
+        Category.latzschuerzen: {},
+        Category.vorbinder: {},
       },
       Category.einwegbekleidung: {},
     },
     Category.schuhe: {
-      Category.berufsschuhe,
-      Category.sicherheitsschuhe,
+      Category.berufsschuhe: {},
+      Category.sicherheitsschuhe: {},
     },
   },
   Category.accessoires: {
     // Hauptkategorie: Accessoires
-    Category.halstuecher,
-    Category.hosentraeger,
-    Category.aermelbaender,
-    Category.handschuhe,
-    Category.fliegen,
-    Category.krawatten,
-    Category.friseurumhaenge,
-    Category.geschirrtuecher,
-    Category.kassierhalfter,
-    Category.kugelknopf,
-    Category.knopfleisten,
-    Category.geldboersen,
-    Category.passiertuecher,
+    Category.halstuecher: {},
+    Category.hosentraeger: {},
+    Category.aermelbaender: {},
+    Category.handschuhe: {},
+    Category.fliegen: {},
+    Category.krawatten: {},
+    Category.friseurumhaenge: {},
+    Category.geschirrtuecher: {},
+    Category.kassierhalfter: {},
+    Category.kugelknopf: {},
+    Category.knopfleisten: {},
+    Category.geldboersen: {},
+    Category.passiertuecher: {},
   },
 };
 
