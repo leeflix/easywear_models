@@ -7,7 +7,8 @@ enum Models {
   request,
   code,
   department,
-  location;
+  location,
+  brand;
 
   Type get type => switch (this) {
         Models.domain => Domain,
@@ -17,6 +18,7 @@ enum Models {
         Models.code => Code,
         Models.department => Department,
         Models.location => Location,
+        Models.brand => Brand,
       };
 
   String get name => string[0].toUpperCase() + string.substring(1).toLowerCase();
