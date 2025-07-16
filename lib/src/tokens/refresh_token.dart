@@ -1,12 +1,26 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:easywear_models/easywear_models.dart';
 
 class RefreshToken extends UserToken<RefreshToken> {
-  RefreshToken({required super.userId});
+  final Id<Domain> domainId;
 
-  RefreshToken.fromJson(super.json) : super.fromJson();
+  RefreshToken({
+    required super.userId,
+    required this.domainId,
+  });
+
+  RefreshToken.fromJson(Map<String, dynamic> json)
+      : domainId = Id<Domain>(json["domainId"]),
+        super.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => {
+        ...super.toJson(),
+        "domainId": domainId,
+      };
 
   RefreshToken.fromToken({
-    required super.token,
-    required super.secret,
-  }) : super.fromToken();
+    required String token,
+    required Secret<RefreshToken> secret,
+  }) : this.fromJson(JWT.verify(token, SecretKey(secret.value)).payload);
 }
