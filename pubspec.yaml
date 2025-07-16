@@ -8,7 +8,7 @@ dependencies:
   crypto:
   uuid:
   meta:
-  dart_jsonwebtoken: ^3.2.0
+  dart_jsonwebtoken:
   auto_exporter_annotation: 1.0.3
 
 dev_dependencies:
