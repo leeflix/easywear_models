@@ -87,7 +87,7 @@ export 'package:easywear_models/src/requests/upload_image_request.dart';
 export 'package:easywear_models/src/requests/verify_domain_request.dart';
 export 'package:easywear_models/src/requests/verify_user_request.dart';
 export 'package:easywear_models/src/tokens/change_password_token.dart';
-export 'package:easywear_models/src/tokens/easywear_access_token.dart';
+export 'package:easywear_models/src/tokens/access_token.dart';
 export 'package:easywear_models/src/tokens/refresh_token.dart';
 export 'package:easywear_models/src/tokens/skip_login_token.dart';
 export 'package:easywear_models/src/tokens/token.dart';

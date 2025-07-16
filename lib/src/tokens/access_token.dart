@@ -1,15 +1,15 @@
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:easywear_models/easywear_models.dart';
 
-class EasyWearAccessToken extends UserToken<EasyWearAccessToken> {
+class AccessToken extends UserToken<AccessToken> {
   final Id<Domain> domainId;
 
-  EasyWearAccessToken({
+  AccessToken({
     required super.userId,
     required this.domainId,
   });
 
-  EasyWearAccessToken.fromJson(Map<String, dynamic> json)
+  AccessToken.fromJson(Map<String, dynamic> json)
       : domainId = Id<Domain>(json["domainId"]),
         super.fromJson(json);
 
@@ -19,8 +19,8 @@ class EasyWearAccessToken extends UserToken<EasyWearAccessToken> {
         "domainId": domainId,
       };
 
-  EasyWearAccessToken.fromToken({
+  AccessToken.fromToken({
     required String token,
-    required Secret<EasyWearAccessToken> secret,
+    required Secret<AccessToken> secret,
   }) : this.fromJson(JWT.verify(token, SecretKey(secret.value)).payload);
 }
