@@ -1,3 +1,4 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:easywear_models/easywear_models.dart';
 
 class UnsubscribeNewsletterToken extends Token<UnsubscribeNewsletterToken> {
@@ -15,4 +16,9 @@ class UnsubscribeNewsletterToken extends Token<UnsubscribeNewsletterToken> {
 
   @override
   Token<Token> fromJson(Map<String, dynamic> json) => UnsubscribeNewsletterToken.fromJson(json);
+
+  UnsubscribeNewsletterToken.fromToken({
+    required String token,
+    required Secret<UnsubscribeNewsletterToken> secret,
+  }) : this.fromJson(JWT.verify(token, SecretKey(secret.value)).payload);
 }

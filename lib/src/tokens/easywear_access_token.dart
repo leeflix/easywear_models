@@ -1,3 +1,4 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:easywear_models/easywear_models.dart';
 
 class EasyWearAccessToken extends UserToken<EasyWearAccessToken> {
@@ -18,6 +19,8 @@ class EasyWearAccessToken extends UserToken<EasyWearAccessToken> {
         "domainId": domainId,
       };
 
-  @override
-  EasyWearAccessToken fromJson(Map<String, dynamic> json) => EasyWearAccessToken.fromJson(json);
+  EasyWearAccessToken.fromToken({
+    required String token,
+    required Secret<EasyWearAccessToken> secret,
+  }) : this.fromJson(JWT.verify(token, SecretKey(secret.value)).payload);
 }

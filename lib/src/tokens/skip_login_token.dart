@@ -1,3 +1,4 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:easywear_models/easywear_models.dart';
 
 class SkipLoginToken extends UserToken<SkipLoginToken> {
@@ -18,6 +19,8 @@ class SkipLoginToken extends UserToken<SkipLoginToken> {
         "domainId": domainId,
       };
 
-  @override
-  SkipLoginToken fromJson(Map<String, dynamic> json) => SkipLoginToken.fromJson(json);
+  SkipLoginToken.fromToken({
+    required String token,
+    required Secret<SkipLoginToken> secret,
+  }) : this.fromJson(JWT.verify(token, SecretKey(secret.value)).payload);
 }

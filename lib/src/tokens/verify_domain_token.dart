@@ -1,3 +1,4 @@
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:easywear_models/easywear_models.dart';
 
 class VerifyDomainToken extends UserToken<VerifyDomainToken> {
@@ -17,4 +18,9 @@ class VerifyDomainToken extends UserToken<VerifyDomainToken> {
         ...super.toJson(),
         "domainId": domainId,
       };
+
+  VerifyDomainToken.fromToken({
+    required String token,
+    required Secret<VerifyDomainToken> secret,
+  }) : this.fromJson(JWT.verify(token, SecretKey(secret.value)).payload);
 }
