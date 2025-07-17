@@ -36,11 +36,7 @@ abstract class Model<T extends Model<T>> extends DataClass<T> {
 
   Map<String, dynamic> toMongoDoc() => addUnderscoreToId(toJson());
 
-  // Models get models => Models.fromType(T); // runTimeType
-
-  // String get modelName => modelType.name;
-
-  // Models get modelType;
+  ModelType get modelType => ModelType.fromType(T);
 }
 
 abstract class DataClass<T extends DataClass<T>> {
