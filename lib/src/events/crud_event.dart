@@ -1,6 +1,6 @@
 import 'package:easywear_models/easywear_models.dart';
 
-abstract class CrudEvent<T extends Model<T>> extends DataClass<CrudEvent<T>> {
+abstract class CrudEvent<T extends Model<T>> extends Event<CrudEvent<T>> {
   final Set<T> records;
 
   CrudEvent({required this.records}) : assert(records.isNotEmpty, "records should not be empty");
