@@ -6,28 +6,30 @@ abstract class CrudEvent<T extends Model<T>> extends Event<CrudEvent<T>> {
   CrudEvent({required this.records}) : assert(records.isNotEmpty, "records should not be empty");
 
   Map<String, dynamic> toJson() => {
-        "op": "",
-        "type": "",
-        "records": records.map((record) => record.toJson()).toList(),
-      };
+    "op": CrudEventType.fromType(runtimeType).string,
+    "type": ModelType.fromType(T).string,
+    "records": records.map((record) => record.toJson()).toList(),
+  };
 
-  static CrudEvent<T> fromJson2<T extends Model<T>>(Map<String, dynamic> json) {
+  static CrudEvent fromJson2(Map<String, dynamic> json) {
     final CrudEventType op = CrudEventType.fromString(json["op"]);
-    final ModelType modelTypeString = ModelType.fromString(json["type"]);
-    final List<T> records = (json["records"] as List).map((recordJson) => modelTypeString.fromJson<T>(recordJson)).toList();
+    final ModelType modelType = ModelType.fromString(json["type"]);
+    final List records = (json["records"] as List)
+        .map((recordJson) => modelType.fromJson(recordJson))
+        .toList();
 
     switch (op) {
-      case CrudEventType.create:
-        return CreatedEvent<T>(records: records);
-      case CrudEventType.update:
-        return UpdatedEvent<T>(records: records);
-      case CrudEventType.delete:
-        return DeletedEvent<T>(records: records);
+      case CrudEventType.createdEvent:
+        return CreatedEvent(records: records);
+      case CrudEventType.updatedEvent:
+        return UpdatedEvent(records: records);
+      case CrudEventType.deletedEvent:
+        return DeletedEvent(records: records);
     }
   }
 
   @override
-  CrudEvent<T> fromJson(Map<String, dynamic> json) => CrudEvent.fromJson2<T>(json);
+  CrudEvent<T> fromJson(Map<String, dynamic> json) => CrudEvent.fromJson2(json);
 }
 
 class CreatedEvent<T extends Model<T>> extends CrudEvent<T> {

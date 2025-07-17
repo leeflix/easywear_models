@@ -21,15 +21,15 @@ enum ModelType {
         ModelType.brand => Brand,
       };
 
-  T fromJson<T extends Model<T>>(Map<String, dynamic> json) => switch (this) {
-        ModelType.domain => Domain.fromJson(json) as T,
-        ModelType.user => User.fromJson(json) as T,
-        ModelType.workwear => Workwear.fromJson(json) as T,
-        ModelType.request => Request.fromJson2(json) as T,
-        ModelType.code => Code.fromJson(json) as T,
-        ModelType.department => Department.fromJson(json) as T,
-        ModelType.location => Location.fromJson(json) as T,
-        ModelType.brand => Brand.fromJson(json) as T,
+  Model fromJson(Map<String, dynamic> json) => switch (this) {
+        ModelType.domain => Domain.fromJson(json),
+        ModelType.user => User.fromJson(json),
+        ModelType.workwear => Workwear.fromJson(json),
+        ModelType.request => Request.fromJson2(json),
+        ModelType.code => Code.fromJson(json),
+        ModelType.department => Department.fromJson(json),
+        ModelType.location => Location.fromJson(json),
+        ModelType.brand => Brand.fromJson(json),
       };
 
   static ModelType fromString(String s) => ModelType.values.firstWhere((e) => e.string == s);
