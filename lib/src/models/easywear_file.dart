@@ -7,6 +7,8 @@ enum EasyWearFile {
   exchangeProtocol,
   orderForm;
 
+  EasyWearFile fromString(String s) => EasyWearFile.values.firstWhere((e) => e.string == s);
+
   FileType get fileType => switch (this) {
         EasyWearFile.byod => FileType.pdf,
         EasyWearFile.excelTool => FileType.xlsx,
