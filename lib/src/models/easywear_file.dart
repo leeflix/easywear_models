@@ -170,4 +170,6 @@ enum FileType {
   pdf,
   csv,
   xlsx;
+
+  FileType fromString(String s) => FileType.values.firstWhere((v) => v.string == s);
 }

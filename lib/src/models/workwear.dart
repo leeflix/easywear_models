@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/models/brand.dart';
 
 class Workwear extends Model<Workwear> {
   String name;

@@ -1,26 +1,52 @@
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/events/crud_event_type.dart';
 
-class CRUDEvent<T extends Model<T>> extends Event<CRUDEvent<T>> {
-  CrudEventType op;
-  Set<T> records;
+abstract class CrudEvent<T extends Model<T>> extends DataClass<CrudEvent<T>> {
+  final Set<T> records;
 
-  CRUDEvent.create({required this.records}) : op = CrudEventType.create;
-
-  CRUDEvent.update({required this.records}) : op = CrudEventType.update;
-
-  CRUDEvent.delete({required this.records}) : op = CrudEventType.delete;
+  CrudEvent({required this.records}) : assert(records.isNotEmpty, "records should not be empty");
 
   Map<String, dynamic> toJson() => {
-        "op": op.string,
-        "type": Models.fromType(T).string,
+        "op": "",
+        "type": "",
         "records": records.map((record) => record.toJson()).toList(),
       };
 
-  CRUDEvent.fromJson(Map<String, dynamic> json)
-      : op = CrudEventType.fromString(json["op"]),
-        records = Set<T>.from((json["records"] as List).map((recordJson) => Models.fromString(json["type"]).fromJson<T>(recordJson)));
+  static CrudEvent<T> fromJson2<T extends Model<T>>(Map<String, dynamic> json) {
+    final CrudEventType op = CrudEventType.fromString(json["op"]);
+    final ModelType modelTypeString = ModelType.fromString(json["type"]);
+    final Set<T> records = (json["records"] as List).map((recordJson) => modelTypeString.fromJson<T>(recordJson)).toSet();
+
+    switch (op) {
+      case CrudEventType.create:
+        return CreatedEvent<T>(records: records);
+      case CrudEventType.update:
+        return UpdatedEvent<T>(records: records);
+      case CrudEventType.delete:
+        return DeletedEvent<T>(records: records);
+    }
+  }
 
   @override
-  CRUDEvent<T> fromJson(Map<String, dynamic> json) => CRUDEvent.fromJson(json);
+  CrudEvent<T> fromJson(Map<String, dynamic> json) => CrudEvent.fromJson2<T>(json);
+}
+
+class CreatedEvent<T extends Model<T>> extends CrudEvent<T> {
+  CreatedEvent({required super.records});
+
+  @override
+  CrudEventType get op => CrudEventType.create;
+}
+
+class UpdatedEvent<T extends Model<T>> extends CrudEvent<T> {
+  UpdatedEvent({required super.records});
+
+  @override
+  CrudEventType get op => CrudEventType.update;
+}
+
+class DeletedEvent<T extends Model<T>> extends CrudEvent<T> {
+  DeletedEvent({required super.records});
+
+  @override
+  CrudEventType get op => CrudEventType.delete;
 }

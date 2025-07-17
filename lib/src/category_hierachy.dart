@@ -85,9 +85,11 @@ final Map<Category, dynamic> categoryHierarchy = {
 
 extension CategorySetExtension on Set<Category> {
   /// Expands the set of categories to include all their descendants based on the full hierarchy.
-  Set<Category> expandWithDescendants(Map<Category, dynamic> fullHierarchy) {
-    return _expandCategoriesWithDescendants(this, fullHierarchy);
-  }
+  Set<Category> expandWithDescendants() => _expandCategoriesWithDescendants(this, categoryHierarchy);
+}
+
+extension StringSetExtension on Set<String> {
+  Set<String> expandWithDescendants() => map(Category.fromString).toSet().expandWithDescendants().map((category) => category.string).toSet();
 }
 
 dynamic _findChildrenOfCategory(Category targetCategory, Map<Category, dynamic> currentHierarchy) {

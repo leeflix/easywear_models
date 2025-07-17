@@ -36,9 +36,11 @@ abstract class Model<T extends Model<T>> extends DataClass<T> {
 
   Map<String, dynamic> toMongoDoc() => addUnderscoreToId(toJson());
 
-  Models get models => Models.fromType(T); // runTimeType
+  // Models get models => Models.fromType(T); // runTimeType
 
-  String get modelName => models.name;
+  // String get modelName => modelType.name;
+
+  // Models get modelType;
 }
 
 abstract class DataClass<T extends DataClass<T>> {
@@ -46,7 +48,7 @@ abstract class DataClass<T extends DataClass<T>> {
 
   T fromJson(Map<String, dynamic> json);
 
-  T deepCopy<T extends DataClass<T>>() => fromJson(jsonDecode(jsonEncode(this))) as T;
+  T deepCopy() => fromJson(jsonDecode(jsonEncode(this)));
 
   @override
   String toString() => JsonEncoder.withIndent("  ").convert(toJson());

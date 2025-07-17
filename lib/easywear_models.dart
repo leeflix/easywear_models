@@ -1,3 +1,9 @@
+import 'package:easywear_models/src/events/crud_event.dart';
+import 'package:easywear_models/src/models/code.dart';
+import 'package:easywear_models/src/models/location.dart';
+
+import 'easywear_models.dart';
+
 export 'package:easywear_models/src/category_hierachy.dart';
 export 'package:easywear_models/src/events/crud_event.dart';
 export 'package:easywear_models/src/events/event.dart';
@@ -93,3 +99,4 @@ export 'package:easywear_models/src/tokens/user_token.dart';
 export 'package:easywear_models/src/tokens/verify_domain_token.dart';
 export 'package:easywear_models/src/tokens/verify_user_token.dart';
 export 'package:easywear_models/src/util/util.dart';
+export 'package:easywear_models/src/events/crud_event_type.dart';
