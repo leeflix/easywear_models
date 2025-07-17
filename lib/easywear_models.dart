@@ -1,11 +1,6 @@
-import 'package:easywear_models/src/events/crud_event.dart';
-import 'package:easywear_models/src/models/code.dart';
-import 'package:easywear_models/src/models/location.dart';
-
-import 'easywear_models.dart';
-
 export 'package:easywear_models/src/category_hierachy.dart';
 export 'package:easywear_models/src/events/crud_event.dart';
+export 'package:easywear_models/src/events/crud_event_type.dart';
 export 'package:easywear_models/src/events/event.dart';
 export 'package:easywear_models/src/events/init_event.dart';
 export 'package:easywear_models/src/models.dart';
@@ -52,6 +47,7 @@ export 'package:easywear_models/src/models/white_label.dart';
 export 'package:easywear_models/src/models/workwear.dart';
 export 'package:easywear_models/src/models/workwear_filters.dart';
 export 'package:easywear_models/src/nullable.dart';
+export 'package:easywear_models/src/requests/change_my_password_request.dart';
 export 'package:easywear_models/src/requests/change_password_of_user_request.dart';
 export 'package:easywear_models/src/requests/change_password_with_token_request.dart';
 export 'package:easywear_models/src/requests/code_has_uses_request.dart';
@@ -89,8 +85,8 @@ export 'package:easywear_models/src/requests/unsubscribe_newsletter_request.dart
 export 'package:easywear_models/src/requests/upload_image_request.dart';
 export 'package:easywear_models/src/requests/verify_domain_request.dart';
 export 'package:easywear_models/src/requests/verify_user_request.dart';
-export 'package:easywear_models/src/tokens/change_password_token.dart';
 export 'package:easywear_models/src/tokens/access_token.dart';
+export 'package:easywear_models/src/tokens/change_password_token.dart';
 export 'package:easywear_models/src/tokens/refresh_token.dart';
 export 'package:easywear_models/src/tokens/skip_login_token.dart';
 export 'package:easywear_models/src/tokens/token.dart';
@@ -99,4 +95,3 @@ export 'package:easywear_models/src/tokens/user_token.dart';
 export 'package:easywear_models/src/tokens/verify_domain_token.dart';
 export 'package:easywear_models/src/tokens/verify_user_token.dart';
 export 'package:easywear_models/src/util/util.dart';
-export 'package:easywear_models/src/events/crud_event_type.dart';

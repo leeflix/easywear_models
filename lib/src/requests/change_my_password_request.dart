@@ -1,8 +1,8 @@
-class ChangePasswordOfUserRequest {
+class ChangeMyPasswordRequest {
   final String oldPassword;
   final String newPassword;
 
-  ChangePasswordOfUserRequest({
+  ChangeMyPasswordRequest({
     required this.oldPassword,
     required this.newPassword,
   });
