@@ -1,16 +1,26 @@
 import 'package:easywear_models/easywear_models.dart';
+import 'package:easywear_models/src/events/crud_event_type.dart';
 
-abstract class CRUDEvent<T extends Model<T>, U extends Event<U>> extends Event<U> {
+class CRUDEvent<T extends Model<T>> extends Event<CRUDEvent<T>> {
+  CrudEventType op;
   Set<T> records;
 
-  CRUDEvent({required this.records});
+  CRUDEvent.create({required this.records}) : op = CrudEventType.create;
+
+  CRUDEvent.update({required this.records}) : op = CrudEventType.update;
+
+  CRUDEvent.delete({required this.records}) : op = CrudEventType.delete;
 
   Map<String, dynamic> toJson() => {
-        "type": "${T}s${runtimeType.toString().split("<").first}",
-        "${T.toString().toLowerCase()}s": records.map((record) => record.toJson()).toList(),
+        "op": op.string,
+        "type": Models.fromType(T).string,
+        "records": records.map((record) => record.toJson()).toList(),
       };
 
-  CRUDEvent.fromJson(Map<String, dynamic> json, T Function(Map<String, dynamic> json) fromJson, String crudEventType)
-      : assert(json["type"] == "${T}s$crudEventType"),
-        records = json["${T.toString().toLowerCase()}s"].map<T>(fromJson).toList();
+  CRUDEvent.fromJson(Map<String, dynamic> json)
+      : op = CrudEventType.fromString(json["op"]),
+        records = Set<T>.from((json["records"] as List).map((recordJson) => Models.fromString(json["type"]).fromJson<T>(recordJson)));
+
+  @override
+  CRUDEvent<T> fromJson(Map<String, dynamic> json) => CRUDEvent.fromJson(json);
 }

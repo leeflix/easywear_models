@@ -1,10 +1,7 @@
 export 'package:easywear_models/src/category_hierachy.dart';
-export 'package:easywear_models/src/events/created_event.dart';
 export 'package:easywear_models/src/events/crud_event.dart';
-export 'package:easywear_models/src/events/deleted_event.dart';
 export 'package:easywear_models/src/events/event.dart';
 export 'package:easywear_models/src/events/init_event.dart';
-export 'package:easywear_models/src/events/updated_event.dart';
 export 'package:easywear_models/src/models.dart';
 export 'package:easywear_models/src/models/address.dart';
 export 'package:easywear_models/src/models/article.dart';
