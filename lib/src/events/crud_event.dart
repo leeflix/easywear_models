@@ -1,7 +1,7 @@
 import 'package:easywear_models/easywear_models.dart';
 
 abstract class CrudEvent<T extends Model<T>> extends Event<CrudEvent<T>> {
-  final Set<T> records;
+  final List<T> records;
 
   CrudEvent({required this.records}) : assert(records.isNotEmpty, "records should not be empty");
 
@@ -14,7 +14,7 @@ abstract class CrudEvent<T extends Model<T>> extends Event<CrudEvent<T>> {
   static CrudEvent<T> fromJson2<T extends Model<T>>(Map<String, dynamic> json) {
     final CrudEventType op = CrudEventType.fromString(json["op"]);
     final ModelType modelTypeString = ModelType.fromString(json["type"]);
-    final Set<T> records = (json["records"] as List).map((recordJson) => modelTypeString.fromJson<T>(recordJson)).toSet();
+    final List<T> records = (json["records"] as List).map((recordJson) => modelTypeString.fromJson<T>(recordJson)).toList();
 
     switch (op) {
       case CrudEventType.create:
@@ -32,21 +32,12 @@ abstract class CrudEvent<T extends Model<T>> extends Event<CrudEvent<T>> {
 
 class CreatedEvent<T extends Model<T>> extends CrudEvent<T> {
   CreatedEvent({required super.records});
-
-  @override
-  CrudEventType get op => CrudEventType.create;
 }
 
 class UpdatedEvent<T extends Model<T>> extends CrudEvent<T> {
   UpdatedEvent({required super.records});
-
-  @override
-  CrudEventType get op => CrudEventType.update;
 }
 
 class DeletedEvent<T extends Model<T>> extends CrudEvent<T> {
   DeletedEvent({required super.records});
-
-  @override
-  CrudEventType get op => CrudEventType.delete;
 }
