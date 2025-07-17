@@ -171,5 +171,5 @@ enum FileType {
   csv,
   xlsx;
 
-  FileType fromString(String s) => FileType.values.firstWhere((v) => v.string == s);
+  static FileType fromString(String s) => FileType.values.firstWhere((v) => v.string == s);
 }
