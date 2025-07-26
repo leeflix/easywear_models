@@ -32,7 +32,7 @@ class Workwear extends Model<Workwear> {
       : name = json["name"],
         imageIds = Set<ImageId>.from(json["imageIds"]),
         categories = Set<Category>.from(
-            json["categories"].map((e) => CategoryExt.fromString(e))),
+            json["categories"].map((e) => Category.fromString(e))),
         skuToArticle = json["skuToArticle"].map<String, Article>((key, value) =>
             MapEntry<String, Article>(key, Article.fromJson(value))),
         customSupplier = json["customSupplier"],
