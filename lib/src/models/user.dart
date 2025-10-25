@@ -30,6 +30,7 @@ class User extends Model<User> {
   int? intratoolUserId;
   String? beekeeperUserId;
   List<OrderPrompt> orderPrompts;
+  Set<Id<User>> responsibleForUserIds;
 
   User({
     required super.domainId,
@@ -66,6 +67,7 @@ class User extends Model<User> {
     required this.intratoolUserId,
     required this.beekeeperUserId,
     required this.orderPrompts,
+    required this.responsibleForUserIds,
   }) : super(
           id: id,
           created: created,
@@ -104,6 +106,7 @@ class User extends Model<User> {
         "intratoolUserId": intratoolUserId,
         "beekeeperUserId": beekeeperUserId,
         "orderPrompts": orderPrompts.map((orderPrompt) => orderPrompt.toJson()).toList(),
+        "responsibleForUserIds": responsibleForUserIds.toList(),
         ...super.toJson(),
       };
 
@@ -139,6 +142,7 @@ class User extends Model<User> {
         intratoolUserId = json["intratoolUserId"],
         beekeeperUserId = json["beekeeperUserId"],
         orderPrompts = List.from(json["orderPrompts"]).map((orderPrompt) => OrderPrompt.fromJson(orderPrompt)).toList(),
+        responsibleForUserIds = json["responsibleForUserIds"] != null ? Set<Id<User>>.from(json["responsibleForUserIds"]) : {},
         super(
           domainId: json["domainId"],
           id: json["id"],
