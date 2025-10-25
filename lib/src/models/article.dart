@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:easywear_models/easywear_models.dart';
-import 'package:easywear_models/src/models/ids.dart';
 
 class Article {
   Map<String, String> configuration;
