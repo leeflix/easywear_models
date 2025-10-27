@@ -67,6 +67,12 @@ class Order extends Request {
   List<Package> packages;
   Set<Id<Request>> sourceOrderIds;
   ViewMode view;
+  DateTime? completedAt;
+  int? deliveryEtaDays;
+  int? confirmationDeadlineDays;
+  int deliveryRemindersSent;
+  bool? autoConfirmed;
+  bool confirmationPaused;
 
   Order({
     required super.domainId,
@@ -85,6 +91,12 @@ class Order extends Request {
     required this.packages,
     required this.sourceOrderIds,
     required this.view,
+    required this.completedAt,
+    required this.deliveryEtaDays,
+    required this.confirmationDeadlineDays,
+    required this.deliveryRemindersSent,
+    required this.autoConfirmed,
+    required this.confirmationPaused,
   }) : super(
           id: id,
           created: created,
@@ -97,6 +109,12 @@ class Order extends Request {
         supplierDomainId = json["supplierDomainId"],
         sourceOrderIds = Set<Id<Request>>.from(json["sourceOrderIds"]),
         view = ViewModeExt.fromString(json["view"]),
+        completedAt = json["completedAt"] == null ? null : DateTime.parse(json["completedAt"]),
+        deliveryEtaDays = json["deliveryEtaDays"],
+        confirmationDeadlineDays = json["confirmationDeadlineDays"],
+        deliveryRemindersSent = json["deliveryRemindersSent"] ?? 0,
+        autoConfirmed = json["autoConfirmed"],
+        confirmationPaused = json["confirmationPaused"] ?? false,
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -119,6 +137,12 @@ class Order extends Request {
         "packages": packages.map((package) => package.toJson()).toList(),
         "sourceOrderIds": sourceOrderIds.toList(),
         "view": view.string,
+        "completedAt": completedAt?.toIso8601String(),
+        "deliveryEtaDays": deliveryEtaDays,
+        "confirmationDeadlineDays": confirmationDeadlineDays,
+        "deliveryRemindersSent": deliveryRemindersSent,
+        "autoConfirmed": autoConfirmed,
+        "confirmationPaused": confirmationPaused,
         ...super.toJson(),
       };
 
@@ -272,6 +296,12 @@ class Claim extends Order {
     required super.packages,
     required super.sourceOrderIds,
     required super.view,
+    required super.completedAt,
+    required super.deliveryEtaDays,
+    required super.confirmationDeadlineDays,
+    required super.deliveryRemindersSent,
+    required super.autoConfirmed,
+    required super.confirmationPaused,
     required this.userInventory,
     required this.imageIds,
   }) : super(
