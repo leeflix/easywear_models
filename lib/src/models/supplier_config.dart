@@ -11,6 +11,11 @@ class SupplierConfig {
   String? returnUrl;
   String? agbUrl;
 
+  /// Email addresses that should receive all supplier notifications.
+  /// This includes: orders, product advice requests, refinement requests, and support emails.
+  /// If null or empty, falls back to supportEmail for backwards compatibility.
+  Set<String>? notificationEmails;
+
   SupplierConfig({
     required this.customerDomainIds,
     required this.domainIdToWorkwearIds,
@@ -19,6 +24,7 @@ class SupplierConfig {
     required this.supportPhone,
     required this.returnUrl,
     required this.agbUrl,
+    this.notificationEmails,
   });
 
   Map<String, dynamic> toJson() => {
@@ -29,6 +35,7 @@ class SupplierConfig {
         "supportPhone": supportPhone,
         "returnUrl": returnUrl,
         "agbUrl": agbUrl,
+        "notificationEmails": notificationEmails?.toList(),
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
@@ -40,7 +47,13 @@ class SupplierConfig {
         supportEmail = json["supportEmail"],
         supportPhone = json["supportPhone"],
         returnUrl = json["returnUrl"],
-        agbUrl = json["agbUrl"];
+        agbUrl = json["agbUrl"],
+        // Support both new field name and old field name for backwards compatibility
+        notificationEmails = json["notificationEmails"] != null
+            ? Set<String>.from(json["notificationEmails"])
+            : (json["orderNotificationEmails"] != null
+                ? Set<String>.from(json["orderNotificationEmails"])
+                : null);
 
   @override
   String toString() => jsonEncode(this);
