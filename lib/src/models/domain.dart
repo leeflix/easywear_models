@@ -48,7 +48,7 @@ class Domain extends Model<Domain> {
     required this.delimiter,
     required this.intratool,
     required this.beekeeper,
-    required this.staffbase,
+    this.staffbase,
     required this.shop,
     required this.starterKitNameToWorkwearIdToAmount,
     required this.warehouse,

@@ -67,7 +67,7 @@ class User extends Model<User> {
     required this.showFirstLoginMessage,
     required this.intratoolUserId,
     required this.beekeeperUserId,
-    required this.staffbaseUserId,
+    this.staffbaseUserId,
     required this.orderPrompts,
     required this.responsibleForUserIds,
   }) : super(
