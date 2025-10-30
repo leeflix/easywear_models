@@ -29,6 +29,7 @@ class User extends Model<User> {
   bool showFirstLoginMessage;
   int? intratoolUserId;
   String? beekeeperUserId;
+  String? staffbaseUserId;
   List<OrderPrompt> orderPrompts;
   Set<Id<User>> responsibleForUserIds;
 
@@ -66,6 +67,7 @@ class User extends Model<User> {
     required this.showFirstLoginMessage,
     required this.intratoolUserId,
     required this.beekeeperUserId,
+    required this.staffbaseUserId,
     required this.orderPrompts,
     required this.responsibleForUserIds,
   }) : super(
@@ -105,6 +107,7 @@ class User extends Model<User> {
         "showFirstLoginMessage": showFirstLoginMessage,
         "intratoolUserId": intratoolUserId,
         "beekeeperUserId": beekeeperUserId,
+        "staffbaseUserId": staffbaseUserId,
         "orderPrompts": orderPrompts.map((orderPrompt) => orderPrompt.toJson()).toList(),
         "responsibleForUserIds": responsibleForUserIds.toList(),
         ...super.toJson(),
@@ -141,6 +144,7 @@ class User extends Model<User> {
         showFirstLoginMessage = json["showFirstLoginMessage"],
         intratoolUserId = json["intratoolUserId"],
         beekeeperUserId = json["beekeeperUserId"],
+        staffbaseUserId = json["staffbaseUserId"],
         orderPrompts = List.from(json["orderPrompts"]).map((orderPrompt) => OrderPrompt.fromJson(orderPrompt)).toList(),
         responsibleForUserIds = json["responsibleForUserIds"] != null ? Set<Id<User>>.from(json["responsibleForUserIds"]) : {},
         super(

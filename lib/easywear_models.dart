@@ -4,6 +4,7 @@ export 'src/models/address.dart';
 export 'src/models/article.dart';
 export 'src/models/beekeeper.dart';
 export 'src/models/budget_adjustment_mode.dart';
+export 'src/models/staffbase.dart';
 export 'src/models/category.dart';
 export 'src/models/code.dart';
 export 'src/models/country.dart';

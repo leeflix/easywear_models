@@ -18,6 +18,7 @@ class Domain extends Model<Domain> {
   String delimiter;
   Intratool? intratool;
   Beekeeper? beekeeper;
+  Staffbase? staffbase;
   Map<Id<Workwear>, double?> shop;
   Map<StarterKitId, Map<Id<Workwear>, int>> starterKitNameToWorkwearIdToAmount;
   Inventory warehouse;
@@ -47,6 +48,7 @@ class Domain extends Model<Domain> {
     required this.delimiter,
     required this.intratool,
     required this.beekeeper,
+    required this.staffbase,
     required this.shop,
     required this.starterKitNameToWorkwearIdToAmount,
     required this.warehouse,
@@ -77,6 +79,7 @@ class Domain extends Model<Domain> {
         delimiter = json["delimiter"],
         intratool = json["intratool"] == null ? null : Intratool.fromJson(json["intratool"]),
         beekeeper = json["beekeeper"] == null ? null : Beekeeper.fromJson(json["beekeeper"]),
+        staffbase = json["staffbase"] == null ? null : Staffbase.fromJson(json["staffbase"]),
         shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
         starterKitNameToWorkwearIdToAmount = (json["starterKitNameToWorkwearIdToAmount"] as Map).map((key, value) => MapEntry(key, (value as Map<String, dynamic>).map((k, v) => MapEntry(Id<Workwear>(k), v.toInt())))),
         warehouse = Inventory.fromJson(json["warehouse"]),
@@ -109,6 +112,7 @@ class Domain extends Model<Domain> {
         "delimiter": delimiter,
         "intratool": intratool?.toJson(),
         "beekeeper": beekeeper?.toJson(),
+        "staffbase": staffbase?.toJson(),
         "shop": shop,
         "starterKitNameToWorkwearIdToAmount": starterKitNameToWorkwearIdToAmount,
         "warehouse": warehouse.toJson(),
