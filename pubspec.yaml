@@ -1,5 +1,5 @@
 name: easywear_models
-version: 0.9.2
+version: 0.9.3
 environment:
   sdk: '>=3.3.0 <4.0.0'
 
