@@ -2,6 +2,7 @@ class Features {
   bool deposit;
   bool correction;
   bool requireUserOrderConfirmation;
+  bool requireAdminApproval;
   int defaultDeliveryEtaDays;
   int defaultConfirmationDeadlineDays;
 
@@ -9,6 +10,7 @@ class Features {
     required this.deposit,
     required this.correction,
     required this.requireUserOrderConfirmation,
+    required this.requireAdminApproval,
     required this.defaultDeliveryEtaDays,
     required this.defaultConfirmationDeadlineDays,
   });
@@ -17,6 +19,7 @@ class Features {
       : deposit = json["deposit"],
         correction = json["correction"],
         requireUserOrderConfirmation = json["requireUserOrderConfirmation"] ?? false,
+        requireAdminApproval = json["requireAdminApproval"] ?? false,
         defaultDeliveryEtaDays = json["defaultDeliveryEtaDays"] ?? 5,
         defaultConfirmationDeadlineDays = json["defaultConfirmationDeadlineDays"] ?? 7;
 
@@ -24,6 +27,7 @@ class Features {
         "deposit": deposit,
         "correction": correction,
         "requireUserOrderConfirmation": requireUserOrderConfirmation,
+        "requireAdminApproval": requireAdminApproval,
         "defaultDeliveryEtaDays": defaultDeliveryEtaDays,
         "defaultConfirmationDeadlineDays": defaultConfirmationDeadlineDays,
       };

@@ -11,6 +11,8 @@ sealed class Request extends Model<Request> {
   RequestStatus status;
   String? adminMessage;
   String? userMessage;
+  DateTime? adminApprovedAt;
+  Id<User>? adminApprovedBy;
 
   Request({
     required super.domainId,
@@ -25,6 +27,8 @@ sealed class Request extends Model<Request> {
     required this.status,
     required this.adminMessage,
     required this.userMessage,
+    required this.adminApprovedAt,
+    required this.adminApprovedBy,
   }) : super(
           id: id,
           created: created,
@@ -42,6 +46,8 @@ sealed class Request extends Model<Request> {
         "status": status.string,
         "adminMessage": adminMessage,
         "userMessage": userMessage,
+        "adminApprovedAt": adminApprovedAt?.toIso8601String(),
+        "adminApprovedBy": adminApprovedBy,
         ...super.toJson(),
       };
 
@@ -88,6 +94,8 @@ class Order extends Request {
     required super.status,
     required super.adminMessage,
     required super.userMessage,
+    required super.adminApprovedAt,
+    required super.adminApprovedBy,
     required this.packages,
     required this.sourceOrderIds,
     required this.view,
@@ -128,6 +136,8 @@ class Order extends Request {
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
+          adminApprovedAt: json["adminApprovedAt"] == null ? null : DateTime.parse(json["adminApprovedAt"]),
+          adminApprovedBy: json["adminApprovedBy"],
         );
 
   @override
@@ -233,6 +243,8 @@ class Correction extends Request {
     required super.status,
     required super.adminMessage,
     required super.userMessage,
+    required super.adminApprovedAt,
+    required super.adminApprovedBy,
     required this.inventory,
   }) : super(
           id: id,
@@ -256,6 +268,8 @@ class Correction extends Request {
           status: RequestStatusExt.fromString(json["status"]),
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
+          adminApprovedAt: json["adminApprovedAt"] == null ? null : DateTime.parse(json["adminApprovedAt"]),
+          adminApprovedBy: json["adminApprovedBy"],
         );
 
   @override
@@ -293,6 +307,8 @@ class Claim extends Order {
     required super.status,
     required super.adminMessage,
     required super.userMessage,
+    required super.adminApprovedAt,
+    required super.adminApprovedBy,
     required super.packages,
     required super.sourceOrderIds,
     required super.view,
