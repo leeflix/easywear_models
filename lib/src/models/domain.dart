@@ -26,6 +26,10 @@ class Domain extends Model<Domain> {
   bool? defaultUserPays;
   Set<Id<Domain>> supplierDomainIds;
 
+  /// Email addresses that should receive domain notifications (orders, alerts, etc.)
+  /// If null or empty, no notification emails are configured.
+  Set<String>? notificationEmails;
+
   Domain({
     required super.domainId,
     Id<Domain>? id,
@@ -56,6 +60,7 @@ class Domain extends Model<Domain> {
     required this.defaultFromSupplier,
     required this.defaultUserPays,
     required this.supplierDomainIds,
+    this.notificationEmails,
   }) : super(
           id: id ?? domainId,
           created: created,
@@ -88,6 +93,12 @@ class Domain extends Model<Domain> {
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],
         supplierDomainIds = json["supplierDomainIds"] == null ? {} : Set<Id<Domain>>.from(json["supplierDomainIds"]),
+        // Support both new field and migration from supplierConfig.notificationEmails
+        notificationEmails = json["notificationEmails"] != null
+            ? Set<String>.from(json["notificationEmails"])
+            : (json["supplierConfig"]?["notificationEmails"] != null
+                ? Set<String>.from(json["supplierConfig"]["notificationEmails"])
+                : null),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -122,6 +133,7 @@ class Domain extends Model<Domain> {
         "defaultFromSupplier": defaultFromSupplier,
         "defaultUserPays": defaultUserPays,
         "supplierDomainIds": supplierDomainIds.toList(),
+        "notificationEmails": notificationEmails?.toList(),
         ...super.toJson(),
       };
 
