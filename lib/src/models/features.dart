@@ -3,6 +3,7 @@ class Features {
   bool correction;
   bool requireUserOrderConfirmation;
   bool requireAdminApproval;
+  bool useBudgetSystem;
   int defaultDeliveryEtaDays;
   int defaultConfirmationDeadlineDays;
 
@@ -11,6 +12,7 @@ class Features {
     required this.correction,
     required this.requireUserOrderConfirmation,
     required this.requireAdminApproval,
+    required this.useBudgetSystem,
     required this.defaultDeliveryEtaDays,
     required this.defaultConfirmationDeadlineDays,
   });
@@ -20,6 +22,7 @@ class Features {
         correction = json["correction"],
         requireUserOrderConfirmation = json["requireUserOrderConfirmation"] ?? false,
         requireAdminApproval = json["requireAdminApproval"] ?? false,
+        useBudgetSystem = json["useBudgetSystem"] ?? true,
         defaultDeliveryEtaDays = json["defaultDeliveryEtaDays"] ?? 5,
         defaultConfirmationDeadlineDays = json["defaultConfirmationDeadlineDays"] ?? 7;
 
@@ -28,6 +31,7 @@ class Features {
         "correction": correction,
         "requireUserOrderConfirmation": requireUserOrderConfirmation,
         "requireAdminApproval": requireAdminApproval,
+        "useBudgetSystem": useBudgetSystem,
         "defaultDeliveryEtaDays": defaultDeliveryEtaDays,
         "defaultConfirmationDeadlineDays": defaultConfirmationDeadlineDays,
       };
