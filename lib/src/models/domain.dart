@@ -24,6 +24,7 @@ class Domain extends Model<Domain> {
   Inventory warehouse;
   bool defaultFromSupplier;
   bool? defaultUserPays;
+  Set<Id<Domain>> supplierDomainIds;
 
   Domain({
     required super.domainId,
@@ -54,6 +55,7 @@ class Domain extends Model<Domain> {
     required this.warehouse,
     required this.defaultFromSupplier,
     required this.defaultUserPays,
+    required this.supplierDomainIds,
   }) : super(
           id: id ?? domainId,
           created: created,
@@ -85,6 +87,7 @@ class Domain extends Model<Domain> {
         warehouse = Inventory.fromJson(json["warehouse"]),
         defaultFromSupplier = json["defaultFromSupplier"],
         defaultUserPays = json["defaultUserPays"],
+        supplierDomainIds = json["supplierDomainIds"] == null ? {} : Set<Id<Domain>>.from(json["supplierDomainIds"]),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -118,6 +121,7 @@ class Domain extends Model<Domain> {
         "warehouse": warehouse.toJson(),
         "defaultFromSupplier": defaultFromSupplier,
         "defaultUserPays": defaultUserPays,
+        "supplierDomainIds": supplierDomainIds.toList(),
         ...super.toJson(),
       };
 
