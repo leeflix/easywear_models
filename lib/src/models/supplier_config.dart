@@ -11,6 +11,10 @@ class SupplierConfig {
   String? returnUrl;
   String? agbUrl;
 
+  /// If true, this supplier's products will be hidden from the public supplier shop.
+  /// This allows temporarily hiding all products without deleting them.
+  bool? hideFromSupplierShop;
+
   SupplierConfig({
     required this.customerDomainIds,
     required this.domainIdToWorkwearIds,
@@ -19,6 +23,7 @@ class SupplierConfig {
     required this.supportPhone,
     required this.returnUrl,
     required this.agbUrl,
+    this.hideFromSupplierShop,
   });
 
   Map<String, dynamic> toJson() => {
@@ -29,6 +34,7 @@ class SupplierConfig {
         "supportPhone": supportPhone,
         "returnUrl": returnUrl,
         "agbUrl": agbUrl,
+        "hideFromSupplierShop": hideFromSupplierShop,
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
@@ -40,7 +46,8 @@ class SupplierConfig {
         supportEmail = json["supportEmail"],
         supportPhone = json["supportPhone"],
         returnUrl = json["returnUrl"],
-        agbUrl = json["agbUrl"];
+        agbUrl = json["agbUrl"],
+        hideFromSupplierShop = json["hideFromSupplierShop"];
 
   @override
   String toString() => jsonEncode(this);
