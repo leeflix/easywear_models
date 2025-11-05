@@ -16,6 +16,10 @@ class SupplierConfig {
   /// If null or empty, falls back to supportEmail for backwards compatibility.
   Set<String>? notificationEmails;
 
+  /// If true, this supplier's products will be hidden from the public supplier shop.
+  /// This allows temporarily hiding all products without deleting them.
+  bool? hideFromSupplierShop;
+
   SupplierConfig({
     required this.customerDomainIds,
     required this.domainIdToWorkwearIds,
@@ -25,6 +29,7 @@ class SupplierConfig {
     required this.returnUrl,
     required this.agbUrl,
     this.notificationEmails,
+    this.hideFromSupplierShop,
   });
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +41,7 @@ class SupplierConfig {
         "returnUrl": returnUrl,
         "agbUrl": agbUrl,
         "notificationEmails": notificationEmails?.toList(),
+        "hideFromSupplierShop": hideFromSupplierShop,
       };
 
   SupplierConfig.fromJson(Map<String, dynamic> json)
@@ -53,7 +59,8 @@ class SupplierConfig {
             ? Set<String>.from(json["notificationEmails"])
             : (json["orderNotificationEmails"] != null
                 ? Set<String>.from(json["orderNotificationEmails"])
-                : null);
+                : null),
+        hideFromSupplierShop = json["hideFromSupplierShop"];
 
   @override
   String toString() => jsonEncode(this);
