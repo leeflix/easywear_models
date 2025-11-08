@@ -72,6 +72,7 @@ class Order extends Request {
   Id<Domain> supplierDomainId;
   List<Package> packages;
   Set<Id<Request>> sourceOrderIds;
+  Set<Id<Request>> fulfilledBySupplierOrderIds;
   ViewMode view;
   DateTime? completedAt;
   int? deliveryEtaDays;
@@ -98,6 +99,7 @@ class Order extends Request {
     required super.adminApprovedBy,
     required this.packages,
     required this.sourceOrderIds,
+    required this.fulfilledBySupplierOrderIds,
     required this.view,
     required this.completedAt,
     required this.deliveryEtaDays,
@@ -115,7 +117,8 @@ class Order extends Request {
   Order.fromJson(Map<String, dynamic> json)
       : packages = json["packages"].map<Package>((package) => Package.fromJson(package)).toList(),
         supplierDomainId = json["supplierDomainId"],
-        sourceOrderIds = Set<Id<Request>>.from(json["sourceOrderIds"]),
+        sourceOrderIds = Set<Id<Request>>.from(json["sourceOrderIds"] ?? []),
+        fulfilledBySupplierOrderIds = Set<Id<Request>>.from(json["fulfilledBySupplierOrderIds"] ?? []),
         view = ViewModeExt.fromString(json["view"]),
         completedAt = json["completedAt"] == null ? null : DateTime.parse(json["completedAt"]),
         deliveryEtaDays = json["deliveryEtaDays"],
@@ -146,6 +149,7 @@ class Order extends Request {
         "supplierDomainId": supplierDomainId,
         "packages": packages.map((package) => package.toJson()).toList(),
         "sourceOrderIds": sourceOrderIds.toList(),
+        "fulfilledBySupplierOrderIds": fulfilledBySupplierOrderIds.toList(),
         "view": view.string,
         "completedAt": completedAt?.toIso8601String(),
         "deliveryEtaDays": deliveryEtaDays,
@@ -311,6 +315,7 @@ class Claim extends Order {
     required super.adminApprovedBy,
     required super.packages,
     required super.sourceOrderIds,
+    required super.fulfilledBySupplierOrderIds,
     required super.view,
     required super.completedAt,
     required super.deliveryEtaDays,
