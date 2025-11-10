@@ -8,7 +8,12 @@ sealed class Request extends Model<Request> {
   DateTime? requested;
   DateTime? canceled;
   String? cancelReason;
-  RequestStatus status;
+
+  // Workflow system fields
+  String workflowStateId;
+  Id<WorkflowDefinition>? workflowDefinitionId;
+  Map<String, dynamic> workflowMetadata;
+
   String? adminMessage;
   String? userMessage;
   DateTime? adminApprovedAt;
@@ -24,7 +29,9 @@ sealed class Request extends Model<Request> {
     required this.requested,
     required this.canceled,
     required this.cancelReason,
-    required this.status,
+    required this.workflowStateId,
+    this.workflowDefinitionId,
+    this.workflowMetadata = const {},
     required this.adminMessage,
     required this.userMessage,
     required this.adminApprovedAt,
@@ -43,7 +50,9 @@ sealed class Request extends Model<Request> {
         "canceled": canceled?.toIso8601String(),
         "cancelReason": cancelReason,
         "created": created.toIso8601String(),
-        "status": status.string,
+        "workflowStateId": workflowStateId,
+        "workflowDefinitionId": workflowDefinitionId,
+        "workflowMetadata": workflowMetadata,
         "adminMessage": adminMessage,
         "userMessage": userMessage,
         "adminApprovedAt": adminApprovedAt?.toIso8601String(),
@@ -92,7 +101,9 @@ class Order extends Request {
     required super.requested,
     required super.canceled,
     required super.cancelReason,
-    required super.status,
+    required super.workflowStateId,
+    super.workflowDefinitionId,
+    super.workflowMetadata = const {},
     required super.adminMessage,
     required super.userMessage,
     required super.adminApprovedAt,
@@ -136,7 +147,9 @@ class Order extends Request {
           requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
           canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
-          status: RequestStatusExt.fromString(json["status"]),
+          workflowStateId: json["workflowStateId"],
+          workflowDefinitionId: json["workflowDefinitionId"],
+          workflowMetadata: json["workflowMetadata"] != null ? Map<String, dynamic>.from(json["workflowMetadata"]) : {},
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
           adminApprovedAt: json["adminApprovedAt"] == null ? null : DateTime.parse(json["adminApprovedAt"]),
@@ -244,7 +257,9 @@ class Correction extends Request {
     required super.requested,
     required super.canceled,
     required super.cancelReason,
-    required super.status,
+    required super.workflowStateId,
+    super.workflowDefinitionId,
+    super.workflowMetadata = const {},
     required super.adminMessage,
     required super.userMessage,
     required super.adminApprovedAt,
@@ -269,7 +284,9 @@ class Correction extends Request {
           requested: json["requested"] == null ? null : DateTime.parse(json["requested"]),
           canceled: json["canceled"] == null ? null : DateTime.parse(json["canceled"]),
           cancelReason: json["cancelReason"],
-          status: RequestStatusExt.fromString(json["status"]),
+          workflowStateId: json["workflowStateId"],
+          workflowDefinitionId: json["workflowDefinitionId"],
+          workflowMetadata: json["workflowMetadata"] != null ? Map<String, dynamic>.from(json["workflowMetadata"]) : {},
           adminMessage: json["adminMessage"],
           userMessage: json["userMessage"],
           adminApprovedAt: json["adminApprovedAt"] == null ? null : DateTime.parse(json["adminApprovedAt"]),
@@ -308,7 +325,9 @@ class Claim extends Order {
     required super.requested,
     required super.canceled,
     required super.cancelReason,
-    required super.status,
+    required super.workflowStateId,
+    super.workflowDefinitionId,
+    super.workflowMetadata = const {},
     required super.adminMessage,
     required super.userMessage,
     required super.adminApprovedAt,

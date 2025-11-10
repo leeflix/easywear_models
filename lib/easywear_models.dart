@@ -25,11 +25,21 @@ export 'src/models/package.dart';
 export 'src/models/package_entry.dart';
 export 'src/models/permissions.dart';
 export 'src/models/request.dart';
-export 'src/models/request_status.dart';
 export 'src/models/request_type.dart';
 export 'src/models/scheduled_budget_adjustment.dart';
+export 'src/models/shopping_cart_reservation.dart';
 export 'src/models/supplier_config.dart';
 export 'src/models/user.dart';
 export 'src/models/view_mode.dart';
 export 'src/models/white_label.dart';
+export 'src/models/workflow_action.dart';
+export 'src/models/workflow_definition.dart';
+export 'src/models/workflow_guard.dart';
+export 'src/models/workflow_history.dart';
+export 'src/models/workflow_state.dart';
+export 'src/models/workflow_transition.dart';
+export 'src/models/domain_workflow_config.dart';
 export 'src/models/workwear.dart';
+
+// Workflow factories
+export 'src/workflows/default_workflows.dart';
