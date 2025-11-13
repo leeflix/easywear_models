@@ -15,6 +15,7 @@ class Domain extends Model<Domain> {
   Features features;
   String currency;
   bool useCurrencyForBudget;
+  bool showRealPrices;
   String delimiter;
   Intratool? intratool;
   Beekeeper? beekeeper;
@@ -50,6 +51,7 @@ class Domain extends Model<Domain> {
     required this.features,
     required this.currency,
     required this.useCurrencyForBudget,
+    required this.showRealPrices,
     required this.delimiter,
     required this.intratool,
     required this.beekeeper,
@@ -83,6 +85,7 @@ class Domain extends Model<Domain> {
         features = Features.fromJson(json["features"]),
         currency = json["currency"],
         useCurrencyForBudget = json["useCurrencyForBudget"],
+        showRealPrices = json["showRealPrices"],
         delimiter = json["delimiter"],
         intratool = json["intratool"] == null ? null : Intratool.fromJson(json["intratool"]),
         beekeeper = json["beekeeper"] == null ? null : Beekeeper.fromJson(json["beekeeper"]),
@@ -123,6 +126,7 @@ class Domain extends Model<Domain> {
         "features": features.toJson(),
         "currency": currency,
         "useCurrencyForBudget": useCurrencyForBudget,
+        "showRealPrices": showRealPrices,
         "delimiter": delimiter,
         "intratool": intratool?.toJson(),
         "beekeeper": beekeeper?.toJson(),
