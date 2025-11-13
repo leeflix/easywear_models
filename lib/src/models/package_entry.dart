@@ -22,6 +22,8 @@ class PackageEntry {
 
   DateTime? received;
 
+  String? customizationNote;
+
 
   PackageEntry({
     required this.amount,
@@ -36,6 +38,7 @@ class PackageEntry {
     required this.sourceLocationId,
     required this.booked,
     required this.received,
+    this.customizationNote,
   });
 
   Map<String, dynamic> toJson() => {
@@ -51,6 +54,7 @@ class PackageEntry {
         "sourceLocationId": sourceLocationId,
         "booked": booked?.toIso8601String(),
         "received": received?.toIso8601String(),
+        "customizationNote": customizationNote,
       };
 
   PackageEntry.fromJson(Map<String, dynamic> json)
@@ -65,7 +69,8 @@ class PackageEntry {
         locationId = json["locationId"],
         sourceLocationId = json["sourceLocationId"],
         booked = json["booked"] == null ? null : DateTime.parse(json["booked"]),
-        received = json["received"] == null ? null : DateTime.parse(json["received"]);
+        received = json["received"] == null ? null : DateTime.parse(json["received"]),
+        customizationNote = json["customizationNote"];
 
   @override
   String toString() => jsonEncode(this);

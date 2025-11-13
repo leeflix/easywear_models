@@ -7,6 +7,7 @@ class User extends Model<User> {
   String? firstName;
   String? lastName;
   String? personnelNumber;
+  DateTime? employmentDate;
   ImageId? imageId;
   String? userName;
   String? companyMail;
@@ -45,6 +46,7 @@ class User extends Model<User> {
     required this.firstName,
     required this.lastName,
     required this.personnelNumber,
+    this.employmentDate,
     required this.imageId,
     required this.userName,
     required this.companyMail,
@@ -85,6 +87,7 @@ class User extends Model<User> {
         "firstName": firstName,
         "lastName": lastName,
         "personnelNumber": personnelNumber,
+        "employmentDate": employmentDate?.toIso8601String(),
         "imageId": imageId,
         "userName": userName,
         "companyMail": companyMail,
@@ -120,6 +123,7 @@ class User extends Model<User> {
         firstName = json["firstName"],
         lastName = json["lastName"],
         personnelNumber = json["personnelNumber"],
+        employmentDate = json["employmentDate"] != null ? DateTime.parse(json["employmentDate"]) : null,
         imageId = json["imageId"],
         userName = json["userName"],
         companyMail = json["companyMail"],
