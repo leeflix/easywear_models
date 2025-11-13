@@ -5,6 +5,7 @@ import 'package:easywear_models/util.dart';
 
 class Workwear extends Model<Workwear> {
   String name;
+  String? description;
   Set<ImageId> imageIds;
   Set<Category> categories;
   Map<ArticleId, Article> skuToArticle;
@@ -19,6 +20,7 @@ class Workwear extends Model<Workwear> {
     DateTime? updated,
     bool? isArchived,
     required this.name,
+    required this.description,
     required this.imageIds,
     required this.categories,
     required this.skuToArticle,
@@ -34,6 +36,7 @@ class Workwear extends Model<Workwear> {
 
   Workwear.fromJson(Map<String, dynamic> json)
       : name = json["name"],
+        description = json["description"],
         imageIds = Set<ImageId>.from(json["imageIds"]),
         categories = Set<Category>.from(
             json["categories"].map((e) => CategoryExt.fromString(e))),
@@ -53,6 +56,7 @@ class Workwear extends Model<Workwear> {
   @override
   Map<String, dynamic> toJson() => {
         "name": name,
+        "description": description,
         "imageIds": imageIds.toList(),
         "categories": categories.map((e) => e.string).toList(),
         "skuToArticle": skuToArticle.map((k, v) => MapEntry(k, v.toJson())),
