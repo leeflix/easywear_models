@@ -3,7 +3,7 @@ import 'package:easywear_models/easywear_models.dart';
 class Department extends Model<Department> {
   String name;
   Set<Id<User>> userIds;
-  Map<Id<Workwear>, double?> shop;
+  Map<Id<Workwear>, DepartmentWorkwearConfig> workwearConfig;
 
   Department({
     required super.domainId,
@@ -13,7 +13,7 @@ class Department extends Model<Department> {
     bool? isArchived,
     required this.name,
     required this.userIds,
-    required this.shop,
+    required this.workwearConfig,
   }) : super(
           id: id,
           created: created,
@@ -24,7 +24,12 @@ class Department extends Model<Department> {
   Department.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         userIds = Set.from(json["userIds"]),
-        shop = (json["shop"] as Map).map((key, value) => MapEntry(key, value?.toDouble())),
+        workwearConfig = (json["workwearConfig"] as Map).map(
+          (key, value) => MapEntry(
+            key,
+            DepartmentWorkwearConfig.fromJson(value),
+          ),
+        ),
         super(
           domainId: json["domainId"],
           id: json["id"],
@@ -38,7 +43,9 @@ class Department extends Model<Department> {
         "name": name,
         "userIds": userIds.toList(),
         "created": created.toIso8601String(),
-        "shop": shop,
+        "workwearConfig": workwearConfig.map(
+          (key, value) => MapEntry(key, value.toJson()),
+        ),
         ...super.toJson(),
       };
 
